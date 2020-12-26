@@ -1,0 +1,30 @@
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+
+platform :ios, '9.0'
+
+target 'StyleCheq' do
+  # Pods for StyleCheq
+  config = use_native_modules!
+  use_react_native!(:path => config["reactNativePath"])
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
+  pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
+
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
+
+  pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
+
+  pod 'toolbar-android', :path => '../node_modules/@react-native-community/toolbar-android'
+
+  target 'StyleCheqTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+   use_flipper!
+  post_install do |installer|
+    flipper_post_install(installer)
+  end
+end
+

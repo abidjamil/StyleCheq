@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Style Cheq</string>
+      <string name="facebook_app_id">996644564094570</string>
+    <string name="fb_login_protocol_scheme">fb996644564094570</string>
+</resources>
