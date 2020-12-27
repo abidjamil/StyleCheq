@@ -15,14 +15,14 @@ import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {
   key: 'root',
-  timeout: 10000,
+  timeout: 50000,
   storage: storage,
   /**
    * Blacklist state that we do not need/want to persist
    */
   blacklist: [
-    'authTypeReducer',
   ],
+
 }
 
 export default (rootReducer, rootSaga) => {

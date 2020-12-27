@@ -1,6 +1,6 @@
 
 export default {
-  logo: require('App/Assets/Images/logo_style.png'),
+  logo: require('App/Assets/Images/logo.png'),
   background: require('App/Assets/Images/background.png'),
   backArrow: require('App/Assets/Images/backArrow.png'),
   one: require('App/Assets/Images/one.jpg'),

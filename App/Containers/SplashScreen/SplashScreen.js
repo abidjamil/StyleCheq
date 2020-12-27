@@ -6,10 +6,15 @@ import { Helpers, Images } from 'App/Theme'
 import logo from '../../Assets/Images/logo_style.png'
 import ImageLoader from '../../Components/AnimatedImageLoader'
 import NavigationService from 'App/Services/NavigationService'
+var that;
 class SplashScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    that = this;
+  }
   componentDidMount() {
     setTimeout(() => {
-      if (!this.props.auth) {
+      if (!that.props.authReducer) {
         NavigationService.navigateAndReset('LoginScreen')
       }
       else {
@@ -19,7 +24,7 @@ class SplashScreen extends React.Component {
     }, 3000)
   }
   render() {
-    console.log("Splash Loaded");
+
     return (
       <View style={[Helpers.fillRowCenter, styles.container]}>
         <View style={[Helpers.center, styles.logo]}>
@@ -31,7 +36,7 @@ class SplashScreen extends React.Component {
   }
 }
 const mapStateToProps = (state) => ({
-
+  authReducer: state.authTypeReducer.authType
 })
 const mapDispatchToProps = (dispatch) => ({
   auth: () => dispatch({ type: 'AUTH_TYPE', payload: that.state.AuthData }),
