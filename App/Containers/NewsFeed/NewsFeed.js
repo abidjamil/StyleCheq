@@ -536,7 +536,7 @@ class NewsFeed extends React.Component {
 
   render() {
 
-    const windowHeight = Dimensions.get('window').height - 80;
+    const windowHeight = Dimensions.get('window').height;
     const windowHeightFull = Dimensions.get('window').height;
     return (
       <SafeAreaView
@@ -548,15 +548,16 @@ class NewsFeed extends React.Component {
         }}>
 
 
-
+        {/* Loader */}
         <OrientationLoadingOverlay
           visible={that.state.isLoading}
           color={Colors.primaryColorLogin}
           indicatorSize="large"
           messageFontSize={12}
-          message="Please Wait"
+          message=""
         />
 
+        {/* Comments Section */}
         <BottomSheet
           visible={this.state.commentsVisible}
           //setting the visibility state of the bottom shee
@@ -645,7 +646,11 @@ class NewsFeed extends React.Component {
             </View>
           </View>
         </BottomSheet>
+
+
         <View style={{ flex: 1 }}>
+
+          {/* Footer Section */}
           <View
             style={Style.footer}>
             <Image
@@ -670,16 +675,19 @@ class NewsFeed extends React.Component {
               source={Images.homeIcon} />
 
           </View>
-          <FlatList
 
+
+          {/* Posts Section */}
+          <FlatList
             showsVerticalScrollIndicator={false}
-            style={{ marginTop: 0, height: '100%' }}
+            style={{ marginTop: 0 }}
+            contentContainerStyle={{ marginTop: 0, marginBottom: 70 }}
             data={this.state.data}
             extraData={this.state.refresh}
             pagingEnabled={true}
             snapToInterval={windowHeight} // Adjust to your content width
             decelerationRate={"fast"}
-            snapToAlignment={"center"}
+            snapToAlignment={"end"}
             keyExtractor={(item) => item.id}
             //ListFooterComponent={this.renderFooter.bind(this)}
             // onEndReachedThreshold={0.1}
@@ -702,7 +710,7 @@ class NewsFeed extends React.Component {
 
                       <View>
 
-                        <Text style={Style.rowName, Style.elevationLow}>
+                        <Text style={Style.rowName}>
                           {item.name}
                         </Text>
 

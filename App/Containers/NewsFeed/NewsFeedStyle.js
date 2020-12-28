@@ -167,18 +167,18 @@ export default StyleSheet.create({
     justifyContent: 'space-evenly',
     position: 'absolute', //Here is the trick
     left: 20,
-    bottom: 50,
+    bottom: 100,
     zIndex: 10,
   },
 
   rightSide: {
     width: 60,
-    height: '50%',
+    height: '40%',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     position: 'absolute', //Here is the trick
     right: 20,
-    bottom: 50,
+    bottom: 120,
     zIndex: 10,
   },
 
