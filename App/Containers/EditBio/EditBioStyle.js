@@ -6,17 +6,21 @@ export default StyleSheet.create({
   privacyView: {
     justifyContent: 'space-between',
     paddingHorizontal: 22,
-    flexDirection:'row'
+    flexDirection: 'row'
   },
 
 
 
   fieldsLine:
   {
-    flexDirection:'row',justifyContent:'space-between',paddingVertical:8
+    flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8
   },
-  firstBox:{
-   top:20,paddingVertical:10
+  firstBox: {
+    top: 20, paddingVertical: 10
+  },
+  privacyBtn:
+  {
+    fontFamily: 'Poppins-Bold', paddingRight: 10, fontWeight: 'bold', fontSize: 18, paddingLeft: 8
   },
   loginBtn: {
     fontSize: 16,
@@ -31,9 +35,10 @@ export default StyleSheet.create({
     borderRadius: 17,
     marginTop: 30,
   },
- inputTextStyle:{ height: '50%', width: '95%', backgroundColor: '#fff', shadowColor: "#000", shadowOpacity: 1, shadowRadius: 2, shadowOffset: { height: 1, width: 1 }, elevation: 10, borderRadius: 10, paddingHorizontal: 15, textAlignVertical: "top"
-}
-,
-editBioStyle:{fontWeight: 'bold', paddingBottom: 20 },
-bioViewStyle:{ paddingHorizontal: 20, top: 20, marginLeft: 20}
+  inputTextStyle: {
+    height: '50%', width: '95%', backgroundColor: '#fff', shadowColor: "#000", shadowOpacity: 1, shadowRadius: 2, shadowOffset: { height: 1, width: 1 }, elevation: 10, borderRadius: 10, paddingHorizontal: 15, textAlignVertical: "top"
+  }
+  ,
+  editBioStyle: { fontWeight: 'bold', paddingBottom: 20 },
+  bioViewStyle: { paddingHorizontal: 20, top: 20, marginLeft: 20 }
 })
