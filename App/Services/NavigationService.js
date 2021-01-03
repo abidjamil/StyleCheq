@@ -54,8 +54,15 @@ function navigateAndReset(routeName, params) {
   )
 }
 
+function goBack() {
+  navigator.dispatch(
+    NavigationActions.back()
+  )
+}
+
 export default {
   navigate,
+  goBack,
   navigateAndReset,
   setTopLevelNavigator,
 }
