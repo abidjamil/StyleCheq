@@ -13,6 +13,19 @@ import VerifyCode from '../Containers/VerifyCodeForForgot/VerifyCode'
 import SetPassword from 'App/Containers/SetPassword/SetPassword'
 import PeopleToFollow from 'App/Containers/PeopleToFollow/PeopleToFollow'
 import NewsFeed from 'App/Containers/NewsFeed/NewsFeed'
+import AccountSetting from '../Containers/AccountSetting/AccountSetting'
+import SelectTags from '../Containers/SelectTags/SelectTags'
+import UploadPost from '../Containers/UploadPost/UploadPost'
+import ExploreTrending from '../Containers/ExploreTrending/ExploreTrending'
+import EditBio from '../Containers/EditBio/EditBio'
+import UserName from '../Containers/UserName/UserName'
+import FontStyle from '../Containers/FontPicker/FontPicker'
+import EditProfile from '../Containers/EditProfile/EditProfile'
+import TextColorPicker from '../Containers/TextColorPicker/TextColorPicker'
+import AccountProfile from '../Containers/AccountProfile/AccountProfile'
+import ProfileRating from '../Containers/ProfileRating/ProfileRating'
+import Notificaton from '../Containers/Notification/Notification'
+import ProfileImage from '../Containers/ProfileImage/ProfileImage'
 /**
  * The root screen contains the application's navigation.
  *
@@ -36,9 +49,20 @@ const StackNavigator = createStackNavigator(
     VerifyCode: VerifyCode,
     SetPasswordScreen: SetPassword,
     PeopleToFollow: PeopleToFollow,
-    NewsFeedScreen: NewsFeed
-
-
+    NewsFeedScreen: NewsFeed,
+    AccountSetting:AccountSetting,
+    SelectTags:SelectTags,
+    UploadPost:UploadPost,
+    ExploreTrending:ExploreTrending,
+    EditBio:EditBio,
+    UserName:UserName,
+    FontStyle:FontStyle,
+    EditProfile:EditProfile,
+    TextColorPicker:TextColorPicker,
+    AccountProfile:AccountProfile,
+    ProfileRating:ProfileRating,
+    Notificaton:Notificaton,
+    ProfileImage:ProfileImage
   },
   {
     animationEnabled: false,

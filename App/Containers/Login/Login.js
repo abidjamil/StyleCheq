@@ -229,7 +229,7 @@ class ExampleScreen extends React.Component {
                 Helpers.fullSize,
               ]}>
               <TouchableOpacity
-                onPress={() => NavigationService.navigate('SignupScreen')}>
+                onPress={() => NavigationService.navigate('ProfileImage')}>
                 <Text style={Style.signUpBtn}>
                   Sign Up
                 </Text>
