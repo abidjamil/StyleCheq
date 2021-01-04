@@ -22,7 +22,7 @@ export default class Splash1 extends React.Component {
 
   render() {
     return (
-      <View style={{ height: '100%', top: 50 }}>
+      <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
             <TouchableOpacity
