@@ -1,10 +1,11 @@
 import React from 'react'
-import { Platform, Text, View, KeyboardAvoidingView, Image, TouchableOpacity, TextInput, FlatList ,ScrollView} from 'react-native'
+import { StyleSheet, Platform, Text, View, Dimensions, Image, TouchableOpacity, TextInput, FlatList, ScrollView } from 'react-native'
 import Style from './UploadPostStyle'
 import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
 import BACK from 'react-native-vector-icons/AntDesign';
 import ImagePicker from 'react-native-image-picker'
-import Editor, { EU } from "react-native-mentions-editor";
+import MentionsTextInput from 'react-native-mentions';
+const { height, width } = Dimensions.get('window');
 var that;
 const users = [
   { id: 1, name: "Raza Dar", username: "mrazadar", gender: "male" },
@@ -27,12 +28,26 @@ export default class Splash1 extends React.Component {
       error: '',
       isLoading: false,
       userImage: null,
-    
+
+
+      value: "",
+      keyword: "",
+      data: [],
+      data: [
+        { id: 1, name: "Raza Dar", username: "mrazadar", gender: "male" },
+        { id: 3, name: "Atif Rashid", username: "atif.rashid", gender: "male" },
+        { id: 4, name: "Peter Pan", username: "peter.pan", gender: "male" },
+        { id: 5, name: "John Doe", username: "john.doe", gender: "male" },
+        { id: 6, name: "Meesha Shafi", username: "meesha.shafi", gender: "female" }
+      ]
+      ,
+
+
       showEditor: true,
-    message: null,
-    messages: [],
-    clearInput: false,
-    showMentions: false,
+      message: null,
+      messages: [],
+      clearInput: false,
+      showMentions: false,
       userImage: {
         uri: "",
         type: "",
@@ -40,62 +55,56 @@ export default class Splash1 extends React.Component {
       }
     }
     that = this;
+    this.reqTimer = 0;
   }
 
-  onChangeHandler = message => {
-  
-    this.setState({
-      message,
-      clearInput: false
-    });
-  };
-  sendMessage = () => {
-    if (!this.state.message) return;
-    const messages = [this.state.message, ...this.state.messages];
-    this.setState({
-      messages,
-      message: null,
-      clearInput: true
-    });
-  };
-
-  toggleEditor = () => {
-   
-  };
-
-  onHideMentions = () => {
-   
-    this.setState({
-      showMentions: false
-    });
-  };
-
-  renderMessageListItem({ item: message, index }) {
+  renderSuggestionsRow({ item }, hidePanel) {
     return (
-      <View style={Style.messageListItem}>
-        <Text style={Style.messageText}>
-          {EU.displayTextWithMentions(message.text, formatMentionNode)}
-        </Text>
-      </View>
-    );
+      <TouchableOpacity onPress={() => this.onSuggestionTap(item.name, hidePanel)}>
+        <View style={Style.suggestionsRowContainer}>
+          <View style={Style.userIconBox}>
+            <Text style={Style.usernameInitials}>{!!item.name && item.name.substring(0, 2).toUpperCase()}</Text>
+          </View>
+          <View style={Style.userDetailsBox}>
+            <Text style={Style.displayNameText}>{item.name}</Text>
+            <Text style={Style.usernameText}>@{item.name}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
   }
 
-  renderMessageList() {
-    return (
-      <FlatList
-        style={Style.messageList}
-        keyboardShouldPersistTaps={"always"}
-        horizontal={false}
-        inverted={true}
-        enableEmptySections={true}
-        data={this.state.messages}
-        keyExtractor={(message, index) => `${message.text}-${index}`}
-        renderItem={rowData => {
-          return this.renderMessageListItem(rowData);
-        }}
-      />
-    );
+  onSuggestionTap(name, hidePanel) {
+    hidePanel();
+
+
+    console.log("hiiiiiiii", name)
+    console.log("hello", this.state.value)
+    console.log("umer", this.state.keyword)
+    const comment = this.state.value + name
+    this.setState({
+
+      value: comment
+
+    })
+    console.log(this.state.value)
   }
+
+
+  callback(keyword) {
+    if (this.reqTimer) {
+      clearTimeout(this.reqTimer);
+    }
+
+  }
+  handleDescription = (text) => {
+    this.setState({ value: text })
+  }
+
+
+
+
+
 
 
 
@@ -138,8 +147,7 @@ export default class Splash1 extends React.Component {
     console.log(image)
 
     return (
-      <View style={{ height: '100%', top: 50,backgroundColor:'#fff' }}>
-<ScrollView>
+      <View style={{ height: '100%', top: 20,  }}>
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
             <View style={{ flexDirection: 'row' }}>
@@ -158,7 +166,7 @@ export default class Splash1 extends React.Component {
 
 
           <View style={Style.PictureSelectorView}
-           >
+          >
             {this.state.userImage.data != null ?
               <TouchableOpacity
                 onPress={() => this.chooseImage()}>
@@ -169,7 +177,7 @@ export default class Splash1 extends React.Component {
                 />
               </TouchableOpacity> :
               <TouchableOpacity
-              onPress={() => this.chooseImage()} >
+                onPress={() => this.chooseImage()} >
                 <Text style={Style.PlusSymbol}>
                   +
                </Text>
@@ -184,10 +192,10 @@ export default class Splash1 extends React.Component {
             style={[
               Helpers.rowCenter,
             ]}>
-            <TouchableOpacity style={{marginTop:20}}
+            <TouchableOpacity style={{ marginTop: 10 }}
             >
               <Text style={Style.loginBtn} onPress={() => this.chooseImage()}>
-               Upload
+                Upload
                    </Text>
             </TouchableOpacity>
 
@@ -195,50 +203,57 @@ export default class Splash1 extends React.Component {
 
 
 
-          
-
-            <View style={Style.main}>
-        <KeyboardAvoidingView behavior="height">
           <View style={Style.container}>
-        
-           
-            <View style={Style.footer}>
-              <Editor
+            <Text onPress={() => { this.setState({ value: "" }) }} style={{ fontFamily: 'Poppins-Regular',marginLeft:20}}>Write a Comment</Text>
+            <View>
+            <MentionsTextInput
+              textInputStyle={{ borderColor: '#ebebeb', borderWidth: 4, padding: 15,fontSize: 15,margin:20,textAlignVertical:"top",marginTop:10 }}
+              suggestionsPanelStyle={{ backgroundColor: 'rgba(100,100,100,0.1)' }}
+              loadingComponent={() => <View style={{ flex: 1, width, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator /></View>}
+              textInputMinHeight={150}
+              textInputMaxHeight={200}
+              trigger={'@'}
               
-                list={users}
-                initialValue={this.state.initialValue}
-                clearInput={this.state.clearInput}
-                onChange={this.onChangeHandler}
-                showEditor={this.state.showEditor}
-                toggleEditor={this.toggleEditor}
-                showMentions={this.state.showMentions}
-                onHideMentions={this.onHideMentions}
-                placeholder="You can write here..."
-                
-              />
-              <TouchableOpacity
-                style={Style.sendBtn}
-                onPress={this.sendMessage}
-              >
-                <Text style={Style.sendBtnText}>Next</Text>
-              </TouchableOpacity>
-            </View>
-            
-          
-            <ScrollView style={Style.messageList}>
-              {this.renderMessageList()}
-            </ScrollView>
-          </View>
-         
-        </KeyboardAvoidingView>
-      </View>
-              </View>
+              triggerLocation={'new-word-only'} // 'new-word-only', 'anywhere'
+              value={this.state.value}
+              onChangeText={(value) => this.handleDescription(value)}
 
-   
-        </ScrollView>
+              triggerCallback={this.callback.bind(this)}
+              renderSuggestionsRow={this.renderSuggestionsRow.bind(this)}
+              suggestionsData={this.state.data} // array of objects
+              keyExtractor={(item, index) => item.id}
+              suggestionRowHeight={45}
+
+              horizontal={false} // defaut is true, change the orientation of the list
+              MaxVisibleRowCount={3} // this is required if horizontal={false}
+            />
+          </View>
+          <View
+              style={[
+                Helpers.rowCenter,
+              ]}>
+              <TouchableOpacity
+                >
+                <Text style={Style.loginBtn}>
+                  Next
+                   </Text>
+              </TouchableOpacity>
+
+            </View>
+          </View>
+
+        
+
+          
+
+
+
+        </View>
+
       </View>
     )
   }
 
 
 }
+
