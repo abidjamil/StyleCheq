@@ -6,6 +6,16 @@ import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
 import NavigationService from 'App/Services/NavigationService'
 
 export default class Splash1 extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: false
+    }
+
+  }
+  handleBio = (text) => {
+    this.setState({ firstName: text })
+  }
 
   render() {
     return (
@@ -29,6 +39,7 @@ export default class Splash1 extends React.Component {
         <View style={Style.bioViewStyle}>
           <Text style={Style.editBioStyle}>Edit Bio</Text>
           <TextInput
+            onChangeText={(value) => this.handleBio(value)}
             multiline={true}
             numberOfLines={15}
             style={Style.inputTextStyle}
@@ -42,7 +53,7 @@ export default class Splash1 extends React.Component {
               Helpers.rowCenter,
             ]}>
             <TouchableOpacity
-            >
+              onPress={() => NavigationService.goBack()}>
               <Text style={Style.loginBtn}>
                 Done
                    </Text>

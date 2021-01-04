@@ -58,7 +58,7 @@ export default class Splash1 extends React.Component {
               Helpers.rowCenter,
             ]}>
             <TouchableOpacity
-            >
+              onPress={() => NavigationService.goBack()}>
               <Text style={Style.loginBtn}>
                 Done
                    </Text>
