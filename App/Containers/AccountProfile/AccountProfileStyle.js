@@ -14,6 +14,7 @@ export default StyleSheet.create({
   fieldsLine:
   {
     flexDirection:'row',justifyContent:'space-between',paddingVertical:8
+  
   },
   firstBox:{
    top:20,paddingVertical:10
@@ -26,6 +27,7 @@ export default StyleSheet.create({
   privacyBtn:
   {
     paddingRight: 10,fontWeight:'bold',fontSize:18,paddingLeft:8
+  
   }
   ,
   nameStyle:

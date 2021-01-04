@@ -1,5 +1,5 @@
 import { StyleSheet,Dimensions } from 'react-native'
-import { Helpers, Metrics, Fonts, Colors } from 'App/Theme'
+import { Helpers, Metrics, Fonts, Colors } from '../../Components/BottomIcons/node_modules/App/Theme'
 const { width, height } = Dimensions.get("window");
 const screenWidth = width < height ? width : height;
 const screenHeight = width < height ? height : width;
@@ -45,7 +45,7 @@ PictureSelectorView: {
   borderRadius: 10,
   borderColor: Colors.black,
   width: '85%',top:20,
-  height: '18%',
+  height: '20%',
   backgroundColor: Colors.white,
   opacity: 0.6,
   alignSelf: 'center',
@@ -66,61 +66,42 @@ UserImage: {
   opacity: 0.5,
   color: 'black'
 },
-mention: {
-  fontSize: 16,
-  fontWeight: "400",
-  backgroundColor: "rgba(36, 77, 201, 0.05)",
-  color: "#244dc9"
-}
-,
-messageList: {
-  paddingVertical: 50
-},
-messageText: {},
-main: {
-  flex: 1,
-  backgroundColor: "#fff",
-  height: screenHeight,
-},
+
 container: {
-  height: screenHeight,
-
-  alignItems: "center",
-  justifyContent: "space-between"
+  height: 510,
+  paddingTop: 40,
 },
-header: {
-  // height: 200,
+suggestionsRowContainer: {
+  flexDirection: 'row',
 },
-heading: {
-  fontSize: 24,
-  fontWeight: "bold"
-  // color: 'green'
+userAvatarBox: {
+  width: 35,
+  paddingTop: 2
 },
-sub: {
-  color: "rgba(0, 0, 0, 0.4)",
+userIconBox: {
+  height: 45,
+  width: 45,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '#54c19c'
+},
+usernameInitials: {
+  color: '#fff',
+  fontWeight: '800',
+  fontSize: 14
+},
+userDetailsBox: {
+  flex: 1,
+  justifyContent: 'center',
+  paddingLeft: 10,
+  paddingRight: 15
+},
+displayNameText: {
+  fontSize: 13,
+  fontWeight: '500'
+},
+usernameText: {
   fontSize: 12,
-  textAlign: "center"
-},
-messageList: {
-  paddingVertical: 10
-},
-messageText: {},
-
-sendBtnText: {
-  fontSize: 18,
-  fontWeight: "bold",
-  color: "#fff",
-  textAlign: "center"
-},
-footer: {
-
-  height: 150,marginTop:50,
-  width: screenWidth,
- 
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: 100,
-  padding: 15,
-  
-},
+  color: 'rgba(0,0,0,0.6)'
+}
 })
