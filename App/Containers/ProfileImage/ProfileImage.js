@@ -1,6 +1,8 @@
 import React from 'react'
-import { Platform, Text, View, Button, Image, ScrollView, FlatList, ImageBackground } from 'react-native'
+import { Platform, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground } from 'react-native'
 import Style from './ProfileImageStyle'
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height/1.056;
 
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import Message from 'react-native-vector-icons/Entypo';
@@ -8,11 +10,7 @@ import User from 'react-native-vector-icons/Entypo';
 import Dot from 'react-native-vector-icons/Entypo';
 import Verified from 'react-native-vector-icons/MaterialIcons';
 import Star from 'react-native-vector-icons/AntDesign';
-import Search from 'react-native-vector-icons/AntDesign';
-import Plus from 'react-native-vector-icons/EvilIcons';
-import Bell from 'react-native-vector-icons/FontAwesome';
-import Hand from 'react-native-vector-icons/MaterialCommunityIcons';
-import Home from 'react-native-vector-icons/Entypo';
+
 import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay';
 import StarRating from 'react-native-star-rating';
 import BottomIcons from '../../Components/BottomIcons'
@@ -49,8 +47,9 @@ export default class Splash1 extends React.Component {
   }
   render() {
     return (
-      <View style={{ height: '100%', top: 15 }}>
-        <ScrollView>
+     
+        <ScrollView style={{}}>
+        <View style={{height:windowHeight}}>
           <View style={Style.firstBox, { paddingHorizontal: 20 }}>
             <View style={Style.fieldsLine}>
 
@@ -59,7 +58,7 @@ export default class Splash1 extends React.Component {
               <User name="user" size={30} />
             </View>
           </View>
-
+     
           <ImageBackground
             style={[Helpers.fullSize]}
             source={Images.background}>
@@ -82,8 +81,6 @@ export default class Splash1 extends React.Component {
                 <Dot name="dots-three-vertical" size={25} color='#fff' />
               </View>
             </View>
-
-
             <View style={Style.textView}>
               <Text style={Style.postText}>POSTS</Text>
               <Text style={Style.postText}>FOLLOWERS</Text>
@@ -122,11 +119,13 @@ export default class Splash1 extends React.Component {
               <Text style={Style.lastViewText}>MODEL,ACTRESS,INFLUENCERS YOU {'\n'}   CAN HAVE ANYTHING IN LIFE {'\n'}  LIFE IF YOU DRESS FOR IT </Text>
             </View>
 
-            <BottomIcons />
+          <BottomIcons/>
 
-
+          </ImageBackground>
+          </View>
+         
             <View>
-
+                
               <FlatList
                 contentContainerStyle={{ paddingVertical: 3, }}
                 numColumns={2}
@@ -134,57 +133,53 @@ export default class Splash1 extends React.Component {
                 data={this.state.data}
 
                 columnWrapperStyle={{ marginHorizontal: 2, marginVertical: 2, }}
-                renderItem={({ item }) => {
-                  var displayRating = false;
+                renderItem={({ item }) =>
+               { 
+                var displayRating = false;
 
-                  toggleRating = () => {
+              toggleRating = () =>{
                     this.displayRating = !this.displayRating
-                  }
-                  return (
-                    <View style={{ padding: 5, flex: 1 }}>
-                      <Image
-
-                        style={{ height: 200, width: '100%', borderRadius: 20, }}
-                        source={item.picture} />
-                      <Star onPress={() => this.toggleRating()} name="star" size={20} color='#FFC00B' />
-                      {displayRating == true ?
-                        <StarRating
-
-                          containerStyle={{ width: 50, marginLeft: 20 }}
-                          disabled={false}
-                          maxStars={5}
-                          visible={displayRating}
-                          fullStarColor='#FFC00B'
-                          emptyStarColor='#fff'
-                          starSize={30}
-                          rating={this.state.starCount}
-                          selectedStar={(rating) => this.onStarRatingPress(rating)}
-                        />
-                        : <View>
-
-                        </View>
-
-                      }
-                    </View>
-
-                  );
                 }
+                return(
+                <View style={{ padding: 5, flex: 1 }}>
+                <Image
 
+                  style={{ height: 200, width: '100%', borderRadius: 20, }}
+                  source={item.picture} />
+ <Star  onPress={()=>this.toggleRating()} name="star" size={20} color='#FFC00B' />
+               {displayRating==true ? 
+                <StarRating
+
+                  containerStyle={{ width: 50, marginLeft: 20 }}
+                  disabled={false}
+                  maxStars={5}
+                  visible ={displayRating}
+                  fullStarColor='#FFC00B'
+                  emptyStarColor='#fff'
+                  starSize={30}
+                  rating={this.state.starCount}
+                  selectedStar={(rating) => this.onStarRatingPress(rating)}
+                />
+                : <View>
+                 
+                </View> 
+                
+                }
+              </View>
+             
+               );}
+                 
                 }
 
               />
-              <View style={{ backgroundColor: 'blue', }}>
-
-
-
-              </View>
+             
 
             </View>
 
-          </ImageBackground>
+          
 
-        </ScrollView>
-      </View>
+            </ScrollView>
+     
     )
   }
 
