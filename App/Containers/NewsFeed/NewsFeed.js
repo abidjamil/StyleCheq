@@ -10,6 +10,8 @@ import { Avatar, Accessory, Icon, Input } from 'react-native-elements';
 import { Searchbar, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BottomSheet } from 'react-native-btr';
+import BottomIcons from '../../Components/BottomIcons'
+
 var that;
 
 class NewsFeed extends React.Component {
@@ -652,27 +654,23 @@ class NewsFeed extends React.Component {
 
           {/* Footer Section */}
           <View
-            style={Style.footer}>
-            <Image
+          >
+
+            {/* <Image
               style={{ height: 30, width: 30 }}
               source={Images.searchIcon} />
-
             <Image
               style={{ height: 30, width: 30 }}
               source={Images.bellIcon} />
-
-
             <Image
               style={{ height: 30, width: 30 }}
               source={Images.addIcon} />
-
             <Image
               style={{ height: 30, width: 40 }}
               source={Images.cameraIcon} />
-
             <Image
               style={{ height: 30, width: 30 }}
-              source={Images.homeIcon} />
+              source={Images.homeIcon} /> */}
 
           </View>
 
@@ -894,7 +892,7 @@ class NewsFeed extends React.Component {
 
 
         </View>
-
+        <BottomIcons />
       </SafeAreaView >
     )
   }
