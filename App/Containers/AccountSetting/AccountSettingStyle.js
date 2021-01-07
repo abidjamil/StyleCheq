@@ -5,47 +5,40 @@ export default StyleSheet.create({
   acctView: {
     justifyContent: 'space-between',
     paddingHorizontal: 28,
-    flexDirection: 'row'
+    flexDirection:'row'
   },
-  privacyBtn:
-  {
-    fontFamily: 'Poppins-Bold', paddingRight: 10, fontWeight: 'bold', fontSize: 18, paddingLeft: 8
-  },
+
+
+
   fieldsLine:
   {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    paddingVertical: 5,
-    textAlign: 'right',
-    fontFamily: 'Poppins-Bold',
+    paddingHorizontal:10,paddingVertical:5,  fontFamily: 'Poppins',
   },
-  firstBox: {
-    top: 20,
-    paddingHorizontal: 30
+  firstBox:{
+   top:20,paddingHorizontal:20
   },
 
   fieldsStyle: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    height: 25,
+    width: 130,
+    paddingHorizontal: 5,
+   
   },
-  boxView: {
-    height: 30,
-    width: '90%', marginLeft: 20,
-    top: 60,
-    backgroundColor: '#F6F6F6'
+  boxView:{
+    height:30,
+    width:'90%',marginLeft:20,
+    top:60,
+    backgroundColor:'#F6F6F6'
   }
-  ,
+,
+  
+secondBox:{
+    top:100,paddingHorizontal:20
+}
 
-  secondBox: {
-    top: 100, paddingHorizontal: 30
-  },
-
-  label: {
-    fontFamily: 'Poppins-Bold',
-    paddingVertical: 1
-  }
-
-
-
+  
+ 
 
 })
