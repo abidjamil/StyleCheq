@@ -705,11 +705,15 @@ class NewsFeed extends React.Component {
                     source={item.picture}>
                     <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
 
-                      <Avatar
-                        size="medium"
-                        rounded
-                        title={this.state.data.name}
-                        source={{ uri: item.avatar || "https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg" }} />
+                      <TouchableOpacity
+                        onPress={() => NavigationService.navigate('ProfileImage')}>
+
+                        <Avatar
+                          size="medium"
+                          rounded
+                          title={this.state.data.name}
+                          source={{ uri: item.avatar || "https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg" }} />
+                      </TouchableOpacity>
 
                       <View>
 
