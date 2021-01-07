@@ -81,8 +81,6 @@ export default class Splash1 extends React.Component {
                 <Dot name="dots-three-vertical" size={25} color='#fff' />
               </View>
             </View>
-
-
             <View style={Style.textView}>
               <Text style={Style.postText}>POSTS</Text>
               <Text style={Style.postText}>FOLLOWERS</Text>
