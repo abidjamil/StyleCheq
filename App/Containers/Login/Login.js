@@ -167,7 +167,7 @@ class ExampleScreen extends React.Component {
             <TextInput
               style={Style.inputField}
               onChangeText={(value) => this.handleEmail(value)}
-              placeholder="Enter Here" />
+              placeholder="example@stylecheq.com" />
 
             <Text style={Style.fieldsLabel}>
               Enter your password
@@ -177,7 +177,7 @@ class ExampleScreen extends React.Component {
               style={Style.inputField}
               onChangeText={(value) => this.handlePassword(value)}
               secureTextEntry={true}
-              placeholder="Enter Here" />
+              placeholder="*********" />
 
             <View
               style={[
@@ -229,7 +229,7 @@ class ExampleScreen extends React.Component {
                 Helpers.fullSize,
               ]}>
               <TouchableOpacity
-                onPress={() => NavigationService.navigate('ProfileImage')}>
+                onPress={() => NavigationService.navigate('EditProfile')}>
                 <Text style={Style.signUpBtn}>
                   Sign Up
                 </Text>
@@ -249,6 +249,17 @@ class ExampleScreen extends React.Component {
                   Sign up with google
                     </Text>
               </TouchableOpacity>
+
+              {Platform.OS === 'ios' ?
+                <TouchableOpacity
+                  onPress={() => this.googleLogin()}
+                  disabled={this.state.loading}>
+                  <Text style={Style.appleSignUpBtn} >
+                    Sign up with Apple
+                    </Text>
+                </TouchableOpacity>
+
+                : <View></View>}
 
             </View>
 

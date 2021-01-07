@@ -6,34 +6,34 @@ export default StyleSheet.create({
   privacyView: {
     justifyContent: 'space-between',
     paddingHorizontal: 22,
-    flexDirection:'row'
+    flexDirection: 'row'
   },
 
   privacyView: {
     justifyContent: 'space-between',
     paddingHorizontal: 22,
-    flexDirection:'row'
+    flexDirection: 'row'
   },
 
 
 
   fieldsLine:
   {
-    flexDirection:'row',justifyContent:'space-between',paddingVertical:8
+    flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8
   },
-  firstBox:{
-   top:20,paddingVertical:10
+  firstBox: {
+    top: 20, paddingVertical: 10
   },
- 
+
   ImageStyle: {
-    height:150,width:150,borderRadius:60,alignSelf:'center'
-   
+    height: 150, width: 150, borderRadius: 60, alignSelf: 'center'
+
   },
   privacyBtn:
   {
-    paddingRight: 10,fontSize:18,paddingLeft:8,fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-Bold', paddingRight: 10, fontWeight: 'bold', fontSize: 18, paddingLeft: 8
   }
-,
+  ,
   loginBtn: {
     fontSize: 16,
     fontFamily: 'Poppins-Regular',
@@ -45,30 +45,31 @@ export default StyleSheet.create({
     paddingEnd: 20,
     overflow: 'hidden',
     borderRadius: 17,
-    marginTop: 30,
+    marginTop: 20,
   },
 
-  sliderStyle:{marginHorizontal: 24, marginTop: 20, height: 20, width: 100,
-   
+  sliderStyle: {
+    marginHorizontal: 24, marginTop: 20, height: 20, width: 100,
   },
 
   container: {
-    flex: 1,
-    alignItems: "center",paddingVertical:30, 
+    height: '60%',
+    alignItems: "center",
+    paddingVertical: 30,
   },
   thumb: {
-  width: 20,
-  height: 20,
-  borderColor: 'white',
-  borderWidth: 1,
-  borderRadius: 10,
-  shadowColor: 'black',
-  shadowOffset: {
+    width: 20,
+    height: 20,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 10,
+    shadowColor: 'black',
+    shadowOffset: {
       width: 0,
       height: 2
-  },
-  shadowRadius: 2,
-  shadowOpacity: 0.35,
+    },
+    shadowRadius: 2,
+    shadowOpacity: 0.35,
   },
 
 })
