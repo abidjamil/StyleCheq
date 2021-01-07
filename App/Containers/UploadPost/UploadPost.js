@@ -5,7 +5,8 @@ import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import BACK from 'react-native-vector-icons/AntDesign';
 import ImagePicker from 'react-native-image-picker'
 import MentionsTextInput from 'react-native-mentions';
-import BottomSheet from 'react-native-js-bottom-sheet'
+import BottomSheet from 'react-native-js-bottom-sheet';
+import NavigationService from 'App/Services/NavigationService'
 const { height, width } = Dimensions.get('window');
 var that;
 const users = [
@@ -16,11 +17,6 @@ const users = [
   { id: 6, name: "Meesha Shafi", username: "meesha.shafi", gender: "female" }
 ];
 
-const formatMentionNode = (txt, key) => (
-  <Text key={key} style={Style.mention}>
-    {txt}
-  </Text>
-);
 export default class Splash1 extends React.Component {
 
   constructor(props) {
@@ -122,6 +118,7 @@ export default class Splash1 extends React.Component {
 
 
   chooseImage = () => {
+    this.bottomSheet.close()
     let options = {
       title: 'Select Picture',
       cameraType: 'front',
@@ -156,6 +153,7 @@ export default class Splash1 extends React.Component {
 
 
   chooseVideo = () => {
+    this.bottomSheet.close()
     let options = {
       title: 'Select Video',
       cameraType: 'front',
@@ -205,13 +203,15 @@ export default class Splash1 extends React.Component {
       <View style={{ height: '100%', top: 20, }}>
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
-            <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+              onPress={() => NavigationService.goBack()}
+              style={{ flexDirection: 'row' }}>
               <BACK name="left" size={23}></BACK>
               <Text style={Style.privacyBtn}>back</Text>
-            </View>
+            </TouchableOpacity>
 
             <View style={{ flexDirection: 'row' }}>
-              <Text style={Style.privacyBtn}>Post Upload</Text>
+              <Text style={Style.privacyBtn}>Upload Post</Text>
             </View>
           </View>
         </View>
@@ -224,7 +224,7 @@ export default class Splash1 extends React.Component {
           >
             {this.state.userImage.data != null ?
               <TouchableOpacity
-              onPress={this._onPressButton}>
+                onPress={this._onPressButton}>
                 <Image
                   style={Style.UserImage}
                   source={{ uri: image }}
@@ -232,7 +232,7 @@ export default class Splash1 extends React.Component {
                 />
               </TouchableOpacity> :
               <TouchableOpacity
-              onPress={this._onPressButton} >
+                onPress={this._onPressButton} >
                 <Text style={Style.PlusSymbol}>
                   +
                </Text>
@@ -249,7 +249,7 @@ export default class Splash1 extends React.Component {
             ]}>
             <TouchableOpacity style={{ marginTop: 10 }}
             >
-              <Text  onPress={this._onPressButton} style={Style.loginBtn} >
+              <Text onPress={this._onPressButton} style={Style.loginBtn} >
                 Upload
                    </Text>
             </TouchableOpacity>
@@ -268,7 +268,6 @@ export default class Splash1 extends React.Component {
                 textInputMinHeight={150}
                 textInputMaxHeight={200}
                 trigger={'@'}
-
                 triggerLocation={'new-word-only'} // 'new-word-only', 'anywhere'
                 value={this.state.value}
                 onChangeText={(value) => this.handleDescription(value)}
@@ -288,7 +287,7 @@ export default class Splash1 extends React.Component {
                 Helpers.rowCenter,
               ]}>
               <TouchableOpacity
-                 >
+              >
                 <Text style={Style.loginBtn}>
                   Next
                    </Text>
@@ -314,17 +313,18 @@ export default class Splash1 extends React.Component {
                 {
 
                   title: 'Select Image',
-                  onPress:() => this.chooseImage()
+                  onPress: () => this.chooseImage()
                 },
 
                 {
                   title: 'Select Video',
-                  onPress:() => this.chooseVideo()
+                  onPress: () => this.chooseVideo()
                 },
 
                 {
                   title: 'Cancel',
-                  
+                  onPress: () => this.bottomSheet.close()
+
                 }
               ]}
               isOpen={false}

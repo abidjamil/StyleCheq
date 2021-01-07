@@ -21,11 +21,14 @@ export default class Splash1 extends React.Component {
             size={35}
             color={Colors.primaryColorLogin} />
 
+          <TouchableOpacity
+            onPress={() => NavigationService.navigate('Notificaton')}>
+            <Bell
+              name="bell"
+              size={35}
+              color={Colors.primaryColorLogin} />
+          </TouchableOpacity>
 
-          <Bell
-            name="bell"
-            size={35}
-            color={Colors.primaryColorLogin} />
 
           <TouchableOpacity
             onPress={() => NavigationService.navigate('UploadPost')}
