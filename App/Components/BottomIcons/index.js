@@ -1,6 +1,5 @@
 import React from 'react'
 import { Platform, Text, View, Button, Image, ScrollView, FlatList, ImageBackground } from 'react-native'
-import Style from './BottomIconStyle'
 
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 
@@ -16,6 +15,7 @@ export default class Splash1 extends React.Component {
   render() {
     return (
       <View style={{ height: '100%', top: 15 }}>
+
        
            
 
@@ -30,9 +30,9 @@ export default class Splash1 extends React.Component {
               <Home name="home" size={40} color='#A0E4E8' style={{ marginLeft: 30, }} />
 
             </View>
+</View>
 
-
-                </View>
+                
     )
   }
 
