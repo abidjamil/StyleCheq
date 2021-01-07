@@ -16,35 +16,38 @@ export default class Splash1 extends React.Component {
       <View style={{}}>
         <View style={{ justifyContent: 'space-around', backgroundColor: '#f5f5f5', paddingHorizontal: 23, padding: 10, flexDirection: 'row', alignItems: 'center' }}>
 
-          <Search
-            name="search1"
-            size={35}
-            color={Colors.primaryColorLogin} />
+          <Image
+            resizeMode="contain"
+            style={{ width: 30, height: 30 }}
+            source={Images.searchIcon} />
 
+          <View >
 
-          <Bell
-            name="bell"
-            size={35}
-            color={Colors.primaryColorLogin} />
+            <Image
+              resizeMode="contain"
+              style={{ width: 30, height: 30 }}
+              source={Images.bellIcon} />
+          </View>
 
           <TouchableOpacity
             onPress={() => NavigationService.navigate('UploadPost')}
-            style={{ width: '15%', height: 55, marginTop: '-15%', backgroundColor: '#000', borderRadius: 35, borderWidth: 2 }}>
-            <Image style={{ width: '100%', height: '100%', }}
+            style={{ width: 51, height: 51, marginTop: '-10%', borderColor: '#0000000', justifyContent: 'center', backgroundColor: "#000", alignItems: 'center', borderRadius: 40, borderWidth: 1 }}>
+            <Image
+              resizeMode="contain"
+              style={{ width: 50, height: 50, zIndex: 1, marginTop: -5 }}
               source={Images.addIcon} />
           </TouchableOpacity>
 
 
-          <Hand
-            name="hand-pointing-up"
-            size={40}
-            color={Colors.primaryColorLogin}
-            style={{ elevation: 3 }} />
+          <Image
+            resizeMode="contain"
+            style={{ width: 30, height: 30 }}
+            source={Images.bottomLike} />
 
-          <Home
-            name="home"
-            size={40}
-            color={Colors.primaryColorLogin} />
+          <Image
+            resizeMode="contain"
+            style={{ width: 30, height: 30 }}
+            source={Images.homeIcon} />
 
         </View>
 

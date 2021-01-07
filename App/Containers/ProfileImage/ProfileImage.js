@@ -92,41 +92,42 @@ export default class Splash1 extends React.Component {
                 <Dot name="dots-three-vertical" size={25} color='#fff' />
               </View>
             </View>
-            <View style={Style.textView}>
-              <Text style={Style.postText}>POSTS</Text>
-              <Text style={Style.postText}>FOLLOWERS</Text>
-            </View>
-
-            <View style={Style.textView1}>
-              <Text style={Style.postText}>512</Text>
-              <Text style={Style.postText}>273k</Text>
-            </View>
-
-            <View style={Style.textView1}>
-              <Text style={Style.postText}>LOCATIONS</Text>
-              <Text style={Style.postText}>FOLLOWING</Text>
-            </View>
-
-            <View style={Style.textView1}>
-              <Text style={Style.postText1}>LONDON</Text>
-              <Text style={Style.postText}>512</Text>
-            </View>
-
-            <View style={{ marginTop: 20 }}>
-
-              <Text style={{ alignSelf: 'flex-end', paddingHorizontal: 30, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>RATING</Text>
-              <View style={{ alignSelf: 'flex-end', paddingHorizontal: 30, flexDirection: 'row', marginLeft: 10 }}>
-
-                <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular', marginLeft: 5 }}>5000</Text>
-                <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>(</Text>
-                <Star name="star" size={20} color='#FFC00B' />
-                <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
-                <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>)</Text>
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              <View style={Style.textView}>
+                <Text style={Style.postText}>POSTS</Text>
+                <Text style={Style.postText}>FOLLOWERS</Text>
               </View>
-            </View>
 
-            <View style={Style.lastView}>
-              <Text style={Style.lastViewText}>MODEL,ACTRESS,INFLUENCERS YOU CAN HAVE ANYTHING IN LIFE IF YOU DRESS FOR IT. </Text>
+              <View style={Style.textView1}>
+                <Text style={Style.postText}>512</Text>
+                <Text style={Style.postText}>273k</Text>
+              </View>
+
+              <View style={Style.textView1}>
+                <Text style={Style.postText}>LOCATIONS</Text>
+                <Text style={Style.postText}>FOLLOWING</Text>
+              </View>
+
+              <View style={Style.textView1}>
+                <Text style={Style.postText}>LONDON</Text>
+                <Text style={Style.postText}>512</Text>
+              </View>
+
+              <View style={{ marginTop: 20 }}>
+
+                <Text style={{ alignSelf: 'flex-end', paddingHorizontal: 30, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>RATING</Text>
+                <View style={{ alignSelf: 'flex-end', paddingHorizontal: 30, flexDirection: 'row', marginLeft: 10 }}>
+
+                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular', marginLeft: 5 }}>5000</Text>
+                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>(</Text>
+                  <Star name="star" size={20} color='#FFC00B' />
+                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
+                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>)</Text>
+                </View>
+              </View>
+              <View style={Style.lastView}>
+                <Text style={Style.lastViewText}>MODEL,ACTRESS,INFLUENCERS YOU CAN HAVE ANYTHING IN LIFE IF YOU DRESS FOR IT. </Text>
+              </View>
             </View>
 
 
@@ -140,11 +141,11 @@ export default class Splash1 extends React.Component {
         <SafeAreaView style={{ marginTop: 50 }}>
           <FlatList
             style={{ flex: 1 }}
-            contentContainerStyle={{ paddingVertical: 3, }}
+            contentContainerStyle={{ paddingVertical: 10, }}
             numColumns={2}
             keyExtractor={(item) => item.id}
             data={this.state.data}
-            columnWrapperStyle={{ marginHorizontal: 2, marginVertical: 2, }}
+            columnWrapperStyle={{ marginHorizontal: 5, marginVertical: 5, }}
             renderItem={({ item }) => {
               var displayRating = false;
 
@@ -152,10 +153,9 @@ export default class Splash1 extends React.Component {
                 this.displayRating = !this.displayRating
               }
               return (
-                <View style={{ padding: 5, flex: 1 }}>
+                <View style={{ padding: 10, flex: 1 }}>
                   <Image
-
-                    style={{ height: 200, width: '100%', borderRadius: 20, }}
+                    style={{ height: 250, width: '100%', borderRadius: 20 }}
                     source={item.picture} />
                   <Star onPress={() => this.toggleRating()} name="star" size={20} color='#FFC00B' />
                   {displayRating == true ?

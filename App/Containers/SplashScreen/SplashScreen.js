@@ -29,6 +29,10 @@ class SplashScreen extends React.Component {
       <View style={[Helpers.fillRowCenter, styles.container]}>
         <View style={[Helpers.center, styles.logo]}>
           <ImageLoader
+            style={{
+              height: 400,
+              width: 400,
+            }}
             source={Images.logo} />
         </View>
       </View>

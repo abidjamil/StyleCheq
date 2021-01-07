@@ -27,5 +27,6 @@ export default {
   messageIcon: require('App/Assets/Images/message_inbox.png'),
   commentIcon: require('App/Assets/Images/comments.png'),
   three_dots: require('App/Assets/Images/three_dots.png'),
+  bottomLike: require('App/Assets/Images/bottomLike.png'),
   test: require('App/Assets/Images/test.png'),
 }

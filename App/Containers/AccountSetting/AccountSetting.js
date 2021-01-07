@@ -4,9 +4,13 @@ import Style from './AccountSettingStyle'
 import BACK from 'react-native-vector-icons/AntDesign';
 import RIGHT from 'react-native-vector-icons/AntDesign';
 import NavigationService from 'App/Services/NavigationService'
+import { connect } from 'react-redux'
+class AccountSetting extends React.Component {
 
-export default class Splash1 extends React.Component {
-
+  logout() {
+    this.props.auth()
+    NavigationService.navigateAndReset('LoginScreen')
+  }
   render() {
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
@@ -69,11 +73,13 @@ export default class Splash1 extends React.Component {
 
           </View>
 
-          <View style={Style.fieldsLine}>
+          <TouchableOpacity
+            onPress={() => this.logout()}
+            style={Style.fieldsLine}>
             <Text style={Style.label}>Logout Account</Text>
             <RIGHT name="right" color='#000' size={20} />
 
-          </View>
+          </TouchableOpacity>
         </View>
 
       </View>
@@ -82,3 +88,13 @@ export default class Splash1 extends React.Component {
 
 
 }
+const mapStateToProps = (state) => ({
+
+})
+const mapDispatchToProps = (dispatch) => ({
+  auth: () => dispatch({ type: 'AUTH_TYPE', payload: null }),
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AccountSetting)

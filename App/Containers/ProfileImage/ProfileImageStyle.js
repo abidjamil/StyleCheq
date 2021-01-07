@@ -38,11 +38,9 @@ export default StyleSheet.create({
   textView1: { justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, marginTop: 2 },
 
 
-  postText: { fontSize: 20, color: '#fff', fontWeight: 'bold', fontFamily: 'Poppins-Regular' },
+  postText: { fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' },
 
-  lastView: { position: 'absolute', bottom: 150, paddingHorizontal: 10 },
+  lastView: { marginTop: '20%', paddingHorizontal: 10 },
 
-  lastViewText: { fontSize: 30, fontFamily: 'Poppins-Italic', color: '#fff', },
-
-  postText1: { fontSize: 20, color: 'green', fontWeight: 'bold', fontFamily: 'Poppins-Regular' }
+  lastViewText: { fontSize: 25, fontFamily: 'Poppins-Italic', color: '#fff', }
 })
