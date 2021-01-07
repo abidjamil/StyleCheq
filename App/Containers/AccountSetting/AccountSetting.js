@@ -1,67 +1,79 @@
 import React from 'react'
 import { Platform, Text, View, Button, Image, TouchableOpacity, TextInput, ImageBackground } from 'react-native'
 import Style from './AccountSettingStyle'
-
 import BACK from 'react-native-vector-icons/AntDesign';
 import RIGHT from 'react-native-vector-icons/AntDesign';
+import NavigationService from 'App/Services/NavigationService'
 
 export default class Splash1 extends React.Component {
- 
+
   render() {
     return (
-      <View style={{height:'100%',top:50}}>
-        <View
-      style={Style.acctView}
-      >
-      <BACK name="left" color='#000' size={20}/>
-      <Text style={{fontWeight:'bold'}}>Account Setting</Text>
-      </View>
+      <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
+
+        <View style={Style.firstBox, { paddingHorizontal: 20 }}>
+          <View style={Style.fieldsLine}>
+            <TouchableOpacity
+              onPress={() => NavigationService.goBack()}
+              style={{ flexDirection: 'row' }}>
+              <BACK name="left" size={23}></BACK>
+              <Text style={Style.privacyBtn}>back</Text>
+            </TouchableOpacity>
+
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={Style.privacyBtn}>Account Setting</Text>
+            </View>
+          </View>
+        </View>
 
 
         <View style={Style.firstBox}>
-        <View style={Style.fieldsLine}>
-          <Text>Email</Text>
-          <TextInput placeholder="example@123" style={Style.fieldsStyle}></TextInput>
-        </View>
-
-        <View style={Style.fieldsLine}>
-          <Text>Phone Number</Text>
-          <TextInput placeholder="+923135705782" style={Style.fieldsStyle} keyboardType='numeric'></TextInput>
-        </View>
-
-        <View style={Style.fieldsLine}>
-          <Text>Password</Text>
-          <TextInput placeholder="*****************" style={Style.fieldsStyle} secureTextEntry={true}></TextInput>
-
-        </View>
-        <View style={Style.fieldsLine}>
-          <Text>Notifications</Text>
-          <RIGHT name="right" color='#000' size={20}/>
-
-        </View>
-        </View>
-        <View style={Style.boxView}/>
-       
-       <View style={Style.secondBox}>
-      
-          <Text style={{paddingHorizontal:10,paddingVertical:10}}>Send Feedback</Text>
-       
           <View style={Style.fieldsLine}>
-          <Text>Privacy</Text>
-          <RIGHT name="right" color='#000' size={20}/>
+            <Text style={Style.label}>Email</Text>
+            <Text style={Style.fieldsStyle}> info@styleCheq.com</Text>
+          </View>
+
+          <View style={Style.fieldsLine}>
+            <Text style={Style.label}>Phone Number</Text>
+            <Text style={Style.fieldsStyle}> +4421234123412</Text>
+          </View>
+
+          <View style={Style.fieldsLine}>
+            <Text style={Style.label}>Password</Text>
+            <Text style={Style.fieldsStyle}> ********** </Text>
+
+          </View>
+          <View style={Style.fieldsLine}>
+            <Text style={Style.label}>Notifications</Text>
+            <RIGHT name="right" color='#000' size={20} />
+
+          </View>
         </View>
+        <View style={Style.boxView} />
 
-        <View style={Style.fieldsLine}>
-          <Text>Become a Partner</Text>
-          <RIGHT name="right" color='#000' size={20}/>
+        <View style={Style.secondBox}>
 
-        </View>
+          <View style={Style.fieldsLine}>
+            <Text style={Style.label}>SendFeedback</Text>
+            <RIGHT name="right" color='#000' size={20} />
+          </View>
 
-        <View style={Style.fieldsLine}>
-          <Text>Logout Account</Text>
-          <RIGHT name="right" color='#000' size={20}/>
+          <View style={Style.fieldsLine}>
+            <Text style={Style.label}>Privacy</Text>
+            <RIGHT name="right" color='#000' size={20} />
+          </View>
 
-        </View>
+          <View style={Style.fieldsLine}>
+            <Text style={Style.label}>Become a Partner</Text>
+            <RIGHT name="right" color='#000' size={20} />
+
+          </View>
+
+          <View style={Style.fieldsLine}>
+            <Text style={Style.label}>Logout Account</Text>
+            <RIGHT name="right" color='#000' size={20} />
+
+          </View>
         </View>
 
       </View>
