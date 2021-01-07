@@ -163,22 +163,24 @@ export default StyleSheet.create({
   leftSide: {
     width: 100,
     height: '50%',
+    maxHeight: 400,
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     position: 'absolute', //Here is the trick
     left: 20,
-    bottom: 100,
+    bottom: Platform.OS === 'ios' ? 150 : 100,
     zIndex: 10,
   },
 
   rightSide: {
     width: 60,
     height: '40%',
+    maxHeight: 300,
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     position: 'absolute', //Here is the trick
     right: 20,
-    bottom: 120,
+    bottom: Platform.OS === 'ios' ? 150 : 100,
     zIndex: 10,
   },
 

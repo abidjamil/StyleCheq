@@ -51,7 +51,7 @@ export default class Splash1 extends React.Component {
       <ScrollView
         nestedScrollEnabled={true}
         contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={{ height: windowHeight }}>
+        <View style={{ height: windowHeight, top: Platform.OS === 'ios' ? 40 : 10 }}>
           <View style={Style.firstBox, { paddingHorizontal: 20 }}>
             <View style={Style.fieldsLine}>
               <Message name="mail" size={30} />
@@ -64,9 +64,9 @@ export default class Splash1 extends React.Component {
 
             </View>
           </View>
-     
+
           <ImageBackground
-            style={[Helpers.fullSize]}
+            style={{ height: Platform.OS === 'ios' ? windowHeight - 40 : windowHeight - 10 }}
             source={Images.background}>
             <OrientationLoadingOverlay
               visible={this.state.loading}
@@ -131,7 +131,7 @@ export default class Splash1 extends React.Component {
             </View>
 
 
-            <View style={{ width: '100%', position: 'absolute', bottom: Platform.OS === 'ios' ? 0 : 30 }}>
+            <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '7%' }}>
               <BottomIcons />
             </View>
 

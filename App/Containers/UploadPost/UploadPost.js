@@ -10,11 +10,11 @@ import NavigationService from 'App/Services/NavigationService'
 const { height, width } = Dimensions.get('window');
 var that;
 const users = [
-  { id: 1, name: "Raza Dar", username: "mrazadar", gender: "male" },
-  { id: 3, name: "Atif Rashid", username: "atif.rashid", gender: "male" },
-  { id: 4, name: "Peter Pan", username: "peter.pan", gender: "male" },
-  { id: 5, name: "John Doe", username: "john.doe", gender: "male" },
-  { id: 6, name: "Meesha Shafi", username: "meesha.shafi", gender: "female" }
+  { id: "1", name: "Raza Dar", username: "mrazadar", gender: "male" },
+  { id: "3", name: "Atif Rashid", username: "atif.rashid", gender: "male" },
+  { id: "4", name: "Peter Pan", username: "peter.pan", gender: "male" },
+  { id: "5", name: "John Doe", username: "john.doe", gender: "male" },
+  { id: "6", name: "Meesha Shafi", username: "meesha.shafi", gender: "female" }
 ];
 
 export default class Splash1 extends React.Component {
@@ -118,7 +118,6 @@ export default class Splash1 extends React.Component {
 
 
   chooseImage = () => {
-    this.bottomSheet.close()
     let options = {
       title: 'Select Picture',
       cameraType: 'front',
@@ -153,7 +152,6 @@ export default class Splash1 extends React.Component {
 
 
   chooseVideo = () => {
-    this.bottomSheet.close()
     let options = {
       title: 'Select Video',
       cameraType: 'front',
@@ -200,7 +198,7 @@ export default class Splash1 extends React.Component {
     console.log(image)
 
     return (
-      <View style={{ height: '100%', top: 20, }}>
+      <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
             <TouchableOpacity
@@ -311,7 +309,6 @@ export default class Splash1 extends React.Component {
 
               options={[
                 {
-
                   title: 'Select Image',
                   onPress: () => this.chooseImage()
                 },

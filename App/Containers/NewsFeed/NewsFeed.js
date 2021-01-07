@@ -544,9 +544,9 @@ class NewsFeed extends React.Component {
       <SafeAreaView
         style={{
           flex: 1,
-          justifyContent: 'center',
           flexDirection: 'column',
           width: '100%',
+          top: 0
         }}>
 
 
@@ -652,51 +652,28 @@ class NewsFeed extends React.Component {
 
         <View style={{ flex: 1 }}>
 
-          {/* Footer Section */}
-          <View
-          >
-
-            {/* <Image
-              style={{ height: 30, width: 30 }}
-              source={Images.searchIcon} />
-            <Image
-              style={{ height: 30, width: 30 }}
-              source={Images.bellIcon} />
-            <Image
-              style={{ height: 30, width: 30 }}
-              source={Images.addIcon} />
-            <Image
-              style={{ height: 30, width: 40 }}
-              source={Images.cameraIcon} />
-            <Image
-              style={{ height: 30, width: 30 }}
-              source={Images.homeIcon} /> */}
-
-          </View>
-
 
           {/* Posts Section */}
           <FlatList
             showsVerticalScrollIndicator={false}
-            style={{ marginTop: 0 }}
-            contentContainerStyle={{ marginTop: 0, marginBottom: 70 }}
+            contentContainerStyle={{ marginTop: 0 }}
             data={this.state.data}
             extraData={this.state.refresh}
             pagingEnabled={true}
             snapToInterval={windowHeight} // Adjust to your content width
             decelerationRate={"fast"}
-            snapToAlignment={"end"}
+            snapToAlignment={"start"}
             keyExtractor={(item) => item.id}
             //ListFooterComponent={this.renderFooter.bind(this)}
             // onEndReachedThreshold={0.1}
             // onEndReached={this.handleLoadMore.bind(this)}
             renderItem={({ item }) => (
-              < View style={{ backgroundColor: 'white' }}>
+              < View style={{ width: '100%', height: windowHeight, justifyContent: 'center', alignItems: 'stretch' }}>
 
-                <View>
+                <View >
                   <ImageBackground
                     resizeMode="cover"
-                    style={{ justifyContent: 'center', overflow: 'hidden', height: windowHeight }}
+                    style={{ width: '100%', justifyContent: 'space-around', overflow: 'hidden', height: windowHeight }}
                     source={item.picture}>
                     <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
 
@@ -732,7 +709,7 @@ class NewsFeed extends React.Component {
                         <View>
                           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
-                              resizeMode="center"
+                              resizeMode="contain"
                               style={{ height: 20, width: 10 }}
                               source={Images.small_star} />
                             <Text style={Style.ratingText}>4.5</Text>
@@ -740,7 +717,7 @@ class NewsFeed extends React.Component {
 
 
                           <Image
-                            resizeMode="center"
+                            resizeMode="contain"
                             style={{ height: 30, width: 30 }}
                             source={Images.jeweleryIcon} />
                         </View>
@@ -748,7 +725,7 @@ class NewsFeed extends React.Component {
                         <View>
                           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
-                              resizeMode="center"
+                              resizeMode="contain"
                               style={{ height: 20, width: 10 }}
                               source={Images.small_star} />
                             <Text style={Style.ratingText}>4.5</Text>
@@ -756,7 +733,7 @@ class NewsFeed extends React.Component {
 
 
                           <Image
-                            resizeMode="center"
+                            resizeMode="contain"
                             style={{ height: 30, width: 30 }}
                             source={Images.pentIcon} />
                         </View>
@@ -774,7 +751,7 @@ class NewsFeed extends React.Component {
 
 
                           <Image
-                            resizeMode="center"
+                            resizeMode="contain"
                             style={{ height: 30, width: 30 }}
                             source={Images.makeupIcon} />
                         </View>
@@ -782,7 +759,7 @@ class NewsFeed extends React.Component {
                         <View>
                           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
-                              resizeMode="center"
+                              resizeMode="contain"
                               style={{ height: 20, width: 10 }}
                               source={Images.small_star} />
                             <Text style={Style.ratingText}>4.5</Text>
@@ -790,7 +767,7 @@ class NewsFeed extends React.Component {
 
 
                           <Image
-                            resizeMode="center"
+                            resizeMode="contain"
                             style={{ height: 30, width: 30 }}
                             source={Images.bodyIcon} />
                         </View>
@@ -799,7 +776,7 @@ class NewsFeed extends React.Component {
                         <View>
                           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
-                              resizeMode="center"
+                              resizeMode="contain"
                               style={{ height: 20, width: 10 }}
                               source={Images.small_star} />
                             <Text style={Style.ratingText}>4.5</Text>
@@ -807,7 +784,7 @@ class NewsFeed extends React.Component {
 
 
                           <Image
-                            resizeMode="center"
+                            resizeMode="contain"
                             style={{ height: 30, width: 30 }}
                             source={Images.makeupIcon} />
                         </View>
@@ -822,7 +799,7 @@ class NewsFeed extends React.Component {
                       <View style={{ flexDirection: 'column', alignItems: 'center', }}>
                         <Text style={Style.ratingText}>{item.overallRating} </Text>
                         <Image
-                          resizeMode="center"
+                          resizeMode="contain"
                           style={{ height: 35, width: 35 }}
                           source={Images.big_star} />
                         <Text style={Style.ratingText}>Rate {item.totalRating} +</Text>
@@ -833,7 +810,7 @@ class NewsFeed extends React.Component {
                         <TouchableOpacity
                           onPress={() => this.toggleComments()}>
                           <Image
-                            resizeMode="center"
+                            resizeMode="contain"
                             style={{ height: 30, width: 30 }}
                             source={Images.commentIcon} />
                           <Text style={Style.ratingText}>{item.totalComments} +</Text>
@@ -844,7 +821,7 @@ class NewsFeed extends React.Component {
                       <View style={{ flexDirection: 'column', alignItems: 'center' }}>
 
                         <Image
-                          resizeMode="center"
+                          resizeMode="contain"
                           style={{ height: 30, width: 30 }}
                           source={Images.shareIcon} />
                         <Text style={Style.ratingText}>Share</Text>
@@ -854,7 +831,7 @@ class NewsFeed extends React.Component {
                       <View style={{ flexDirection: 'column', alignItems: 'center' }}>
 
                         <Image
-                          resizeMode="center"
+                          resizeMode="contain"
                           style={{ height: 30, width: 30 }}
                           source={Images.messageIcon} />
                         <Text style={Style.ratingText}>Message</Text>
@@ -867,11 +844,11 @@ class NewsFeed extends React.Component {
                       style={Style.topRightSide}>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image
-                          resizeMode="center"
+                          resizeMode="contain"
                           style={{ height: 20, width: 10 }}
                           source={Images.three_dots} />
                         <Image
-                          resizeMode="center"
+                          resizeMode="contain"
                           style={{ height: 30, width: 30 }}
                           source={Images.handIcon} />
                       </View>

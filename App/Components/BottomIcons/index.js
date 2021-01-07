@@ -14,7 +14,7 @@ export default class Splash1 extends React.Component {
   render() {
     return (
       <View style={{}}>
-        <View style={{ justifyContent: 'space-around', backgroundColor: '#f5f5f5', paddingHorizontal: 23, padding: 10, flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ justifyContent: 'space-around', backgroundColor: 'fff', paddingHorizontal: 23, padding: 10, flexDirection: 'row', alignItems: 'center' }}>
 
           <Image
             resizeMode="contain"
@@ -44,11 +44,13 @@ export default class Splash1 extends React.Component {
             style={{ width: 30, height: 30 }}
             source={Images.bottomLike} />
 
-          <Image
-            resizeMode="contain"
-            style={{ width: 30, height: 30 }}
-            source={Images.homeIcon} />
-
+          <TouchableOpacity
+            onPress={() => NavigationService.navigate('NewsFeedScreen')}>
+            <Image
+              resizeMode="contain"
+              style={{ width: 30, height: 30 }}
+              source={Images.homeIcon} />
+          </TouchableOpacity>
         </View>
 
 
