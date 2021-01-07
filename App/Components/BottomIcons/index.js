@@ -14,11 +14,18 @@ export default class Splash1 extends React.Component {
   render() {
     return (
       <View style={{}}>
-        <View style={{ justifyContent: 'space-around', backgroundColor: '#fff', paddingHorizontal: 23, padding: 10, flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ justifyContent: 'space-around', backgroundColor: '#f5f5f5', paddingHorizontal: 23, padding: 10, flexDirection: 'row', alignItems: 'center' }}>
 
-          <Search name="search1" size={35} color={Colors.primaryColorLogin} />
+          <Search
+            name="search1"
+            size={35}
+            color={Colors.primaryColorLogin} />
 
-          <Bell name="bell" size={35} color={Colors.primaryColorLogin} />
+
+          <Bell
+            name="bell"
+            size={35}
+            color={Colors.primaryColorLogin} />
 
           <TouchableOpacity
             onPress={() => NavigationService.navigate('UploadPost')}
@@ -28,9 +35,16 @@ export default class Splash1 extends React.Component {
           </TouchableOpacity>
 
 
-          <Hand name="hand-pointing-up" size={40} color={Colors.primaryColorLogin} />
+          <Hand
+            name="hand-pointing-up"
+            size={40}
+            color={Colors.primaryColorLogin}
+            style={{ elevation: 3 }} />
 
-          <Home name="home" size={40} color={Colors.primaryColorLogin} />
+          <Home
+            name="home"
+            size={40}
+            color={Colors.primaryColorLogin} />
 
         </View>
 
