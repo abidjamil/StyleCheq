@@ -1,5 +1,5 @@
 import { StyleSheet,Dimensions } from 'react-native'
-import { Helpers, Metrics, Fonts, Colors } from '../../Components/BottomIcons/node_modules/App/Theme'
+import { Helpers, Metrics, Fonts, Colors } from 'App/Theme'
 const { width, height } = Dimensions.get("window");
 const screenWidth = width < height ? width : height;
 const screenHeight = width < height ? height : width;

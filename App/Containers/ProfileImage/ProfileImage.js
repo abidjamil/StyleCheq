@@ -2,7 +2,7 @@ import React from 'react'
 import { Platform, Text, View, Button, Image, ScrollView, FlatList, ImageBackground } from 'react-native'
 import Style from './ProfileImageStyle'
 
-import { ApplicationStyles, Helpers, Images, Metrics, Colors } from '../../Theme'
+import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import Message from 'react-native-vector-icons/Entypo';
 import User from 'react-native-vector-icons/Entypo';
 import Dot from 'react-native-vector-icons/Entypo';
