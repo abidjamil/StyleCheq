@@ -781,9 +781,6 @@ class NewsFeed extends React.Component {
                             source={Images.makeupIcon} />
                         </View>
 
-
-
-
                         <View>
                           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
