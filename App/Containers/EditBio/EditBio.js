@@ -3,32 +3,18 @@ import { Platform, Text, View, Button, Image, TouchableOpacity, TextInput, Image
 import Style from './EditBioStyle'
 import BACK from 'react-native-vector-icons/AntDesign';
 import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
-import NavigationService from 'App/Services/NavigationService'
-
 export default class Splash1 extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      loading: false
-    }
-
-  }
-  handleBio = (text) => {
-    this.setState({ firstName: text })
-  }
 
   render() {
     return (
-      <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
+      <View style={{ height: '100%', top: 50 }}>
 
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
-            <TouchableOpacity
-              onPress={() => NavigationService.goBack()}
-              style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row' }}>
               <BACK name="left" size={23}></BACK>
               <Text style={Style.privacyBtn}>back</Text>
-            </TouchableOpacity>
+            </View>
 
             <View style={{ flexDirection: 'row' }}>
               <Text style={Style.privacyBtn}>Edit Bio</Text>
@@ -39,7 +25,6 @@ export default class Splash1 extends React.Component {
         <View style={Style.bioViewStyle}>
           <Text style={Style.editBioStyle}>Edit Bio</Text>
           <TextInput
-            onChangeText={(value) => this.handleBio(value)}
             multiline={true}
             numberOfLines={15}
             style={Style.inputTextStyle}
@@ -53,7 +38,7 @@ export default class Splash1 extends React.Component {
               Helpers.rowCenter,
             ]}>
             <TouchableOpacity
-              onPress={() => NavigationService.goBack()}>
+            >
               <Text style={Style.loginBtn}>
                 Done
                    </Text>

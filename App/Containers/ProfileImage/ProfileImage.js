@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView } from 'react-native'
 import Style from './ProfileImageStyle'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
@@ -49,7 +48,6 @@ export default class Splash1 extends React.Component {
   }
   render() {
     return (
-
       <ScrollView
         nestedScrollEnabled={true}
         contentContainerStyle={{ flexGrow: 1 }}>
@@ -66,7 +64,7 @@ export default class Splash1 extends React.Component {
 
             </View>
           </View>
-
+     
           <ImageBackground
             style={[Helpers.fullSize]}
             source={Images.background}>
@@ -191,9 +189,7 @@ export default class Splash1 extends React.Component {
         </SafeAreaView>
 
 
-
       </ScrollView>
-
     )
   }
 
