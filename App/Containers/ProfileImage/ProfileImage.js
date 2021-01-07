@@ -2,7 +2,7 @@ import React from 'react'
 import { Platform, Text, View, Button, Image, ScrollView, FlatList, ImageBackground } from 'react-native'
 import Style from './ProfileImageStyle'
 
-import { ApplicationStyles, Helpers, Images, Metrics, Colors } from '../../Components/BottomIcons/node_modules/App/Theme'
+import { ApplicationStyles, Helpers, Images, Metrics, Colors } from '../../Theme'
 import Message from 'react-native-vector-icons/Entypo';
 import User from 'react-native-vector-icons/Entypo';
 import Dot from 'react-native-vector-icons/Entypo';
@@ -122,7 +122,7 @@ export default class Splash1 extends React.Component {
               <Text style={Style.lastViewText}>MODEL,ACTRESS,INFLUENCERS YOU {'\n'}   CAN HAVE ANYTHING IN LIFE {'\n'}  LIFE IF YOU DRESS FOR IT </Text>
             </View>
 
-          <BottomIcons/>
+            <BottomIcons />
 
 
             <View>
@@ -134,42 +134,42 @@ export default class Splash1 extends React.Component {
                 data={this.state.data}
 
                 columnWrapperStyle={{ marginHorizontal: 2, marginVertical: 2, }}
-                renderItem={({ item }) =>
-               { 
-                var displayRating = false;
+                renderItem={({ item }) => {
+                  var displayRating = false;
 
-              toggleRating = () =>{
+                  toggleRating = () => {
                     this.displayRating = !this.displayRating
-                }
-                return(
-                <View style={{ padding: 5, flex: 1 }}>
-                <Image
+                  }
+                  return (
+                    <View style={{ padding: 5, flex: 1 }}>
+                      <Image
 
-                  style={{ height: 200, width: '100%', borderRadius: 20, }}
-                  source={item.picture} />
- <Star  onPress={()=>this.toggleRating()} name="star" size={20} color='#FFC00B' />
-               {displayRating==true ? 
-                <StarRating
+                        style={{ height: 200, width: '100%', borderRadius: 20, }}
+                        source={item.picture} />
+                      <Star onPress={() => this.toggleRating()} name="star" size={20} color='#FFC00B' />
+                      {displayRating == true ?
+                        <StarRating
 
-                  containerStyle={{ width: 50, marginLeft: 20 }}
-                  disabled={false}
-                  maxStars={5}
-                  visible ={displayRating}
-                  fullStarColor='#FFC00B'
-                  emptyStarColor='#fff'
-                  starSize={30}
-                  rating={this.state.starCount}
-                  selectedStar={(rating) => this.onStarRatingPress(rating)}
-                />
-                : <View>
-                 
-                </View> 
-                
+                          containerStyle={{ width: 50, marginLeft: 20 }}
+                          disabled={false}
+                          maxStars={5}
+                          visible={displayRating}
+                          fullStarColor='#FFC00B'
+                          emptyStarColor='#fff'
+                          starSize={30}
+                          rating={this.state.starCount}
+                          selectedStar={(rating) => this.onStarRatingPress(rating)}
+                        />
+                        : <View>
+
+                        </View>
+
+                      }
+                    </View>
+
+                  );
                 }
-              </View>
-             
-               );}
-                 
+
                 }
 
               />
