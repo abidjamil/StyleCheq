@@ -117,7 +117,8 @@ class PictureSelection extends React.Component {
         ]}
       >
         <ImageBackground
-          style={[Helpers.fullSize]}>
+          style={[Helpers.fullSize]}
+          source={Images.background}>
           <OrientationLoadingOverlay
             visible={that.state.isLoading}
             color={Colors.primaryColorLogin}

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView } from 'react-native'
 import Style from './ProfileImageStyle'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
@@ -65,7 +66,7 @@ export default class Splash1 extends React.Component {
 
             </View>
           </View>
-
+     
           <ImageBackground
             style={[Helpers.fullSize]}
             source={Images.background}>
@@ -130,6 +131,7 @@ export default class Splash1 extends React.Component {
               <Text style={Style.lastViewText}>MODEL,ACTRESS,INFLUENCERS YOU CAN HAVE ANYTHING IN LIFE IF YOU DRESS FOR IT. </Text>
             </View>
 
+
             <View style={{ width: '100%', position: 'absolute', bottom: Platform.OS === 'ios' ? 0 : 30 }}>
               <BottomIcons />
             </View>
@@ -188,9 +190,9 @@ export default class Splash1 extends React.Component {
 
         </SafeAreaView>
 
+       
 
-
-      </ScrollView>
+            </ScrollView>
 
     )
   }
