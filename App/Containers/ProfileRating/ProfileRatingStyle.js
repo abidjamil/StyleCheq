@@ -22,9 +22,8 @@ export default StyleSheet.create({
 
   privacyBtn:
   {
-    paddingRight: 10, fontSize: 18, paddingLeft: 8, fontFamily: 'Poppins-Regular',
-  }
-  ,
+    fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
+  },
 
   mainImageView: { flexDirection: 'row', paddingHorizontal: 20, top: 30 },
   mainImage: { height: 120, width: 120, borderRadius: 50 },

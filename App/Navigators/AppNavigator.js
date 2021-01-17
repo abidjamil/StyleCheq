@@ -25,6 +25,7 @@ import TextColorPicker from '../Containers/TextColorPicker/TextColorPicker'
 import AccountProfile from '../Containers/AccountProfile/AccountProfile'
 import ProfileRating from '../Containers/ProfileRating/ProfileRating'
 import Notificaton from '../Containers/Notification/Notification'
+import ProfileImageSelf from '../Containers/ProfileImageSelf/ProfileImage'
 import ProfileImage from '../Containers/ProfileImage/ProfileImage'
 import NotificationScreen from '../Containers/Notification/Notification'
 /**
@@ -51,20 +52,21 @@ const StackNavigator = createStackNavigator(
     SetPasswordScreen: SetPassword,
     PeopleToFollow: PeopleToFollow,
     NewsFeedScreen: NewsFeed,
-    AccountSetting:AccountSetting,
-    SelectTags:SelectTags,
-    UploadPost:UploadPost,
-    ExploreTrending:ExploreTrending,
-    EditBio:EditBio,
-    UserName:UserName,
-    FontStyle:FontStyle,
-    EditProfile:EditProfile,
-    TextColorPicker:TextColorPicker,
-    AccountProfile:AccountProfile,
-    ProfileRating:ProfileRating,
-    Notificaton:Notificaton,
-    ProfileImage:ProfileImage,
-    NotificationScreen: NotificationScreen
+    AccountSetting: AccountSetting,
+    SelectTags: SelectTags,
+    UploadPost: UploadPost,
+    ExploreTrending: ExploreTrending,
+    EditBio: EditBio,
+    UserName: UserName,
+    FontStyle: FontStyle,
+    EditProfile: EditProfile,
+    TextColorPicker: TextColorPicker,
+    AccountProfile: AccountProfile,
+    ProfileRating: ProfileRating,
+    Notificaton: Notificaton,
+    ProfileImage: ProfileImage,
+    ProfileImageSelf: ProfileImageSelf,
+    NotificationScreen: NotificationScreen,
   },
   {
     animationEnabled: false,

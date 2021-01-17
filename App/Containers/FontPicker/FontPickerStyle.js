@@ -25,9 +25,8 @@ export default StyleSheet.create({
   },
   privacyBtn:
   {
-    fontFamily: 'Poppins-Bold', paddingRight: 10, fontWeight: 'bold', fontSize: 18, paddingLeft: 8
-  }
-  ,
+    fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
+  },
   loginBtn: {
     fontSize: 16,
     fontFamily: 'Poppins-Regular',

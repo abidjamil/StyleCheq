@@ -9,10 +9,7 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
 
-  privacyBtn:
-  {
-    fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
-  },
+
 
   fieldsLine:
   {
@@ -26,7 +23,10 @@ export default StyleSheet.create({
     height: 150, width: 150, borderRadius: 60, alignSelf: 'center'
 
   },
-
+  privacyBtn:
+  {
+    fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
+  },
   trisaStyle: { fontSize: 50, color: '#fff', fontWeight: 'bold', fontFamily: 'Poppins-Regular' },
 
   trisaemail: { color: 'red', paddingHorizontal: 20 },

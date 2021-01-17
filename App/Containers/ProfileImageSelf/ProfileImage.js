@@ -58,14 +58,13 @@ export default class Splash1 extends React.Component {
         <View style={{ height: windowHeight, top: Platform.OS === 'ios' ? 40 : 10 }}>
           <View style={Style.firstBox, { paddingHorizontal: 20 }}>
             <View style={Style.fieldsLine}>
+              <Message name="mail" size={30} />
+              <Text style={{ fontSize: 20, fontFamily: 'Poppins-Bold', }}>Profile</Text>
 
               <TouchableOpacity
-                onPress={() => NavigationService.goBack()}
-                style={{ flexDirection: 'row' }}>
-                <BACK name="left" size={23}></BACK>
-                <Text style={Style.privacyBtn}>back</Text>
+                onPress={() => NavigationService.navigate('AccountSetting')}>
+                <User name="user" size={30} />
               </TouchableOpacity>
-
 
             </View>
           </View>
@@ -87,8 +86,11 @@ export default class Splash1 extends React.Component {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Style.trisaemail}>@trisasnow_256</Text>
               <View style={{ flexDirection: 'row', marginEnd: 20 }}>
-                <TouchableOpacity>
-                  <Dot name="dots-three-vertical" size={25} color='#fff' />
+                <TouchableOpacity
+                  style={{ flexDirection: 'row', backgroundColor: '#fff', }}
+                  onPress={() => NavigationService.navigate('EditProfile')}>
+                  <Text style={{ backgroundColor: '#fff', paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 5, color: 'blue' }}>Edit Profile</Text>
+                  <Verified name="verified" color="green" size={18} style={{ paddingTop: 5, paddingRight: 7 }}></Verified>
                 </TouchableOpacity>
 
 
@@ -133,9 +135,9 @@ export default class Splash1 extends React.Component {
             </View>
 
 
-            {/* <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '10%' }}>
+            <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '10%' }}>
               <BottomIcons />
-            </View> */}
+            </View>
 
           </ImageBackground>
         </View>

@@ -21,14 +21,13 @@ export default StyleSheet.create({
     justifyContent: "center",
     textAlign: "center"
   },
-
   fieldsLine:
   {
     flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8
   },
   privacyBtn:
   {
-    paddingRight: 10, fontWeight: 'bold', fontSize: 18, paddingLeft: 8
+    fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
   },
   postStyle: { fontFamily: 'Poppins', marginLeft: 20, top: 10 }
   ,
