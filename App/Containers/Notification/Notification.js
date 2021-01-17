@@ -120,8 +120,6 @@ export default class Splash1 extends React.Component {
                           Images.two,
                           'Official and 2 Others rate your photo','2 sec ago',]},  
 
-
-
                         {title: 'C', data: [Images.two,
                           'Official and 2 Others rate your photo','2 sec ago',
                           Images.two,
@@ -175,7 +173,7 @@ export default class Splash1 extends React.Component {
                   </View>
   }  
                     keyExtractor={(item, index) => index} 
-                     renderSectionHeader={({section}) => <Text>{section.title}</Text>}
+                    renderSectionHeader={({section}) => <Text>{section.title}</Text>}
                    
                 />  
 

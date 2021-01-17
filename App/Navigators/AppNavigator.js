@@ -26,6 +26,7 @@ import AccountProfile from '../Containers/AccountProfile/AccountProfile'
 import ProfileRating from '../Containers/ProfileRating/ProfileRating'
 import Notificaton from '../Containers/Notification/Notification'
 import ProfileImage from '../Containers/ProfileImage/ProfileImage'
+import NotificationScreen from '../Containers/Notification/Notification'
 /**
  * The root screen contains the application's navigation.
  *
@@ -62,7 +63,8 @@ const StackNavigator = createStackNavigator(
     AccountProfile:AccountProfile,
     ProfileRating:ProfileRating,
     Notificaton:Notificaton,
-    ProfileImage:ProfileImage
+    ProfileImage:ProfileImage,
+    NotificationScreen: NotificationScreen
   },
   {
     animationEnabled: false,

@@ -15,18 +15,22 @@ export default class Splash1 extends React.Component {
     return (
       <View style={{}}>
         <View style={{ justifyContent: 'space-around', backgroundColor: 'fff', paddingHorizontal: 23, padding: 10, flexDirection: 'row', alignItems: 'center' }}>
-
-          <Image
-            resizeMode="contain"
-            style={{ width: 30, height: 30 }}
-            source={Images.searchIcon} />
-
-          <View >
-
+          <TouchableOpacity
+            onPress={() => NavigationService.navigate('ExploreTrending')}>
             <Image
               resizeMode="contain"
               style={{ width: 30, height: 30 }}
-              source={Images.bellIcon} />
+              source={Images.searchIcon} />
+          </TouchableOpacity>
+
+          <View >
+            <TouchableOpacity
+              onPress={() => NavigationService.navigate('NotificationScreen')}>
+              <Image
+                resizeMode="contain"
+                style={{ width: 30, height: 30 }}
+                source={Images.bellIcon} />
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity
