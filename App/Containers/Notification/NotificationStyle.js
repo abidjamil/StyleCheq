@@ -36,10 +36,9 @@ export default StyleSheet.create({
   image1Style: { height: 40, width: 40, borderRadius: 20, marginLeft: 5, marginTop: 5 },
   textStyle: { fontFamily: 'Poppins-Regular', marginLeft: 10, marginTop: 12 },
   followBtnStyle: { borderRadius: 1, borderWidth: 1, backgroundColor: '#0D80AE', borderRadius: 10, paddingHorizontal: 5, height: 37, width: 53 },
-
-  notifiyText: { fontFamily: 'Poppins-Regular', marginLeft: 10, marginTop: 10 },
+  notifiyText: { fontFamily: 'Poppins-Regular', marginLeft: 10, marginTop: 10, fontSize: 14, },
   notifiyText1: { fontFamily: 'Poppins-Regular', marginLeft: 5, marginTop: 10 },
-  image2Style: { height: 40, width: 40, borderRadius: 20, marginLeft: 5 },
+  image2Style: { height: 40, width: 40, borderRadius: 5, marginLeft: 5 },
   text2SecStyle: { marginLeft: 40, color: 'grey' }
 
 })

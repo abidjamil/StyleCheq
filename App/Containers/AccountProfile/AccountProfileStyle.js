@@ -27,8 +27,7 @@ export default StyleSheet.create({
   privacyBtn:
   {
     fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
-  }
-  ,
+  },
   nameStyle:
   {
     alignSelf: 'center', top: 25

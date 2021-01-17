@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView } from 'react-native'
+import { Alert, Modal, Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView } from 'react-native'
 import Style from './ProfileImageStyle'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import Message from 'react-native-vector-icons/Entypo';
@@ -21,6 +21,7 @@ export default class Splash1 extends React.Component {
     super(props)
     this.state = {
       loading: false,
+      modalVisible: false,
       data: [
         {
           id: "1",
@@ -47,14 +48,87 @@ export default class Splash1 extends React.Component {
       starCount: rating
     });
   }
-  toggleRating() {
+  toggleModal(visible) {
+    this.setState({ modalVisible: visible });
+  }
+  ReportProfile() {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure to report profile?',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            this.setState({ modalVisible: false })
+          }
 
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            this.setState({ modalVisible: false })
+          }
+
+        }
+      ],
+      { cancelable: false }
+    );
+  }
+  BlockProfile() {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure to block profile?',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            this.setState({ modalVisible: false })
+          }
+
+        },
+        {
+          text: 'No',
+          onPress: () => {
+            this.setState({ modalVisible: false })
+          }
+
+        }
+      ],
+      { cancelable: false }
+    );
   }
   render() {
     return (
       <ScrollView
         nestedScrollEnabled={true}
         contentContainerStyle={{ flexGrow: 1 }}>
+
+        <View>
+          <Modal
+            ref={(ref) => { this.Modal = ref }}
+            animationType={"slide"}
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => { console.log("Modal has been closed.") }}>
+
+            <View style={Style.ModelView}>
+              <View style={{ alignSelf: 'flex-start', paddingHorizontal: 20, paddingTop: 20, }}>
+                <TouchableOpacity
+                  onPress={() => this.ReportProfile()}>
+                  <Text style={Style.modelText}>Report...</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => this.BlockProfile()}>
+                  <Text style={Style.modelText}>Block</Text>
+                </TouchableOpacity>
+
+              </View>
+            </View>
+          </Modal>
+        </View>
+
+
         <View style={{ height: windowHeight, top: Platform.OS === 'ios' ? 40 : 10 }}>
           <View style={Style.firstBox, { paddingHorizontal: 20 }}>
             <View style={Style.fieldsLine}>
@@ -87,7 +161,8 @@ export default class Splash1 extends React.Component {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Style.trisaemail}>@trisasnow_256</Text>
               <View style={{ flexDirection: 'row', marginEnd: 20 }}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.toggleModal()}>
                   <Dot name="dots-three-vertical" size={25} color='#fff' />
                 </TouchableOpacity>
 

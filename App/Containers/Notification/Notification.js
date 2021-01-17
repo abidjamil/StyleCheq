@@ -1,19 +1,28 @@
 import React from 'react'
-import { Platform, Text, View, Button, Image, Dimensions, FlatList, SectionList } from 'react-native'
+import { Platform, TouchableOpacity, Text, View, Button, Image, Dimensions, FlatList, SectionList } from 'react-native'
 import Style from './NotificationStyle'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import BACK from 'react-native-vector-icons/AntDesign';
 import { StyleSheet } from 'react-native';
+import HTML from "react-native-render-html";
+import NavigationService from 'App/Services/NavigationService'
+
 const windowHeight = Dimensions.get("screen").height
 const windowWidth = Dimensions.get("screen").width
-const B = (props) => <Text style={{ fontWeight: 'bold' }}>{props.children}</Text>
+
+const B = (props) => {
+  <Text style={{ fontWeight: 'bold' }}>
+    Hello
+  </Text>
+}
+
 export default class Splash1 extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
       starCount: 3.5,
-      data: [
+      notificationData: [
         {
           id: "1",
           picture: Images.two,
@@ -36,7 +45,7 @@ export default class Splash1 extends React.Component {
         {
           id: "4",
           picture: Images.two,
-          text: 'Official and 2 Others rate your photo',
+          text: 'Official and <strong>2 Others rate your</strong> photo',
           time: '2 sec ago'
         }
         ,
@@ -44,7 +53,7 @@ export default class Splash1 extends React.Component {
         {
           id: "5",
           picture: Images.two,
-          text: 'Official and 2 Others rate your photo',
+          text: `Official and <strong>2 Others rate your</strong> photo`,
           time: '2 sec ago'
 
         },
@@ -75,6 +84,27 @@ export default class Splash1 extends React.Component {
 
 
   render() {
+    let A = [
+      { id: '1', value: 'Afghanistan' },
+      { id: '2', value: 'Afghanistan' },
+      { id: '3', value: 'Afghanistan' },
+    ];
+    let B = [
+      { id: '4', value: 'Benin' },
+      { id: '5', value: 'Bhutan' },
+      { id: '6', value: 'Bosnia' },
+      { id: '7', value: 'Botswana' },
+      { id: '8', value: 'Brazil' },
+      { id: '9', value: 'Brunei' },
+      { id: '10', value: 'Bulgaria' },
+    ];
+    let C = [
+      { id: '11', value: 'Cambodia' },
+      { id: '12', value: 'Cameroon' },
+      { id: '13', value: 'Canada' },
+      { id: '14', value: 'Cabo' },
+    ];
+
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
 
@@ -102,91 +132,32 @@ export default class Splash1 extends React.Component {
 
           <SectionList
             sections={[
-              {
-                title: 'A', data: [Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-
-
-
-                ]
-              },
-              {
-                title: 'B', data: [Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',]
-              },
-
-              {
-                title: 'C', data: [Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',
-                Images.two,
-                  'Official and 2 Others rate your photo', '2 sec ago',]
-              },
+              { title: 'Today', data: this.state.notificationData },
+              { title: 'Yesterday', data: this.state.notificationData },
+              { title: 'This Month', data: this.state.notificationData },
             ]}
-
             renderItem={({ item }) =>
-              <View >
-                <View style={{ flexDirection: 'row' }}>
-                  <Image style={Style.image1Style}
-                    source={item} />
-                  <Text style={Style.notifiyText}>{item}</Text>
-                  <Image style={Style.image2Style}
-                    source={item} />
-                </View>
-                <View style={{ height: 10, paddingBottom: 20 }}>
-                  <Text style={{ marginLeft: 50, marginTop: -10, color: 'grey' }}>{item}</Text>
-                </View>
-                <View style={{ marginTop: 10, flexDirection: 'row' }}>
-                  <Image style={{ height: 40, width: 40, borderRadius: 20, marginLeft: 5 }}
-                    source={item} />
-                  <Text style={Style.notifiyText1}>{item}</Text>
+              <View style={{ paddingTop: 20 }}>
+                <View style={{
+                  flexDirection: 'row', justifyContent: 'space-around', width: '100%'
+                }}>
+                  < Image style={Style.image1Style}
+                    source={item.picture} />
 
-                  <Image style={Style.image2Style}
-                    source={item} />
-                </View>
-
-
-                <View style={{ height: 10, paddingBottom: 20 }}>
-                  <Text style={{ marginLeft: 50, marginTop: -10, color: 'grey' }}>{item}</Text>
-                </View>
-                <View style={{ marginTop: 10, flexDirection: 'row' }}>
-                  <Image style={Style.image2Style}
-                    source={item} />
-                  <Text style={Style.notifiyText1}>{item}</Text>
-                  <View style={Style.followBtnStyle}>
-                    <Text style={{ color: '#fff', paddingTop: 10 }}>Follow</Text>
+                  <View style={{ marginLeft: -25, marginTop: 5 }}>
+                    <HTML source={{ html: item.text }} />
+                    <Text style={{ marginTop: -5, color: 'grey' }}>{item.time}</Text>
                   </View>
+                  <Image style={Style.image2Style}
+                    source={item.picture} />
                 </View>
-                <View style={{ height: 10, paddingBottom: 20 }}>
-                  <Text style={{ marginLeft: 50, marginTop: -10, color: 'grey' }}>{item}</Text>
-                </View>
+
 
 
               </View>
             }
             keyExtractor={(item, index) => index}
-            renderSectionHeader={({ section }) => <Text>{section.title}</Text>}
+            renderSectionHeader={({ section }) => <Text style={{ marginStart: 15, fontFamily: 'Poppins-Bold', fontSize: 16 }}>{section.title}</Text>}
 
           />
 

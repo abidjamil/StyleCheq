@@ -9,14 +9,16 @@ export default class Splash1 extends React.Component {
 
   render() {
     return (
-      <View style={{ height: '100%', top: 50 }}>
+      <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
 
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
-            <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+              onPress={() => NavigationService.goBack()}
+              style={{ flexDirection: 'row' }}>
               <BACK name="left" size={23}></BACK>
               <Text style={Style.privacyBtn}>back</Text>
-            </View>
+            </TouchableOpacity>
 
             <View style={{ flexDirection: 'row' }}>
               <Text style={Style.privacyBtn}>Account</Text>
