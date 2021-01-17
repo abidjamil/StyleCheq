@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView,Modal } from 'react-native'
+import { Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView } from 'react-native'
 import Style from './ProfileImageStyle'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import Message from 'react-native-vector-icons/Entypo';
@@ -37,8 +37,7 @@ export default class Splash1 extends React.Component {
           id: "4",
           picture: Images.two,
         }],
-      starCount: 3.5,
-      modalVisible: false
+      starCount: 3.5
     }
 
   }
@@ -47,9 +46,9 @@ export default class Splash1 extends React.Component {
       starCount: rating
     });
   }
-  toggleModal(visible) {
-    this.setState({ modalVisible: visible });
- }
+  toggleRating() {
+
+  }
   render() {
     return (
       <ScrollView
@@ -80,10 +79,6 @@ export default class Splash1 extends React.Component {
               message=""
             />
 
-
-
-
-
             <View style={{ marginLeft: 10 }}>
               <Text style={Style.trisaStyle}>TRISA SNOW</Text>
             </View>
@@ -97,9 +92,7 @@ export default class Splash1 extends React.Component {
                   <Verified name="verified" color="green" size={18} style={{ backgroundColor: '#fff', paddingTop: 5, paddingRight: 7 }}></Verified>
                 </TouchableOpacity>
 
-                <Dot
-                onPress = {() => {this.toggleModal(true)}}
-                  name="dots-three-vertical" size={25} color='#fff' />
+                <Dot name="dots-three-vertical" size={25} color='#fff' />
               </View>
             </View>
             <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -141,31 +134,12 @@ export default class Splash1 extends React.Component {
             </View>
 
 
-            <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '7%' }}>
+            <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '10%' }}>
               <BottomIcons />
             </View>
 
           </ImageBackground>
         </View>
-
-        <View>
-              <Modal animationType={"slide"} transparent={true}
-                visible={this.state.modalVisible}
-                onRequestClose={() => { console.log("Modal has been closed.") }}>
-
-                <View style={Style.ModelView}>
-                  <View style={{ alignSelf: 'flex-start', paddingHorizontal: 20, paddingTop: 20, }}>
-                    <Text style={Style.modelText}>Report...</Text>
-                    <Text style={Style.modelText}>Block</Text>
-                    <Text style={Style.modelText}>Copy Profile URL</Text>
-                    <Text style={Style.modelText}>Share this Profile</Text>
-                  </View>
-                </View>
-              </Modal>
-            </View>
-
-
-
 
         <SafeAreaView style={{ marginTop: 50 }}>
           <FlatList
@@ -177,14 +151,12 @@ export default class Splash1 extends React.Component {
             columnWrapperStyle={{ marginHorizontal: 5, marginVertical: 5, }}
             renderItem={({ item }) => {
               var displayRating = false;
-
-             
               return (
                 <View style={{ padding: 10, flex: 1 }}>
                   <Image
                     style={{ height: 250, width: '100%', borderRadius: 20 }}
                     source={item.picture} />
-                  <Star onPress={() => this.toggleRating()} name="star" size={20} color='#FFC00B' />
+                  <Star name="star" size={20} color='#FFC00B' />
                   {displayRating == true ?
                     <StarRating
 

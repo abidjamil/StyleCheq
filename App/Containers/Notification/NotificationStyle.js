@@ -9,7 +9,10 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
 
-
+  privacyBtn:
+  {
+    paddingRight: 10, fontWeight: 'bold', fontSize: 18, paddingLeft: 8
+  },
 
   fieldsLine:
   {
@@ -30,7 +33,7 @@ export default StyleSheet.create({
   ,
   todayStyle: { marginLeft: 25, fontFamily: 'Poppins-Regular', marginTop: 10 }
   ,
-  image1Style: { height: 40, width: 40, borderRadius: 20, marginLeft: 5,marginTop:5 },
+  image1Style: { height: 40, width: 40, borderRadius: 20, marginLeft: 5, marginTop: 5 },
   textStyle: { fontFamily: 'Poppins-Regular', marginLeft: 10, marginTop: 12 },
   followBtnStyle: { borderRadius: 1, borderWidth: 1, backgroundColor: '#0D80AE', borderRadius: 10, paddingHorizontal: 5, height: 37, width: 53 },
 

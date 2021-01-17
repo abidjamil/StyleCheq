@@ -43,6 +43,7 @@
     "react-native-interactable-reanimated": "0.0.8",
     "react-native-js-bottom-sheet": "1.1.0",
     "react-native-keyboard-avoiding-view": "1.0.0",
+    "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-mentions": "^1.1.4",
     "react-native-mentions-editor": "^1.0.11",
     "react-native-orientation-loading-overlay": "0.1.6",

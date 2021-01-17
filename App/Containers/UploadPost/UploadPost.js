@@ -7,6 +7,7 @@ import ImagePicker from 'react-native-image-picker'
 import MentionsTextInput from 'react-native-mentions';
 import BottomSheet from 'react-native-js-bottom-sheet';
 import NavigationService from 'App/Services/NavigationService'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 const { height, width } = Dimensions.get('window');
 var that;
 const users = [
@@ -258,7 +259,7 @@ export default class Splash1 extends React.Component {
 
           <View style={Style.container}>
             <Text onPress={() => { this.setState({ value: "" }) }} style={{ fontFamily: 'Poppins-Regular', marginLeft: 20 }}>Write a Comment</Text>
-            <View>
+            <KeyboardAwareScrollView style={{ flex: 1 }}>
               <MentionsTextInput
                 textInputStyle={{ borderColor: '#ebebeb', borderWidth: 4, padding: 15, fontSize: 15, margin: 20, textAlignVertical: "top", marginTop: 10 }}
                 suggestionsPanelStyle={{ backgroundColor: 'rgba(100,100,100,0.1)' }}
@@ -269,7 +270,6 @@ export default class Splash1 extends React.Component {
                 triggerLocation={'new-word-only'} // 'new-word-only', 'anywhere'
                 value={this.state.value}
                 onChangeText={(value) => this.handleDescription(value)}
-
                 triggerCallback={this.callback.bind(this)}
                 renderSuggestionsRow={this.renderSuggestionsRow.bind(this)}
                 suggestionsData={this.state.data} // array of objects
@@ -279,7 +279,7 @@ export default class Splash1 extends React.Component {
                 horizontal={false} // defaut is true, change the orientation of the list
                 MaxVisibleRowCount={3} // this is required if horizontal={false}
               />
-            </View>
+            </KeyboardAwareScrollView>
             <View
               style={[
                 Helpers.rowCenter,

@@ -43,11 +43,12 @@ export default StyleSheet.create({
   lastView: { marginTop: '20%', paddingHorizontal: 10 },
 
   lastViewText: { fontSize: 25, fontFamily: 'Poppins-Italic', color: '#fff', },
-  modelText:{
-    paddingVertical:10,fontFamily: 'Poppins-Regular' 
+  modelText: {
+    paddingVertical: 10, fontFamily: 'Poppins-Regular'
   },
-  ModelView:{ alignSelf:'center',marginTop:200,
-                
-  height:200,width:300,backgroundColor:'#fff',borderRadius:10}
+  ModelView: {
+    alignSelf: 'center', marginTop: '50%',
+    width: 300, backgroundColor: '#fff', borderRadius: 10
+  }
 
 })

@@ -24,8 +24,8 @@ export default class Splash1 extends React.Component {
           </TouchableOpacity>
 
           <View >
-            <TouchableOpacity
-              onPress={() => NavigationService.navigate('NotificationScreen')}>
+            <TouchableOpacity>
+              {/* onPress={() => NavigationService.navigate('NotificationScreen')}> */}
               <Image
                 resizeMode="contain"
                 style={{ width: 30, height: 30 }}
