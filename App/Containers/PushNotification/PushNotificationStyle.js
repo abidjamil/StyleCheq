@@ -10,7 +10,7 @@ export default StyleSheet.create({
 
   privacyBtn:
   {
-    fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
+    fontFamily: 'Poppins-Light', paddingRight: 5, fontSize: 16, paddingLeft: 5
   },
 
   fieldsLine:
@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
   pushNotificationBtn:
   {
-    paddingRight: 10, fontWeight: 'bold', fontSize: 18, paddingLeft: 8
+    paddingRight: 10, fontWeight: 'bold', fontSize: 16, paddingLeft: 8
   }
   ,
   paddingText:

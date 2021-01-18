@@ -27,7 +27,11 @@ import ProfileRating from '../Containers/ProfileRating/ProfileRating'
 import Notificaton from '../Containers/Notification/Notification'
 import ProfileImageSelf from '../Containers/ProfileImageSelf/ProfileImage'
 import ProfileImage from '../Containers/ProfileImage/ProfileImage'
+import PrivacySetting from '../Containers/PrivacySetting/PrivacySetting'
 import NotificationScreen from '../Containers/Notification/Notification'
+import PushNotificationScreen from '../Containers/PushNotification/PushNotification'
+import BecomePartnerScreen from '../Containers/BecomePartner/BecomePartner'
+
 /**
  * The root screen contains the application's navigation.
  *
@@ -67,6 +71,9 @@ const StackNavigator = createStackNavigator(
     ProfileImage: ProfileImage,
     ProfileImageSelf: ProfileImageSelf,
     NotificationScreen: NotificationScreen,
+    PrivacySetting: PrivacySetting,
+    PushNotificationScreen: PushNotificationScreen,
+    BecomePartnerScreen: BecomePartnerScreen
   },
   {
     animationEnabled: false,

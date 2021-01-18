@@ -11,6 +11,8 @@ import { Searchbar, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BottomSheet } from 'react-native-btr';
 import BottomIcons from '../../Components/BottomIcons'
+import Message from 'react-native-vector-icons/Entypo';
+import User from 'react-native-vector-icons/Entypo';
 
 var that;
 
@@ -543,7 +545,7 @@ class NewsFeed extends React.Component {
     return (
       <SafeAreaView
         style={{
-          flex: 1,
+          height: windowHeight,
           flexDirection: 'column',
           width: '100%',
           top: 0
@@ -650,17 +652,37 @@ class NewsFeed extends React.Component {
         </BottomSheet>
 
 
-        <View style={{ flex: 1 }}>
-
+        <View style={{ paddingBottom: Platform.OS === 'ios' ? 80 : 120 }}>
 
           {/* Posts Section */}
+
+          <View style={{ ...Style.fieldsLine, alignItems: 'center', paddingStart: 20, paddingRight: 20 }}>
+            <TouchableOpacity
+              onPress={() => NavigationService.navigate('UploadPost')}>
+              <Image
+                resizeMode="contain"
+                style={{ width: 30, height: 30 }}
+                source={Images.cameraIcon} />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 16, fontFamily: 'Poppins-Light', }}>Timeline</Text>
+
+            <TouchableOpacity
+              onPress={() => NavigationService.navigate('ProfileImageSelf')}>
+              <Image
+                resizeMode="contain"
+                style={{ width: 25, height: 30 }}
+                source={Images.profileIcon} />
+            </TouchableOpacity>
+
+          </View>
+
           <FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ marginTop: 0 }}
             data={this.state.data}
             extraData={this.state.refresh}
             pagingEnabled={true}
-            snapToInterval={windowHeight} // Adjust to your content width
+            snapToInterval={windowHeight - 80} // Adjust to your content width
             decelerationRate={"fast"}
             snapToAlignment={"start"}
             keyExtractor={(item) => item.id}
@@ -668,12 +690,12 @@ class NewsFeed extends React.Component {
             // onEndReachedThreshold={0.1}
             // onEndReached={this.handleLoadMore.bind(this)}
             renderItem={({ item }) => (
-              < View style={{ width: '100%', height: windowHeight, justifyContent: 'center', alignItems: 'stretch' }}>
+              < View style={{ width: '100%', height: windowHeight - 80, justifyContent: 'center', alignItems: 'stretch' }}>
 
                 <View >
                   <ImageBackground
                     resizeMode="cover"
-                    style={{ width: '100%', justifyContent: 'space-around', overflow: 'hidden', height: windowHeight }}
+                    style={{ width: '100%', justifyContent: 'space-around', overflow: 'hidden', height: '100%' }}
                     source={item.picture}>
                     <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
 
@@ -867,9 +889,11 @@ class NewsFeed extends React.Component {
           />
 
 
+          <BottomIcons />
 
-        </View>
-        <BottomIcons />
+        </View >
+
+
       </SafeAreaView >
     )
   }

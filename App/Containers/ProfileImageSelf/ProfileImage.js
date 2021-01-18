@@ -55,15 +55,15 @@ export default class Splash1 extends React.Component {
       <ScrollView
         nestedScrollEnabled={true}
         contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={{ height: windowHeight, top: Platform.OS === 'ios' ? 40 : 10 }}>
+        <View style={{ height: windowHeight, top: Platform.OS === 'ios' ? 40 : 5 }}>
           <View style={Style.firstBox, { paddingHorizontal: 20 }}>
             <View style={Style.fieldsLine}>
-              <Message name="mail" size={30} />
-              <Text style={{ fontSize: 20, fontFamily: 'Poppins-Bold', }}>Profile</Text>
+              <Message name="mail" size={25} />
+              <Text style={{ fontSize: 16, fontFamily: 'Poppins-Light', }}>Profile</Text>
 
               <TouchableOpacity
                 onPress={() => NavigationService.navigate('AccountSetting')}>
-                <User name="user" size={30} />
+                <User name="user" size={25} />
               </TouchableOpacity>
 
             </View>
@@ -135,7 +135,7 @@ export default class Splash1 extends React.Component {
             </View>
 
 
-            <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '10%' }}>
+            <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '7%' }}>
               <BottomIcons />
             </View>
 

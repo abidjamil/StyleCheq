@@ -28,9 +28,8 @@ export default StyleSheet.create({
   },
   privacyBtn:
   {
-    paddingRight: 10, fontSize: 18, paddingLeft: 8, fontFamily: 'Poppins-Regular',
-  }
-  ,
+    paddingRight: 10, fontSize: 16, paddingLeft: 8, fontFamily: 'Poppins-Light',
+  },
   todayStyle: { marginLeft: 25, fontFamily: 'Poppins-Regular', marginTop: 10 }
   ,
   image1Style: { height: 40, width: 40, borderRadius: 20, marginLeft: 5, marginTop: 5 },

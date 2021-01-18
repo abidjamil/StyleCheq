@@ -208,6 +208,30 @@ export default StyleSheet.create({
     marginStart: 5,
     color: Colors.white
   },
+  privacyView: {
+    justifyContent: 'space-between',
+    paddingHorizontal: 22,
+    flexDirection: 'row'
+  },
+
+
+
+  fieldsLine:
+  {
+    flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8
+
+  },
+  firstBox: {
+    top: 20, paddingVertical: 10
+  },
+
+  ImageStyle: {
+    height: 150, width: 150, borderRadius: 60, alignSelf: 'center'
+  },
+  privacyBtn:
+  {
+    fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
+  },
   elevationLow: {
     ...Platform.select({
       ios: {

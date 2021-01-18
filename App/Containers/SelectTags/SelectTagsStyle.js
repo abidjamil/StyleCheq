@@ -23,7 +23,7 @@ export default StyleSheet.create({
 
   privacyBtn:
   {
-    fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 16, paddingLeft: 5
+    fontFamily: 'Poppins-Light', paddingRight: 5, fontSize: 16, paddingLeft: 5
   },
   tagText: {
     marginLeft: 30, top: 30, fontFamily: 'Poppins',

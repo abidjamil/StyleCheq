@@ -48,8 +48,12 @@ class AccountSetting extends React.Component {
 
           </View>
           <View style={Style.fieldsLine}>
-            <Text style={Style.label}>Notifications</Text>
-            <RIGHT name="right" color='#000' size={20} />
+            <TouchableOpacity
+              onPress={() => NavigationService.navigate('PushNotificationScreen')}
+              style={Style.fieldsLine}>
+              <Text style={Style.label}>Notifications</Text>
+              <RIGHT name="right" color='#000' size={20} />
+            </TouchableOpacity>
 
           </View>
         </View>
@@ -63,14 +67,21 @@ class AccountSetting extends React.Component {
           </View>
 
           <View style={Style.fieldsLine}>
-            <Text style={Style.label}>Privacy</Text>
-            <RIGHT name="right" color='#000' size={20} />
+            <TouchableOpacity
+              onPress={() => NavigationService.navigate('PrivacySetting')}
+              style={Style.fieldsLine}>
+              <Text style={Style.label}>Privacy</Text>
+              <RIGHT name="right" color='#000' size={20} />
+            </TouchableOpacity>
           </View>
 
           <View style={Style.fieldsLine}>
-            <Text style={Style.label}>Become a Partner</Text>
-            <RIGHT name="right" color='#000' size={20} />
-
+            <TouchableOpacity
+              onPress={() => NavigationService.navigate('BecomePartnerScreen')}
+              style={Style.fieldsLine}>
+              <Text style={Style.label}>Become a Partner</Text>
+              <RIGHT name="right" color='#000' size={20} />
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity
