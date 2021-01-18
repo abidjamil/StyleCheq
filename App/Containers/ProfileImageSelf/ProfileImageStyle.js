@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
   privacyBtn:
   {
-    fontFamily: 'Poppins-Light', paddingRight: 5, fontSize: 16, paddingLeft: 5
+    fontFamily: 'Poppins-Light', paddingRight: 5, fontSize: 14, paddingLeft: 5
   },
   trisaStyle: { fontSize: 50, color: '#fff', fontWeight: 'bold', fontFamily: 'Poppins-Regular' },
 

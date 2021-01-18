@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
   pushNotificationBtn:
   {
-    paddingRight: 10, fontWeight: 'bold', fontSize: 16, paddingLeft: 8
+    paddingRight: 10, fontWeight: 'bold', fontSize: 14, paddingLeft: 8
   }
   ,
   paddingText:
