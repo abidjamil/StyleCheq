@@ -652,7 +652,7 @@ class NewsFeed extends React.Component {
         </BottomSheet>
 
 
-        <View style={{ paddingBottom: Platform.OS === 'ios' ? 80 : 120 }}>
+        <View style={{ paddingBottom: Platform.OS === 'ios' ? 80 : '27%' }}>
 
           {/* Posts Section */}
 

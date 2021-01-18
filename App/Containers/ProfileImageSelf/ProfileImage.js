@@ -55,7 +55,7 @@ export default class Splash1 extends React.Component {
       <ScrollView
         nestedScrollEnabled={true}
         contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={{ height: windowHeight, top: Platform.OS === 'ios' ? 40 : 5 }}>
+        <View style={{ height: windowHeight, top: Platform.OS === 'ios' ? 40 : 10 }}>
           <View style={Style.firstBox, { paddingHorizontal: 20 }}>
             <View style={Style.fieldsLine}>
               <Message name="mail" size={25} />
@@ -135,7 +135,7 @@ export default class Splash1 extends React.Component {
             </View>
 
 
-            <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '7%' }}>
+            <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '5%' }}>
               <BottomIcons />
             </View>
 

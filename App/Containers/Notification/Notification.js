@@ -26,20 +26,20 @@ export default class Splash1 extends React.Component {
         {
           id: "1",
           picture: Images.two,
-          text: 'Official and 2 Others rate your photo',
+          text: 'Official and  <strong>2 Others rate </strong> your photo',
           time: '2 sec ago'
 
         },
         {
           id: "2",
           picture: Images.one,
-          text: 'Official and 2 Others rate your photo',
+          text: 'Official and  <strong>2 Others rate </strong> your photo',
           time: '2 sec ago'
         },
         {
           id: "3",
           picture: Images.three,
-          text: 'Official and 2 Others rate your photo',
+          text: 'Official and  <strong>2 Others rate </strong> your photo',
           time: '2 sec ago'
         },
         {
@@ -137,16 +137,16 @@ export default class Splash1 extends React.Component {
               { title: 'This Month', data: this.state.notificationData },
             ]}
             renderItem={({ item }) =>
-              <View style={{ paddingTop: 20 }}>
+              <View style={{ paddingTop: 10 }}>
                 <View style={{
-                  flexDirection: 'row', justifyContent: 'space-around', width: '100%'
+                  flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '95%'
                 }}>
                   < Image style={Style.image1Style}
                     source={item.picture} />
 
-                  <View style={{ marginLeft: -25, marginTop: 5 }}>
+                  <View style={{ marginLeft: '-3%', marginTop: 5 }}>
                     <HTML source={{ html: item.text }} />
-                    <Text style={{ marginTop: -5, color: 'grey' }}>{item.time}</Text>
+                    <Text style={{ marginTop: -3, color: 'grey' }}>{item.time}</Text>
                   </View>
                   <Image style={Style.image2Style}
                     source={item.picture} />
@@ -157,7 +157,7 @@ export default class Splash1 extends React.Component {
               </View>
             }
             keyExtractor={(item, index) => index}
-            renderSectionHeader={({ section }) => <Text style={{ marginStart: 15, fontFamily: 'Poppins-Bold', fontSize: 16 }}>{section.title}</Text>}
+            renderSectionHeader={({ section }) => <Text style={{ marginTop: 20, marginStart: 20, fontFamily: 'Poppins-Bold', fontSize: 16 }}>{section.title}</Text>}
 
           />
 

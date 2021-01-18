@@ -29,7 +29,7 @@ export default class Splash1 extends React.Component {
         },
         {
           id: "4",
-          picture: Images.two,
+          picture: Images.four,
 
         }
       ]
@@ -38,96 +38,53 @@ export default class Splash1 extends React.Component {
   render() {
     return (
 
-      <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25, paddingBottom: 30 }}>
+      <View style={{ top: Platform.OS === 'ios' ? 50 : 15 }}>
         <ScrollView
           nestedScrollEnabled>
-          <View style={Style.firstBox, { paddingHorizontal: 20 }}>
-            <View style={Style.fieldsLine}>
-              <TouchableOpacity
-                onPress={() => NavigationService.goBack()}
-                style={{ flexDirection: 'row' }}>
-                <BACK name="left" size={23}></BACK>
-                <Text style={Style.privacyBtn}>back</Text>
-              </TouchableOpacity>
+          <View>
+            <View style={Style.firstBox, { paddingHorizontal: 20 }}>
+              <View style={Style.fieldsLine}>
+                <TouchableOpacity
+                  onPress={() => NavigationService.goBack()}
+                  style={{ flexDirection: 'row' }}>
+                  <BACK name="left" size={23}></BACK>
+                  <Text style={Style.privacyBtn}>back</Text>
+                </TouchableOpacity>
 
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={Style.privacyBtn}>Explore</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={Style.privacyBtn}>Explore</Text>
+                </View>
               </View>
             </View>
-          </View>
 
-          <View>
-            <Image style={Style.headerImage}
-              resizeMode="cover"
-              source={Images.two} />
-          </View>
+            <View>
+              <Image style={Style.headerImage}
+                resizeMode="cover"
+                source={Images.two} />
+            </View>
 
-          <View style={Style.searchStyle}>
-            <Search name="search" size={40} color='gray' style={{ top: 5, marginLeft: 10 }} />
-            <TextInput
-              style={Style.searchInput}
-              placeholder='Search' placeholderTextColor='gray'
-            />
-            <SCAN name="scan1" size={25} color='gray' style={{ top: 10 }} />
-
-
-          </View>
-
-          <View style={Style.trendingView1}>
-            <Text style={{ color: 'grey' }}>Trending#</Text>
-            <Text style={Style.textStyle}>5 billion</Text>
-          </View>
+            <View style={Style.searchStyle}>
+              <Search name="search" size={30} color='gray' style={{}} />
+              <TextInput
+                style={Style.searchInput}
+                placeholder='Search' placeholderTextColor='gray'
+              />
+              <SCAN name="scan1" size={25} color='gray' style={{}} />
 
 
-
-          <View style={{ marginTop: -5 }}>
-            <FlatList
-              horizontal={true}
-              contentContainerStyle={{ paddingVertical: 5, }}
-              keyExtractor={(item) => item.id}
-
-              data={this.state.data}
-
-              renderItem={({ item }) => {
-
-                return (
-                  <View style={{ flexDirection: 'row', paddingBottom: 40 }}>
-                    <Image style={Style.imageStylee}
-                      source={item.picture} />
-                    <Image style={Style.imageStylee}
-                      source={item.picture} />
-                    <Image style={Style.imageStylee}
-                      source={item.picture} />
-                    <Image style={Style.imageStylee}
-                      source={item.picture} />
-                    <Image style={Style.imageStylee}
-                      source={item.picture} />
-                    <Image style={Style.imageStylee}
-                      source={item.picture} />
-                  </View>
-
-
-
-
-                );
-              }
-
-              }
-
-            />
-
-
-
-
-
+            </View>
 
             <View style={Style.trendingView}>
-              <Text style={{ color: 'grey' }}>Trending#</Text>
+              <Text style={{ fontFamily: 'Poppins-Regular', color: 'black' }}>#LahorePics</Text>
               <Text style={Style.textStyle}>5 billion</Text>
             </View>
-            <View style={{ marginTop: -20 }}>
+
+
+
+            <View style={{ marginTop: 5 }}>
               <FlatList
                 horizontal={true}
+                contentContainerStyle={{ paddingVertical: 5, }}
                 keyExtractor={(item) => item.id}
 
                 data={this.state.data}
@@ -135,19 +92,76 @@ export default class Splash1 extends React.Component {
                 renderItem={({ item }) => {
 
                   return (
-                    <View style={{ flexDirection: 'row', paddingBottom: 40 }}>
+                    <View style={{ flexDirection: 'row', paddingBottom: 5 }}>
+
                       <Image style={Style.imageStylee}
                         source={item.picture} />
+                    </View>
+
+
+
+
+                  );
+                }} />
+
+
+
+
+
+
+              <View style={Style.trendingView1}>
+                <Text style={{ fontFamily: 'Poppins-Regular', color: 'black' }}>#ReactNative</Text>
+                <Text style={Style.textStyle}>5 billion</Text>
+              </View>
+              <View style={{ marginTop: 5 }}>
+
+
+                <FlatList
+                  horizontal={true}
+                  keyExtractor={(item) => item.id}
+
+                  data={this.state.data}
+
+                  renderItem={({ item }) => {
+
+                    return (
+                      <View style={{ flexDirection: 'row' }}>
+                        <Image style={Style.imageStylee}
+                          source={item.picture} />
+
+
+                      </View>
+
+
+
+
+                    );
+                  }
+
+                  }
+
+                />
+
+              </View>
+            </View>
+
+
+            <View style={{ ...Style.trendingView1 }}>
+              <Text style={{ fontFamily: 'Poppins-Regular', color: 'black' }}>#ComputerScience</Text>
+              <Text style={Style.textStyle}>5 billion</Text>
+            </View>
+
+            <View style={{ marginTop: 5 }}>
+              <FlatList
+                horizontal={true}
+                keyExtractor={(item) => item.id}
+                data={this.state.data}
+                renderItem={({ item }) => {
+                  return (
+                    <View style={{ flexDirection: 'row', paddingBottom: 50 }}>
                       <Image style={Style.imageStylee}
                         source={item.picture} />
-                      <Image style={Style.imageStylee}
-                        source={item.picture} />
-                      <Image style={Style.imageStylee}
-                        source={item.picture} />
-                      <Image style={Style.imageStylee}
-                        source={item.picture} />
-                      <Image style={Style.imageStylee}
-                        source={item.picture} />
+
                     </View>
 
 
@@ -159,15 +173,9 @@ export default class Splash1 extends React.Component {
                 }
 
               />
-
             </View>
 
-
-
-
-
           </View>
-
         </ScrollView>
 
       </View>
