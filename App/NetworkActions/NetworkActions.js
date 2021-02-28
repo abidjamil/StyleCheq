@@ -136,11 +136,11 @@ async function GetPeopleToFollow(Token) {
 }
 
 async function GetTimeline(Request, Token) {
-    console.log("Forgot Password Body", Body)
+    console.log("GetTimeline Token", Token)
     return await Promise.resolve(API({
         method: 'GET',
         url: '/api/v1/post/timeline',
-        params: Body,
+        params: Request,
         headers: {
             'Authorization': "Bearer " + Token
         }
@@ -154,4 +154,83 @@ async function GetTimeline(Request, Token) {
     )
 
 }
-export { GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow }
+async function GetProfileSelf(Token) {
+    console.log("GetProfileSelf Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/user/account/user/find',
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+async function GetProfile(Request, Token) {
+    console.log("GetProfile Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/user/account/user/find',
+        params: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+async function ChatAttachment(Request, Token) {
+    console.log("ChatAttachment Token", Request)
+    return await Promise.resolve(API({
+        method: 'POST',
+        url: '/api/v1/user/attachment',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        },
+
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            console.log(JSON.stringify(error))
+            return Promise.reject(error)
+        })
+    )
+
+}
+
+async function GetPreviousChat(Request, Token) {
+    console.log("GetProfile Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/conversation/history',
+        params: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+
+export { GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment }

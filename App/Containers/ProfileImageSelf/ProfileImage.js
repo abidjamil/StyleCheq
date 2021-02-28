@@ -1,6 +1,7 @@
 import React from 'react'
 import { Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView } from 'react-native'
 import Style from './ProfileImageStyle'
+import { connect } from 'react-redux'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import Message from 'react-native-vector-icons/Entypo';
 import User from 'react-native-vector-icons/Entypo';
@@ -12,11 +13,12 @@ import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay'
 import StarRating from 'react-native-star-rating';
 import BottomIcons from '../../Components/BottomIcons'
 import BACK from 'react-native-vector-icons/AntDesign';
+import { NetworkActions } from '../../NetworkActions'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height / 1.056;
 
-
-export default class Splash1 extends React.Component {
+var that;
+class ProfileScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -38,9 +40,28 @@ export default class Splash1 extends React.Component {
           id: "4",
           picture: Images.two,
         }],
+
       starCount: 3.5
     }
+    that = this;
+  }
+  UNSAFE_componentWillMount() {
+    this.getProfile()
+  }
 
+  getProfile() {
+    NetworkActions.GetProfileSelf(that.props.auth.data.token).then
+      (function (response) {
+        console.log(response.data[0])
+        that.setState({ isLoading: false })
+        that.setState({
+          userProfile: response.data[0]
+        })
+      })
+      .catch(function (error) {
+        alert(error)
+        that.setState({ isLoading: false })
+      })
   }
   onStarRatingPress(rating) {
     this.setState({
@@ -84,7 +105,7 @@ export default class Splash1 extends React.Component {
               <Text style={Style.trisaStyle}>TRISA SNOW</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={Style.trisaemail}>@trisasnow_256</Text>
+              <Text style={Style.trisaemail}>@{this.state.userProfile?.username}</Text>
               <View style={{ flexDirection: 'row', marginEnd: 20 }}>
                 <TouchableOpacity
                   style={{ flexDirection: 'row', backgroundColor: '#fff', }}
@@ -103,8 +124,8 @@ export default class Splash1 extends React.Component {
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>512</Text>
-                <Text style={Style.postText}>273k</Text>
+                <Text style={Style.postText}>PostsNumber</Text>
+                <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowBy}</Text>
               </View>
 
               <View style={Style.textView1}>
@@ -114,7 +135,7 @@ export default class Splash1 extends React.Component {
 
               <View style={Style.textView1}>
                 <Text style={Style.postText}>LONDON</Text>
-                <Text style={Style.postText}>512</Text>
+                <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
               </View>
 
               <View style={{ marginTop: 20 }}>
@@ -195,3 +216,17 @@ export default class Splash1 extends React.Component {
 
 
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  auth: state.authTypeReducer.authType,
+  timelineData: state.timelineReducer.timeline
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  timeline: () => dispatch({ type: 'Timeline', payload: that.state.data }),
+
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileScreen)

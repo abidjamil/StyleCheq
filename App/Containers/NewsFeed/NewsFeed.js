@@ -13,6 +13,7 @@ import { BottomSheet } from 'react-native-btr';
 import BottomIcons from '../../Components/BottomIcons'
 import Message from 'react-native-vector-icons/Entypo';
 import User from 'react-native-vector-icons/Entypo';
+import ParsedText from 'react-native-parsed-text';
 
 var that;
 
@@ -25,389 +26,7 @@ class NewsFeed extends React.Component {
       commentsVisible: false,
       refresh: true,
       isLoading: false,
-      data: [
-        {
-          id: '1',
-          name: 'Abid Jamil',
-          username: '@Abid',
-          picture: Images.two,
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_avatar_child_kid-512.png',
-          status: 'Follow',
-          time: '22secs',
-          overallRating: 4.5,
-          totalRating: 107,
-          totalMessages: 400,
-          totalComments: 300,
-          tags: [
-            {
-              type: 1,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 5,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 4,
-              rating: 2.6,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '2',
-          name: 'Kashif Asif',
-          username: '@Kashif668',
-          picture: Images.one,
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_avatar_child_kid-512.png',
-          status: 'Follow',
-          time: '25secs',
-          overallRating: 3.5,
-          totalRating: 127,
-          totalMessages: 330,
-          totalComments: 260,
-          tags: [
-            {
-              type: 3,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 2,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 1,
-              rating: 2.6,
-              link: "",
-            },
-            {
-              type: 7,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '3',
-          name: 'Atif Mehmood',
-          username: '@atiff',
-          picture: Images.three,
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-          status: 'Follow',
-          time: '2 mint',
-          overallRating: 3.7,
-          totalRating: 427,
-          totalMessages: 310,
-          totalComments: 160,
-          tags: [
-            {
-              type: 2,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 6,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 5,
-              rating: 2.6,
-              link: "",
-            },
-            {
-              type: 2,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '4',
-          name: 'Azka Ramzan',
-          username: '@azkaRamzan',
-          picture: Images.four,
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-          status: 'Follow',
-          time: '8 mint',
-          tags: [
-            {
-              type: 1,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 2,
-              rating: 2.6,
-              link: "",
-            },
-            {
-              type: 10,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '5',
-          name: 'Basit Gill',
-          username: '@basit123',
-          picture: Images.one,
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-          status: 'Follow',
-          time: '4 hours',
-          overallRating: 3.5,
-          totalRating: 127,
-          totalMessages: 330,
-          totalComments: 260,
-          tags: [
-            {
-              type: 1,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 4,
-              rating: 2.6,
-              link: "",
-            },
-            {
-              type: 2,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '6',
-          name: 'Anees Ahmad',
-          username: '@aneess',
-          picture: Images.four,
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-          status: 'Follow',
-          time: '5 hours',
-          overallRating: 5.0,
-          totalRating: 127,
-          totalMessages: 600,
-          totalComments: 340,
-          tags: [
-            {
-              type: 1,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 5,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 2.6,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '7',
-          name: 'Anees Ahmad',
-          username: '@aneess',
-          picture: Images.two,
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-          status: 'Follow',
-          time: '2 days',
-          overallRating: 3.7,
-          totalRating: 427,
-          totalMessages: 310,
-          totalComments: 160,
-          tags: [
-            {
-              type: 3,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 5,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 8,
-              rating: 2.6,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '8',
-          name: 'Anees Ahmad',
-          username: '@aneess',
-          picture: Images.one,
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_avatar_child_kid-512.png',
-          status: 'Follow',
-          time: '4 days',
-          overallRating: 4.5,
-          totalRating: 107,
-          totalMessages: 400,
-          totalComments: 300,
-          tags: [
-            {
-              type: 2,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 5,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 3.6,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 2,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '9',
-          name: 'Anees Ahmad',
-          username: '@aneess',
-          picture: Images.three,
-          avatar: 'https://www.w3schools.com/howto/img_avatar.png',
-          status: 'Follow',
-          time: '4 days',
-          overallRating: 3.5,
-          totalRating: 127,
-          totalMessages: 330,
-          totalComments: 260,
-          tags: [
-            {
-              type: 1,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 5,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 7,
-              rating: 4.6,
-              link: "",
-            },
-            {
-              type: 9,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '10',
-          name: 'Anees Ahmad',
-          username: '@aneess',
-          picture: Images.two,
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_avatar_child_kid-512.png',
-          status: 'Follow',
-          time: '4 days',
-          overallRating: 4.5,
-          totalRating: 107,
-          totalMessages: 400,
-          totalComments: 300,
-          tags: [
-            {
-              type: 1,
-              rating: 5,
-              link: "",
-            },
-            {
-              type: 5,
-              rating: 4,
-              link: "",
-            },
-            {
-              type: 4,
-              rating: 2.6,
-              link: "",
-            },
-            {
-              type: 3,
-              rating: 3,
-              link: "",
-            },
-          ]
-        },
-        {
-          id: '11',
-          name: 'Anees Ahmad',
-          username: '@aneess',
-          picture: Images.two,
-          avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_avatar_child_kid-512.png',
-          status: 'Follow',
-          time: '4 days',
-          overallRating: 4.5,
-          totalRating: 107,
-          totalMessages: 400,
-          totalComments: 300,
-          tags: [
-            {
-              type: 1,
-              rating: 2,
-              link: "",
-            },
-            {
-              type: 5,
-              rating: 2.5,
-              link: "",
-            },
-            {
-              type: 2,
-              rating: 3.6,
-              link: "",
-            },
-            {
-              type: 6,
-              rating: 4,
-              link: "",
-            },
-          ]
-        },
-      ],
+      data: props.timelineData,
       commentsData: [
         {
           id: '1',
@@ -461,14 +80,32 @@ class NewsFeed extends React.Component {
   }
 
   UNSAFE_componentWillMount() {
-
+    this.GetTimelineData()
   }
   handleLetsExploreAction() {
 
   }
 
-  toggleComments() {
 
+  GetTimelineData() {
+    const Request = {
+      pageNumber: 1,
+      rowsPerPage: 10
+    }
+    NetworkActions.GetTimeline(Request, that.props.auth.data.token).then
+      (function (response) {
+        that.setState({ isLoading: false })
+        that.setState({
+          data: response
+        })
+        that.props.timeline()
+      })
+      .catch(function (error) {
+        alert(error)
+        that.setState({ isLoading: false })
+      })
+  }
+  toggleComments() {
     this.setState({ commentsVisible: !this.state.commentsVisible })
   }
 
@@ -516,6 +153,7 @@ class NewsFeed extends React.Component {
       refresh: !this.state.refresh
     })
 
+    GetTimeline
 
     const comment = {
       id: this.state.commentsData.length + 1,
@@ -536,6 +174,17 @@ class NewsFeed extends React.Component {
     }
     )
     this.textInput.clear()
+  }
+
+  renderText(matchingString, matches) {
+    // matches => ["[@michel:5455345]", "@michel", "5455345"]
+    let pattern = /\[(@[^:]+):([^\]]+)\]/i;
+    let match = matchingString.match(pattern);
+    return `${match[1]}`;
+  }
+
+  handleNamePress(name, matchIndex /*: number*/) {
+    alert(name)
   }
 
   render() {
@@ -679,41 +328,36 @@ class NewsFeed extends React.Component {
           <FlatList
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ marginTop: 0 }}
-            data={this.state.data}
+            data={this.state.data?.data}
             extraData={this.state.refresh}
             pagingEnabled={true}
             snapToInterval={windowHeight - 80} // Adjust to your content width
             decelerationRate={"fast"}
             snapToAlignment={"start"}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.postId}
             //ListFooterComponent={this.renderFooter.bind(this)}
             // onEndReachedThreshold={0.1}
             // onEndReached={this.handleLoadMore.bind(this)}
             renderItem={({ item }) => (
               < View style={{ width: '100%', height: windowHeight - 80, justifyContent: 'center', alignItems: 'stretch' }}>
 
-                <View >
+                <View>
                   <ImageBackground
                     resizeMode="cover"
                     style={{ width: '100%', justifyContent: 'space-around', overflow: 'hidden', height: '100%' }}
-                    source={item.picture}>
+                    source={{ uri: item.postPicture }}>
                     <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
 
                       <TouchableOpacity
-                        onPress={() => NavigationService.navigate('ProfileImage')}>
-
+                        onPress={() => NavigationService.navigate(item.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf', item)}>
                         <Avatar
                           size="medium"
                           rounded
-                          title={this.state.data.name}
-                          source={{ uri: item.avatar || "https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg" }} />
+                          source={{ uri: item.profilePicture || "https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg" }} />
                       </TouchableOpacity>
 
                       <View>
 
-                        <Text style={Style.rowName}>
-                          {item.name}
-                        </Text>
 
                         <Text style={Style.rowUsername}>
                           {item.username}
@@ -815,8 +459,7 @@ class NewsFeed extends React.Component {
                     </View>
 
 
-                    <View
-                      style={Style.rightSide}>
+                    <View style={Style.rightSide}>
 
                       <View style={{ flexDirection: 'column', alignItems: 'center', }}>
                         <Text style={Style.ratingText}>{item.overallRating} </Text>
@@ -839,7 +482,6 @@ class NewsFeed extends React.Component {
                         </TouchableOpacity>
                       </View>
 
-
                       <View style={{ flexDirection: 'column', alignItems: 'center' }}>
 
                         <Image
@@ -849,14 +491,17 @@ class NewsFeed extends React.Component {
                         <Text style={Style.ratingText}>Share</Text>
                       </View>
 
-
                       <View style={{ flexDirection: 'column', alignItems: 'center' }}>
 
-                        <Image
-                          resizeMode="contain"
-                          style={{ height: 30, width: 30 }}
-                          source={Images.messageIcon} />
-                        <Text style={Style.ratingText}>Message</Text>
+                        <TouchableOpacity
+                          style={{ justifyContent: 'center', alignItems: 'center' }}
+                          onPress={() => NavigationService.navigate('ChatScreen', item)}>
+                          <Image
+                            resizeMode="contain"
+                            style={{ height: 30, width: 30 }}
+                            source={Images.messageIcon} />
+                          <Text style={Style.ratingText}>Message</Text>
+                        </TouchableOpacity>
                       </View>
 
 
@@ -876,7 +521,19 @@ class NewsFeed extends React.Component {
                       </View>
                     </View>
 
+                    <ParsedText
 
+                      style={Style.description}
+                      parse={
+                        [
+                          { pattern: RegExp(item.username), style: Style.name, onPress: this.handleNamePress },
+                          { pattern: /\[(@[^:]+):([^\]]+)\]/i, style: Style.username, onPress: this.handleNamePress, renderText: this.renderText },
+                          { pattern: /#(\w+)/, style: Style.hashtag },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: true }}>
+                      {item.username + ' : ' + item.description}
+                    </ParsedText>
                   </ImageBackground>
 
 
@@ -902,11 +559,12 @@ class NewsFeed extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.signUpReducer.signUp,
-  auth: state.authTypeReducer.authType
+  auth: state.authTypeReducer.authType,
+  timelineData: state.timelineReducer.timeline
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  signup: () => dispatch({ type: 'SignUp', payload: that.state.signupResponse }),
+  timeline: () => dispatch({ type: 'Timeline', payload: that.state.data }),
 
 })
 

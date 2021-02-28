@@ -69,7 +69,7 @@ export default class Splash1 extends React.Component {
 
   renderSuggestionsRow({ item }, hidePanel) {
     return (
-      <TouchableOpacity onPress={() => this.onSuggestionTap(item.name, hidePanel)}>
+      <TouchableOpacity onPress={() => this.onSuggestionTap(item, hidePanel)}>
         <View style={Style.suggestionsRowContainer}>
           <View style={Style.userIconBox}>
             <Text style={Style.usernameInitials}>{!!item.name && item.name.substring(0, 2).toUpperCase()}</Text>
@@ -83,41 +83,26 @@ export default class Splash1 extends React.Component {
     )
   }
 
-  onSuggestionTap(name, hidePanel) {
+  onSuggestionTap(item, hidePanel) {
     hidePanel();
-
-
-    console.log("hiiiiiiii", name)
-    console.log("hello", this.state.value)
-    console.log("umer", this.state.keyword)
-    const comment = this.state.value + name
+    const _comment = this.state.value + item.username
+    const comment = this.state.value + "[" + item.username + ":" + item.id + "]"
     this.setState({
-
-      value: comment
-
+      value: _comment
+    })
+    this.setState({
+      valueData: comment
     })
     console.log(this.state.value)
   }
 
-
   callback(keyword) {
-    if (this.reqTimer) {
-      clearTimeout(this.reqTimer);
-    }
-
+    console.log(keyword)
   }
   handleDescription = (text) => {
+
     this.setState({ value: text })
   }
-
-
-
-
-
-
-
-
-
   chooseImage = () => {
     let options = {
       title: 'Select Picture',
@@ -133,7 +118,7 @@ export default class Splash1 extends React.Component {
 
       }
       else if (response != null) {
-        console.log("URI" + JSON.stringify(response))
+
         const source = { uri: response.path }
         const imagesource = source.uri
         const picture = {
@@ -196,7 +181,6 @@ export default class Splash1 extends React.Component {
 
   render() {
     var image = Platform.OS === 'ios' ? this.state.userImage.uri : 'file://' + this.state.userImage.path
-    console.log(image)
 
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
@@ -275,7 +259,6 @@ export default class Splash1 extends React.Component {
                 suggestionsData={this.state.data} // array of objects
                 keyExtractor={(item, index) => item.id}
                 suggestionRowHeight={45}
-
                 horizontal={false} // defaut is true, change the orientation of the list
                 MaxVisibleRowCount={3} // this is required if horizontal={false}
               />

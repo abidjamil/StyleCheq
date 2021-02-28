@@ -28,13 +28,19 @@ export default StyleSheet.create({
     marginStart: 5,
     color: Colors.white,
     marginTop: 1,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   },
   rowUsername: {
-    fontSize: 10,
-    fontFamily: 'Poppins-Light',
+    fontSize: 12,
+    fontFamily: 'Poppins-Bold',
     marginStart: 5,
     color: Colors.white,
-    marginTop: -4,
+    marginTop: 5,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
   },
   rowStatusFollow: {
     fontSize: 10,
@@ -125,12 +131,7 @@ export default StyleSheet.create({
     paddingBottom: Platform.OS === 'ios' ? 5 : 0,
     paddingEnd: 20
   },
-  rowName: {
-    fontSize: 12,
-    fontFamily: 'Poppins-Bold',
-    marginStart: 2,
-    marginTop: 7,
-  },
+
 
   commentsHeader: {
     fontSize: 12,
@@ -142,12 +143,7 @@ export default StyleSheet.create({
     marginTop: 30,
     marginBottom: 20,
   },
-  rowUsername: {
-    fontSize: 10,
-    fontFamily: 'Poppins',
-    marginStart: 2,
-    marginTop: 0,
-  },
+
   footer: {
     width: '100%',
     height: 70,
@@ -162,25 +158,25 @@ export default StyleSheet.create({
 
   leftSide: {
     width: 100,
-    height: '50%',
+    height: '70%',
     maxHeight: 400,
     flexDirection: 'column',
     justifyContent: 'space-around',
     position: 'absolute', //Here is the trick
     left: 20,
-    bottom: Platform.OS === 'ios' ? 150 : 100,
+    bottom: Platform.OS === 'ios' ? 30 : 30,
     zIndex: 10,
   },
 
   rightSide: {
-    width: 60,
-    height: '40%',
+    width: 100,
+    height: '50%',
     maxHeight: 300,
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     position: 'absolute', //Here is the trick
-    right: 20,
-    bottom: Platform.OS === 'ios' ? 150 : 100,
+    right: 0,
+    bottom: Platform.OS === 'ios' ? 170 : 120,
     zIndex: 10,
   },
 
@@ -231,6 +227,37 @@ export default StyleSheet.create({
   privacyBtn:
   {
     fontFamily: 'Poppins-Regular', paddingRight: 5, fontSize: 14, paddingLeft: 5
+  },
+  description: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+    marginStart: 5,
+    color: Colors.white,
+    marginBottom: Platform.OS === 'ios' ? 120 : 60,
+    marginStart: '5%',
+    marginEnd: '5%',
+    width: '90%',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
+  },
+  username: {
+    fontSize: 11,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: "#edc307",
+  },
+  name: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: Colors.white,
+  },
+  hashtag: {
+    fontSize: 11,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: "#cf0eaf",
   },
   elevationLow: {
     ...Platform.select({
