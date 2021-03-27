@@ -32,9 +32,41 @@ export default StyleSheet.create({
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10
   },
+  commentUserName: {
+    fontSize: 13,
+    fontFamily: 'Poppins-SemiBold',
+    marginStart: 5,
+    color: Colors.white,
+    marginTop: 1,
+  },
   rowUsername: {
     fontSize: 12,
     fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: Colors.white,
+    marginTop: 5,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
+  },
+  commentUsername: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: Colors.black,
+    marginTop: 5,
+  },
+  commentRowTime: {
+    fontSize: 10,
+    fontFamily: 'Poppins-Regular',
+    marginStart: 5,
+    color: Colors.black,
+    marginTop: 5,
+
+  },
+  rowTime: {
+    fontSize: 10,
+    fontFamily: 'Poppins-Regular',
     marginStart: 5,
     color: Colors.white,
     marginTop: 5,
@@ -159,12 +191,11 @@ export default StyleSheet.create({
   leftSide: {
     width: 100,
     height: '70%',
-    maxHeight: 400,
     flexDirection: 'column',
     justifyContent: 'space-around',
     position: 'absolute', //Here is the trick
-    left: 20,
-    bottom: Platform.OS === 'ios' ? 30 : 30,
+    left: -10,
+    top: Platform.OS === 'ios' ? 70 : 90,
     zIndex: 10,
   },
 
@@ -233,7 +264,7 @@ export default StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     marginStart: 5,
     color: Colors.white,
-    marginBottom: Platform.OS === 'ios' ? 120 : 60,
+    bottom: 60,
     marginStart: '5%',
     marginEnd: '5%',
     width: '90%',

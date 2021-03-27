@@ -13,7 +13,7 @@ export default StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     marginStart: '10%',
     marginEnd: '10%',
-    marginTop: 50,
+    marginTop: 30,
   },
   fieldsLabel: {
     fontSize: 12,

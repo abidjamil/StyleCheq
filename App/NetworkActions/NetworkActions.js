@@ -233,4 +233,158 @@ async function GetPreviousChat(Request, Token) {
 
 }
 
-export { GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment }
+async function GetChatHistory(Request, Token) {
+    console.log("GetChatHistory Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/conversation/users/list',
+        params: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+
+async function NewPost(Request, Token) {
+    console.log("GetChatHistory Token", Token)
+    return await Promise.resolve(API({
+        method: 'POST',
+        url: '/api/v1/post/new',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+async function GetUsers(Token) {
+    console.log("GetFollowTo Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: 'api/v1/people/me/followbyAndTo',
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+
+
+async function GetComments(Request, Token) {
+    console.log("GetComments Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: 'api/v1/post/comment',
+        params: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+async function AddComment(Request, Token) {
+    console.log("AddComments Token", Token)
+    return await Promise.resolve(API({
+        method: 'POST',
+        url: 'api/v1/post/comment/new',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+
+async function RateIcon(Request, Token) {
+    console.log("RateIcon Token", Token)
+    return await Promise.resolve(API({
+        method: 'PUT',
+        url: '/api/v1/post/rating/tag',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+
+async function RatePost(Request, Token) {
+    console.log("RateIcon Token", Token)
+    return await Promise.resolve(API({
+        method: 'POST',
+        url: '/api/v1/post/rate',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+async function LikePost(Request, Token) {
+    console.log("LikePost Token", Token)
+    return await Promise.resolve(API({
+        method: 'POST',
+        url: '/api/v1/post/emotion',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+export { LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }

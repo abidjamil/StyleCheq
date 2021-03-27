@@ -63,8 +63,8 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   UserImage: {
-    width: 300,
-    height: 200,
+    width: 500,
+    height: 100,
     alignSelf: 'stretch',
   }
   , PlusSymbol: {
@@ -92,7 +92,6 @@ export default StyleSheet.create({
     width: 45,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#54c19c'
   },
   usernameInitials: {
     color: '#fff',

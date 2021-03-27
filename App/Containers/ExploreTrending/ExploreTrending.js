@@ -119,9 +119,7 @@ export default class Splash1 extends React.Component {
                 <FlatList
                   horizontal={true}
                   keyExtractor={(item) => item.id}
-
                   data={this.state.data}
-
                   renderItem={({ item }) => {
 
                     return (

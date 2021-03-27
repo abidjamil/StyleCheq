@@ -32,7 +32,7 @@ import NotificationScreen from '../Containers/Notification/Notification'
 import PushNotificationScreen from '../Containers/PushNotification/PushNotification'
 import BecomePartnerScreen from '../Containers/BecomePartner/BecomePartner'
 import Chat from '../Containers/Chat/Chat'
-
+import ChatHistory from '../Containers/ChatHistory/ChatHistory'
 /**
  * The root screen contains the application's navigation.
  *
@@ -75,7 +75,8 @@ const StackNavigator = createStackNavigator(
     PrivacySetting: PrivacySetting,
     PushNotificationScreen: PushNotificationScreen,
     BecomePartnerScreen: BecomePartnerScreen,
-    ChatScreen: Chat
+    ChatScreen: Chat,
+    ChatHistory: ChatHistory
   },
   {
     animationEnabled: false,

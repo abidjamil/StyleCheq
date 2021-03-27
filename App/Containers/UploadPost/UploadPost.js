@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, Platform, Text, View, Dimensions, Image, TouchableOpacity, TextInput, FlatList, ScrollView } from 'react-native'
 import Style from './UploadPostStyle'
+import { NetworkActions } from '../../NetworkActions'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import BACK from 'react-native-vector-icons/AntDesign';
 import ImagePicker from 'react-native-image-picker'
@@ -10,15 +12,7 @@ import NavigationService from 'App/Services/NavigationService'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 const { height, width } = Dimensions.get('window');
 var that;
-const users = [
-  { id: "1", name: "Raza Dar", username: "mrazadar", gender: "male" },
-  { id: "3", name: "Atif Rashid", username: "atif.rashid", gender: "male" },
-  { id: "4", name: "Peter Pan", username: "peter.pan", gender: "male" },
-  { id: "5", name: "John Doe", username: "john.doe", gender: "male" },
-  { id: "6", name: "Meesha Shafi", username: "meesha.shafi", gender: "female" }
-];
-
-export default class Splash1 extends React.Component {
+class UploadPost extends React.Component {
 
   constructor(props) {
     super(props)
@@ -27,21 +21,6 @@ export default class Splash1 extends React.Component {
       error: '',
       isLoading: false,
       userImage: null,
-
-
-      value: "",
-      keyword: "",
-      data: [],
-      data: [
-        { id: 1, name: "Raza Dar", username: "mrazadar", gender: "male" },
-        { id: 3, name: "Atif Rashid", username: "atif.rashid", gender: "male" },
-        { id: 4, name: "Peter Pan", username: "peter.pan", gender: "male" },
-        { id: 5, name: "John Doe", username: "john.doe", gender: "male" },
-        { id: 6, name: "Meesha Shafi", username: "meesha.shafi", gender: "female" }
-      ]
-      ,
-
-
       showEditor: true,
       message: null,
       messages: [],
@@ -58,25 +37,68 @@ export default class Splash1 extends React.Component {
   }
 
 
-  bottomSheet
   _onPressButton = () => {
-
     this.bottomSheet.open()
   }
 
+  UNSAFE_componentWillMount() {
+
+    this.getUsersList()
+  }
+
+  onNext() {
+    console.log(this.state.valueData)
+    const data = {
+      media: this.state.userImage,
+      description: this.state.value
+    }
+    NavigationService.navigate('SelectTags', data)
+
+  }
 
 
+  getUsersList() {
+    that.setState({ isLoading: true })
+    NetworkActions.GetUsers(that.props.auth.data.token).then
+      (function (response) {
+        that.setState({ isLoading: false })
+        if (response != null) {
+          if (response.status == 200) {
+            console.log("User Response", response.data)
+            that.setState({ data: response.data, copyData: response.data })
+          }
+          else if (response.status == 406) {
+            that.setState({ error: response.message })
+          }
+          else {
+            alert(response.message)
+          }
+        }
+
+      })
+      .catch(function (error) {
+        alert(error)
+        that.setState({ isLoading: false })
+      })
+  }
 
   renderSuggestionsRow({ item }, hidePanel) {
     return (
       <TouchableOpacity onPress={() => this.onSuggestionTap(item, hidePanel)}>
         <View style={Style.suggestionsRowContainer}>
           <View style={Style.userIconBox}>
-            <Text style={Style.usernameInitials}>{!!item.name && item.name.substring(0, 2).toUpperCase()}</Text>
+            <Image
+              style={{
+                height: 45,
+                width: 45,
+              }}
+              resizeMode="contain"
+              source={{ uri: item.profilePicture }}
+            />
           </View>
           <View style={Style.userDetailsBox}>
-            <Text style={Style.displayNameText}>{item.name}</Text>
-            <Text style={Style.usernameText}>@{item.name}</Text>
+            <Text style={Style.displayNameText}>{item.username}</Text>
+            <Text style={Style.usernameText}>@{item.username}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -85,23 +107,46 @@ export default class Splash1 extends React.Component {
 
   onSuggestionTap(item, hidePanel) {
     hidePanel();
+
     const _comment = this.state.value + item.username
-    const comment = this.state.value + "[" + item.username + ":" + item.id + "]"
+    const comment = this.state.value + " " + item.username
     this.setState({
       value: _comment
     })
     this.setState({
       valueData: comment
     })
-    console.log(this.state.value)
+
   }
 
   callback(keyword) {
-    console.log(keyword)
+
+    keyword = keyword.replace('@', '');
+
+    if (keyword) {      // Inserted text is not blank
+      // Filter the masterDataSource and update FilteredDataSource
+      const newData = this.state.data.filter(
+        function (item) {
+          // Applying filter for the inserted text in search bar
+          const itemData = item.username
+            ? item.username.toUpperCase()
+            : ''.toUpperCase();
+          const textData = keyword.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        }
+      );
+      this.setState({ data: newData });
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      this.setState({ data: this.state.copyData });
+      // setSearch(text);
+    }
   }
   handleDescription = (text) => {
-
+    console.log(text)
     this.setState({ value: text })
+    this.setState({ valueData: text })
   }
   chooseImage = () => {
     let options = {
@@ -130,7 +175,7 @@ export default class Splash1 extends React.Component {
         if (picture.uri != null) {
           this.setState({ userImage: picture })
         }
-
+        this.bottomSheet.close()
       }
     });
 
@@ -164,7 +209,7 @@ export default class Splash1 extends React.Component {
         if (video.uri != null) {
           this.setState({ userImage: video })
         }
-
+        this.bottomSheet.close()
       }
     });
 
@@ -211,7 +256,7 @@ export default class Splash1 extends React.Component {
                 <Image
                   style={Style.UserImage}
                   source={{ uri: image }}
-                  resizeMode="center"
+                  resizeMode="contain"
                 />
               </TouchableOpacity> :
               <TouchableOpacity
@@ -226,15 +271,11 @@ export default class Splash1 extends React.Component {
           </View>
 
 
-          <View
-            style={[
-              Helpers.rowCenter,
-            ]}>
-            <TouchableOpacity style={{ marginTop: 10 }}
-            >
+          <View style={[Helpers.rowCenter,]}>
+            <TouchableOpacity style={{ marginTop: 10 }}>
               <Text onPress={this._onPressButton} style={Style.loginBtn} >
                 Upload
-                   </Text>
+              </Text>
             </TouchableOpacity>
 
           </View>
@@ -247,7 +288,7 @@ export default class Splash1 extends React.Component {
               <MentionsTextInput
                 textInputStyle={{ borderColor: '#ebebeb', borderWidth: 4, padding: 15, fontSize: 15, margin: 20, textAlignVertical: "top", marginTop: 10 }}
                 suggestionsPanelStyle={{ backgroundColor: 'rgba(100,100,100,0.1)' }}
-                loadingComponent={() => <View style={{ flex: 1, width, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator /></View>}
+                loadingComponent={() => <View style={{ flex: 1, width, justifyContent: 'center', alignItems: 'center' }}></View>}
                 textInputMinHeight={150}
                 textInputMaxHeight={200}
                 trigger={'@'}
@@ -262,19 +303,21 @@ export default class Splash1 extends React.Component {
                 horizontal={false} // defaut is true, change the orientation of the list
                 MaxVisibleRowCount={3} // this is required if horizontal={false}
               />
-            </KeyboardAwareScrollView>
-            <View
-              style={[
-                Helpers.rowCenter,
-              ]}>
-              <TouchableOpacity
-              >
-                <Text style={Style.loginBtn}>
-                  Next
-                   </Text>
-              </TouchableOpacity>
+              <View
+                style={[
+                  Helpers.rowCenter,
+                ]}>
 
-            </View>
+                <TouchableOpacity
+                  onPress={() => this.onNext()} >
+                  <Text style={Style.loginBtn}>
+                    Next
+                   </Text>
+                </TouchableOpacity>
+
+              </View>
+            </KeyboardAwareScrollView>
+
 
             <BottomSheet
 
@@ -287,9 +330,6 @@ export default class Splash1 extends React.Component {
               itemDivider={3}
               backButtonEnabled={true}
               coverScreen={true}
-
-
-
               options={[
                 {
                   title: 'Select Image',
@@ -325,3 +365,18 @@ export default class Splash1 extends React.Component {
 
 
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  auth: state.authTypeReducer.authType,
+  timelineData: state.timelineReducer.timeline
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  timeline: () => dispatch({ type: 'Timeline', payload: that.state.data }),
+
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UploadPost)

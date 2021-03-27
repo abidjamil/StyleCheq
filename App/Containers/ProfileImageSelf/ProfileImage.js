@@ -79,7 +79,10 @@ class ProfileScreen extends React.Component {
         <View style={{ height: windowHeight, top: Platform.OS === 'ios' ? 40 : 10 }}>
           <View style={Style.firstBox, { paddingHorizontal: 20 }}>
             <View style={Style.fieldsLine}>
-              <Message name="mail" size={25} />
+              <TouchableOpacity
+                onPress={() => NavigationService.navigate('ChatHistory')}>
+                <Message name="mail" size={25} />
+              </TouchableOpacity>
               <Text style={{ fontSize: 16, fontFamily: 'Poppins-Light', }}>Profile</Text>
 
               <TouchableOpacity
@@ -124,17 +127,15 @@ class ProfileScreen extends React.Component {
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>PostsNumber</Text>
+                <Text style={Style.postText}>{totalPosts}</Text>
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowBy}</Text>
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>LOCATIONS</Text>
                 <Text style={Style.postText}>FOLLOWING</Text>
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>LONDON</Text>
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
               </View>
 

@@ -13,6 +13,8 @@ class SignupUserScreen extends React.Component {
     super(props)
     this.state = {
       username: '',
+      firstname: '',
+      lastname: '',
       error: '',
       isLoading: false
     }
@@ -20,43 +22,55 @@ class SignupUserScreen extends React.Component {
   }
 
   handleUserName = (text) => {
-    this.setState({ username: text })
-    this.setState({ error: '' })
+    this.setState({ username: text, error: '' })
+  }
+  handleFirstName = (text) => {
+    this.setState({ firstname: text })
+  }
+  handleLastName = (text) => {
+    this.setState({ lastname: text })
   }
 
   handleSignupAction() {
     if (this.state.username && this.state.username.length >= 4) {
-      const request = {
-        id: this.props.user.data.id,
-        username: this.state.username,
+      if (this.state.firstname.length > 0 && this.state.lastname.length > 0) {
+        const request = {
+          id: this.props.user.data.id,
+          username: this.state.username,
+          firstName: this.state.firstname,
+          lastName: this.state.lastname
+        }
+        that.setState({ isLoading: true })
+        NetworkActions.SignupStep2(request).then
+          (function (response) {
+            that.setState({ isLoading: false })
+            if (response != null) {
+              if (response.status == 200) {
+                console.log("Username Response", response)
+                that.setState({ signupResponse: response })
+                that.props.signup()
+                NavigationService.navigate("PictureSelectionScreen")
+              }
+              else if (response.status == 406) {
+                that.setState({ error: response.message })
+              }
+              else {
+                alert(response.message)
+              }
+            }
+          })
+          .catch(function (error) {
+            alert(error)
+            that.setState({ isLoading: false })
+          })
       }
-      that.setState({ isLoading: true })
-      NetworkActions.SignupStep2(request).then
-        (function (response) {
-          that.setState({ isLoading: false })
-          if (response != null) {
-            if (response.status == 200) {
-              console.log("Username Response", response)
-              that.setState({ signupResponse: response })
-              that.props.signup()
-              NavigationService.navigate("PictureSelectionScreen")
-            }
-            else if (response.status == 406) {
-              that.setState({ error: response.message })
-            }
-            else {
-              alert(response.message)
-            }
-          }
-        })
-        .catch(function (error) {
-          alert(error)
-          that.setState({ isLoading: false })
-        })
+      else {
+        alert('First Name and Last Name is also mandatory')
+      }
+
     }
     else {
       this.setState({ error: 'Username must contain atleast 4 letters' })
-
     }
   }
   render() {
@@ -96,6 +110,23 @@ class SignupUserScreen extends React.Component {
             <Text style={Style.fieldsError}>
               {this.state.error}
             </Text>
+
+            <Text style={{ ...Style.fieldsLabel, marginTop: 5 }}>
+              First Name
+                </Text>
+
+            <TextInput
+              style={Style.inputField}
+              onChangeText={(text) => this.handleFirstName(text)}
+              placeholder="First Name" />
+
+            <Text style={{ ...Style.fieldsLabel, marginTop: 5 }}>
+              Last Name
+                </Text>
+            <TextInput
+              style={Style.inputField}
+              onChangeText={(text) => this.handleLastName(text)}
+              placeholder="Last Name" />
             <View
               style={[
                 Helpers.rowCenter,

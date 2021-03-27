@@ -20,6 +20,7 @@ console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
 var that;
 class Chat extends React.Component {
     constructor(props) {
+        console.log(props.navigation.state.params)
         super(props)
         this.state = {
             pageNumber: 0,
@@ -116,8 +117,7 @@ class Chat extends React.Component {
             <InputToolbar
                 {...props}
                 containerStyle={{
-
-                    paddingTop: 6,
+                    marginTop: 6,
                 }}
                 primaryStyle={{ alignItems: 'center' }}
             />
@@ -284,6 +284,9 @@ class Chat extends React.Component {
     onSend(messages = []) {
         console.log(messages)
         this.socket.emit("new private message", messages);
+        this.setState({
+            messages: [...this.state.messages, ...messages]
+        });
     }
     onLoadEarlier() {
         that.setState({
@@ -301,7 +304,7 @@ class Chat extends React.Component {
     }
     render() {
         return (
-            <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 10, paddingBottom: Platform.OS === 'ios' ? 80 : 10 }}>
+            <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 10, paddingBottom: Platform.OS === 'ios' ? 80 : 15 }}>
                 <OrientationLoadingOverlay
                     visible={this.state.loading}
                     color={Colors.black}
@@ -328,11 +331,18 @@ class Chat extends React.Component {
 
                 <GiftedChat
                     ref={ref => this.giftedChatRef = ref}
+                    listViewProps={{
+                        style: {
+                            marginBottom: 5
+                        },
+                    }}
                     loadEarlier={true}
                     messages={this.state.messages}
                     showUserAvatar={true}
                     inverted={false}
                     isAnimated={true}
+                    scrollToBottom={true}
+                    infiniteScroll={true}
                     renderAvatarOnTop={true}
                     isLoadingEarlier={this.state.isLoadingEarlier}
                     onLoadEarlier={this.onLoadEarlier}

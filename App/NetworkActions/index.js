@@ -1,4 +1,4 @@
-import { GetPreviousChat, ChatAttachment, GetProfileSelf, GetProfile, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow } from './NetworkActions';
+import { LikePost, RatePost, RateIcon, AddComment, GetComments, NewPost, GetUsers, GetChatHistory, GetPreviousChat, ChatAttachment, GetProfileSelf, GetProfile, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow } from './NetworkActions';
 
 const NetworkActions = {
     AuthAction: AuthAction,
@@ -13,7 +13,15 @@ const NetworkActions = {
     GetProfileSelf: GetProfileSelf,
     GetProfile: GetProfile,
     ChatAttachment: ChatAttachment,
-    GetPreviousChat: GetPreviousChat
+    GetPreviousChat: GetPreviousChat,
+    GetChatHistory: GetChatHistory,
+    NewPost: NewPost,
+    GetUsers: GetUsers,
+    AddComment: AddComment,
+    GetComments: GetComments,
+    RateIcon: RateIcon,
+    RatePost: RatePost,
+    LikePost: LikePost
 
 }
 export {

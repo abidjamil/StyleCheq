@@ -51,10 +51,17 @@ class ProfileScreen extends React.Component {
   }
 
   getProfile() {
-    const Request = {
-      userId: this.state.userData.userId
+    var Request = null
+    if (this.state.userData.userId) {
+      Request = {
+        userId: this.state.userData.userId
+      }
     }
-
+    else {
+      Request = {
+        username: this.state.userData.substring(1)
+      }
+    }
     console.log(this.state.userData.username)
     NetworkActions.GetProfile(Request, that.props.auth.data.token).then
       (function (response) {
@@ -207,12 +214,12 @@ class ProfileScreen extends React.Component {
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>LOCATIONS</Text>
+
                 <Text style={Style.postText}>FOLLOWING</Text>
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>LONDON</Text>
+
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
               </View>
 
