@@ -512,16 +512,16 @@ class NewsFeed extends React.Component {
 
                     <View style={Style.rightSide}>
 
-                      <View style={{ flexDirection: 'column', alignItems: 'center', }}>
-                        <Text style={Style.ratingText}>{item.overallRating} </Text>
+                      <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <TouchableOpacity
+                          style={{ alignItems: 'center', justifyContent: 'center' }}
                           onPress={() => this.setState({ postRatingModal: true, selectedPostForRating: item })}>
-                          <Text style={Style.ratingText}> {item.totalRating}</Text>
+                          <Text style={Style.ratingText}>{item.rating}</Text>
                           <Image
                             resizeMode="contain"
                             style={{ height: 35, width: 35 }}
                             source={Images.big_star} />
-                          <Text style={Style.ratingText}>Rate {item.rating}</Text>
+                          <Text style={Style.ratingText}>Rate {item.totalRating}</Text>
                         </TouchableOpacity>
                       </View>
 
@@ -566,10 +566,10 @@ class NewsFeed extends React.Component {
                     <View
                       style={Style.topRightSide}>
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Image
+                        {/* <Image
                           resizeMode="contain"
                           style={{ height: 20, width: 10 }}
-                          source={Images.three_dots} />
+                          source={Images.three_dots} /> */}
                         <TouchableOpacity
                           onPress={() => this.onLikePost(item)}>
                           <Image

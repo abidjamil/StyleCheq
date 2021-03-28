@@ -6,8 +6,11 @@ import BACK from 'react-native-vector-icons/AntDesign';
 import { StyleSheet } from 'react-native';
 import HTML from "react-native-render-html";
 import NavigationService from 'App/Services/NavigationService'
-
+import { NetworkActions } from '../../NetworkActions'
+import { connect } from 'react-redux'
+import moment from "moment";
 const windowHeight = Dimensions.get("screen").height
+import { Avatar, Accessory, Icon, Input } from 'react-native-elements';
 const windowWidth = Dimensions.get("screen").width
 
 const B = (props) => {
@@ -15,95 +18,59 @@ const B = (props) => {
     Hello
   </Text>
 }
-
-export default class Splash1 extends React.Component {
+var that;
+class NotificationsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
       starCount: 3.5,
-      notificationData: [
-        {
-          id: "1",
-          picture: Images.two,
-          text: 'Official and  <strong>2 Others rate </strong> your photo',
-          time: '2 sec ago'
-
-        },
-        {
-          id: "2",
-          picture: Images.one,
-          text: 'Official and  <strong>2 Others rate </strong> your photo',
-          time: '2 sec ago'
-        },
-        {
-          id: "3",
-          picture: Images.three,
-          text: 'Official and  <strong>2 Others rate </strong> your photo',
-          time: '2 sec ago'
-        },
-        {
-          id: "4",
-          picture: Images.two,
-          text: 'Official and <strong>2 Others rate your</strong> photo',
-          time: '2 sec ago'
-        }
-        ,
-
-        {
-          id: "5",
-          picture: Images.two,
-          text: `Official and <strong>2 Others rate your</strong> photo`,
-          time: '2 sec ago'
-
-        },
-        {
-          id: "6",
-          picture: Images.one,
-          text: 'Official and 2 Others rate your photo',
-          time: '2 sec ago'
-        },
-        {
-          id: "7",
-          picture: Images.three,
-          text: 'Official and 2 Others rate your photo',
-          time: '2 sec ago'
-        },
-        {
-          id: "8",
-          picture: Images.two,
-          text: 'Official and 2 Others rate your photo',
-          time: '2 sec ago'
-        }
-
-      ],
+      todayNotificationData: [],
+      thisMonthNotificationData: [],
+      yesterdayNotificationData: [],
     }
+    that = this;
 
   }
 
+  UNSAFE_componentWillMount() {
+    this.getNotifications()
+  }
 
+  getNotifications() {
+    const today = moment()
+    const yesterday = moment().subtract(1, 'day');
+    const previous = moment().subtract(2, 'day');
+    NetworkActions.GetNotifications(that.props.auth.data.token).then
+      (function (response) {
+
+        if (response.status === 200) {
+          const todayData = response.data.filter((data) =>
+            moment(today).utc().isSame(moment(data.createdAt).utc(), 'day')
+          )
+
+          const yesterDayData = response.data.filter((data) =>
+            moment(yesterday).utc().isSame(moment(data.createdAt).utc(), 'day')
+          )
+
+          const previousData = response.data.filter((data) =>
+            moment(data.createdAt).utc().isBefore(moment(yesterday).utc(), 'day')
+          )
+          that.setState({
+            todayNotificationData: todayData,
+            yesterdayNotificationData: yesterDayData,
+            thisMonthNotificationData: previousData
+          })
+
+        }
+      })
+      .catch(function (error) {
+        alert(JSON.stringify(error))
+      })
+  }
 
   render() {
-    let A = [
-      { id: '1', value: 'Afghanistan' },
-      { id: '2', value: 'Afghanistan' },
-      { id: '3', value: 'Afghanistan' },
-    ];
-    let B = [
-      { id: '4', value: 'Benin' },
-      { id: '5', value: 'Bhutan' },
-      { id: '6', value: 'Bosnia' },
-      { id: '7', value: 'Botswana' },
-      { id: '8', value: 'Brazil' },
-      { id: '9', value: 'Brunei' },
-      { id: '10', value: 'Bulgaria' },
-    ];
-    let C = [
-      { id: '11', value: 'Cambodia' },
-      { id: '12', value: 'Cameroon' },
-      { id: '13', value: 'Canada' },
-      { id: '14', value: 'Cabo' },
-    ];
+
 
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
@@ -125,31 +92,38 @@ export default class Splash1 extends React.Component {
           </View>
         </View>
 
-
-
-
-        <View style={{ paddingBottom: 30 }}>
+        <View style={{ paddingBottom: 80 }}>
 
           <SectionList
             sections={[
-              { title: 'Today', data: this.state.notificationData },
-              { title: 'Yesterday', data: this.state.notificationData },
-              { title: 'This Month', data: this.state.notificationData },
+              { title: 'Today', data: this.state.todayNotificationData },
+              { title: 'Yesterday', data: this.state.yesterdayNotificationData },
+              { title: 'Older', data: this.state.thisMonthNotificationData },
             ]}
             renderItem={({ item }) =>
-              <View style={{ paddingTop: 10 }}>
+              <View style={{ paddingTop: 10, marginStart: 5, marginEnd: 5 }}>
                 <View style={{
-                  flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '95%'
+                  flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: '95%'
                 }}>
-                  < Image style={Style.image1Style}
-                    source={item.picture} />
 
-                  <View style={{ marginLeft: '-3%', marginTop: 5 }}>
-                    <HTML source={{ html: item.text }} />
-                    <Text style={{ marginTop: -3, color: 'grey' }}>{item.time}</Text>
+                  <Avatar
+                    style={{ ...Style.image1Style, }}
+                    size="medium"
+                    rounded
+                    source={{ uri: item.profilePicture }}
+
+                  />
+
+
+                  <View style={{ marginLeft: '3%', marginTop: 5, alignSelf: 'flex-start', flex: 4 }}>
+                    <HTML source={{ html: item.body }}
+                      contentWidth={500}
+                    />
+                    <Text style={{ marginTop: -3, color: 'grey', fontSize: 9, fontFamily: 'Poppins-Regular' }}>{moment(item.createdAt).fromNow()}</Text>
                   </View>
-                  <Image style={Style.image2Style}
-                    source={item.picture} />
+                  <Image style={{ ...Style.image2Style, }}
+
+                    source={{ uri: item.profilePicture }} />
                 </View>
 
 
@@ -253,3 +227,15 @@ export default class Splash1 extends React.Component {
 
 
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  auth: state.authTypeReducer.authType,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NotificationsScreen)

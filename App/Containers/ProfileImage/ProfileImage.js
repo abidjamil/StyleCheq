@@ -209,31 +209,30 @@ class ProfileScreen extends React.Component {
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>512</Text>
+                <Text style={Style.postText}>{this.state.userProfile?.totalPost}</Text>
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowBy}</Text>
               </View>
 
               <View style={Style.textView1}>
 
                 <Text style={Style.postText}>FOLLOWING</Text>
+                <Text style={{ alignSelf: 'flex-end', paddingHorizontal: 30, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>RATING</Text>
               </View>
 
               <View style={Style.textView1}>
 
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
+                <View style={{ paddingHorizontal: 10, flexDirection: 'row', }}>
+                  <Star name="star" size={20} color='#FFC00B' />
+                  <Text style={{ ...Style.postText, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>{this.state.userProfile?.totalProfileRating}</Text>
+
+                </View>
               </View>
 
-              <View style={{ marginTop: 20 }}>
+              <View style={{ marginTop: 5 }}>
 
-                <Text style={{ alignSelf: 'flex-end', paddingHorizontal: 30, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>RATING</Text>
-                <View style={{ alignSelf: 'flex-end', paddingHorizontal: 30, flexDirection: 'row', marginLeft: 10 }}>
 
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular', marginLeft: 5 }}>5000</Text>
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>(</Text>
-                  <Star name="star" size={20} color='#FFC00B' />
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>)</Text>
-                </View>
+
               </View>
               <View style={Style.lastView}>
                 <Text style={Style.lastViewText}>MODEL,ACTRESS,INFLUENCERS YOU CAN HAVE ANYTHING IN LIFE IF YOU DRESS FOR IT. </Text>
