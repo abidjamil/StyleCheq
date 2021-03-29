@@ -141,14 +141,25 @@ class NewsFeed extends React.Component {
     that.setState({ currentComment: text })
   }
   onLikePost(item) {
+    that.setState({ isLoading: true })
     const Request = {
       postId: item.postId,
     }
     NetworkActions.LikePost(Request, that.props.auth.data.token).then
       (function (response) {
         that.setState({ isLoading: false })
+        console.log(response)
         if (response != null) {
           if (response.status == 200) {
+            if (item.isLiked > 0) {
+              item.isLiked = 0
+            }
+            else {
+              item.isLiked = 1
+            }
+            that.setState({
+              refresh: !that.state.refresh
+            })
           }
         }
       })
@@ -271,6 +282,9 @@ class NewsFeed extends React.Component {
                 defaultRating={0}
                 size={30}
                 onFinishRating={(value) => {
+                  that.setState({
+                    isLoading: true
+                  })
                   const request = {
                     postId: this.state.selectedIcon?.post?.postId,
                     tagName: this.state.selectedIcon?.icon?.tagName,
@@ -280,8 +294,14 @@ class NewsFeed extends React.Component {
                     (function (response) {
                       console.log(JSON.stringify(response))
                       that.setState({ ratingModal: false })
+                      that.setState({
+                        isLoading: false
+                      })
                     })
                     .catch(function (error) {
+                      that.setState({
+                        isLoading: false
+                      })
                       alert(error)
                     })
 
@@ -313,6 +333,9 @@ class NewsFeed extends React.Component {
                 defaultRating={0}
                 size={30}
                 onFinishRating={(value) => {
+                  that.setState({
+                    isLoading: true
+                  })
                   const request = {
                     postId: this.state.selectedPostForRating.postId,
                     rating: value
@@ -321,8 +344,14 @@ class NewsFeed extends React.Component {
                     (function (response) {
                       console.log(JSON.stringify(response))
                       that.setState({ postRatingModal: false })
+                      that.setState({
+                        isLoading: false
+                      })
                     })
                     .catch(function (error) {
+                      that.setState({
+                        isLoading: false
+                      })
                       alert(error)
                     })
 
@@ -363,7 +392,6 @@ class NewsFeed extends React.Component {
                   ref={list => { this.commentsList = list }}
                   showsVerticalScrollIndicator={false}
                   style={{ marginTop: 0 }}
-
                   data={this.state.commentsData}
                   extraData={this.state.refresh}
                   keyExtractor={(item) => item.commentId}
@@ -516,7 +544,7 @@ class NewsFeed extends React.Component {
                         <TouchableOpacity
                           style={{ alignItems: 'center', justifyContent: 'center' }}
                           onPress={() => this.setState({ postRatingModal: true, selectedPostForRating: item })}>
-                          <Text style={Style.ratingText}>{item.rating}</Text>
+                          <Text style={Style.ratingText}>{item.avgRating}</Text>
                           <Image
                             resizeMode="contain"
                             style={{ height: 35, width: 35 }}
@@ -575,7 +603,7 @@ class NewsFeed extends React.Component {
                           <Image
                             resizeMode="contain"
                             style={{ height: 30, width: 30 }}
-                            source={Images.handIcon} />
+                            source={item.isLiked > 0 ? Images.handIconBlue : Images.handIcon} />
                         </TouchableOpacity>
                       </View>
                     </View>

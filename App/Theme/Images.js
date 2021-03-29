@@ -19,6 +19,7 @@ export default {
   bottomBar: require('App/Assets/Images/bottom_bar.png'),
   clothesIcon: require('App/Assets/Images/clothes.png'),
   handIcon: require('App/Assets/Images/hand.png'),
+  handIconBlue: require('App/Assets/Images/handIconBlue.png'),
   jeweleryIcon: require('App/Assets/Images/jewelery.png'),
   bodyIcon: require('App/Assets/Images/body.png'),
   makeupIcon: require('App/Assets/Images/makeup.png'),

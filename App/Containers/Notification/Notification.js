@@ -23,11 +23,18 @@ class NotificationsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      pageNumber: 1,
+      rowsPerPage: 100,
       loading: false,
       starCount: 3.5,
       todayNotificationData: [],
       thisMonthNotificationData: [],
       yesterdayNotificationData: [],
+      emptyNotification: [
+        {
+          body: "No Notification"
+        }
+      ]
     }
     that = this;
 
@@ -36,12 +43,32 @@ class NotificationsScreen extends React.Component {
   UNSAFE_componentWillMount() {
     this.getNotifications()
   }
-
+  followPeople(item) {
+    const request = {
+      followTo: item.id,
+    }
+    NetworkActions.FollowUser(request, that.props.auth.data.token).then
+      (function (response) {
+        if (response.status === 200) {
+          item.followStatus = "Following"
+        }
+      })
+      .catch(function (error) {
+        alert(JSON.stringify(error))
+      })
+    this.setState({
+      refresh: !this.state.refresh
+    })
+  }
   getNotifications() {
+    const request = {
+      pageNumber: this.state.pageNumber,
+      rowsPerPage: this.state.rowsPerPage
+    }
     const today = moment()
     const yesterday = moment().subtract(1, 'day');
     const previous = moment().subtract(2, 'day');
-    NetworkActions.GetNotifications(that.props.auth.data.token).then
+    NetworkActions.GetNotifications(request, that.props.auth.data.token).then
       (function (response) {
 
         if (response.status === 200) {
@@ -74,8 +101,6 @@ class NotificationsScreen extends React.Component {
 
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
-
-
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
 
@@ -96,9 +121,9 @@ class NotificationsScreen extends React.Component {
 
           <SectionList
             sections={[
-              { title: 'Today', data: this.state.todayNotificationData },
-              { title: 'Yesterday', data: this.state.yesterdayNotificationData },
-              { title: 'Older', data: this.state.thisMonthNotificationData },
+              { title: 'Today', data: this.state.todayNotificationData.length > 0 ? this.state.todayNotificationData.reverse() : this.state.emptyNotification },
+              { title: 'Yesterday', data: this.state.yesterdayNotificationData.length > 0 ? this.state.yesterdayNotificationData.reverse() : this.state.emptyNotification },
+              { title: 'Older', data: this.state.thisMonthNotificationData.length > 0 ? this.state.thisMonthNotificationData.reverse() : this.state.emptyNotification },
             ]}
             renderItem={({ item }) =>
               <View style={{ paddingTop: 10, marginStart: 5, marginEnd: 5 }}>
@@ -121,9 +146,15 @@ class NotificationsScreen extends React.Component {
                     />
                     <Text style={{ marginTop: -3, color: 'grey', fontSize: 9, fontFamily: 'Poppins-Regular' }}>{moment(item.createdAt).fromNow()}</Text>
                   </View>
-                  <Image style={{ ...Style.image2Style, }}
-
-                    source={{ uri: item.profilePicture }} />
+                  {item.notificationType == "followedBy" ? <TouchableOpacity
+                    onPress={() => this.followPeople(item)}>
+                    <Text style={item.followStatus == 'Following' ? Style.rowStatusFollowing : Style.rowStatusFollow}>
+                      Follow
+                    </Text>
+                  </TouchableOpacity> :
+                    <Image style={{ ...Style.image2Style, }}
+                      source={{ uri: item.postPicture }} />
+                  }
                 </View>
 
 

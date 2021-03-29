@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Helpers, Metrics, Fonts, Colors } from 'App/Theme'
 
 export default StyleSheet.create({
 
@@ -48,6 +49,41 @@ export default StyleSheet.create({
   ModelView: {
     alignSelf: 'center', marginTop: '50%',
     width: 300, backgroundColor: '#fff', borderRadius: 10
-  }
-
+  },
+  rowStatusFollow: {
+    fontSize: 14,
+    fontFamily: 'Poppins',
+    backgroundColor: Colors.primaryColorLogin,
+    color: Colors.white,
+    padding: 5,
+    paddingStart: 15,
+    paddingEnd: 15,
+    borderRadius: 5,
+    overflow: 'hidden',
+    textAlign: 'center'
+  },
+  rowStatusFollowing: {
+    fontSize: 14,
+    fontFamily: 'Poppins',
+    backgroundColor: Colors.white,
+    color: Colors.primaryColorLogin,
+    borderColor: Colors.primaryColorLogin,
+    borderWidth: 0.5,
+    padding: 3,
+    paddingStart: 15,
+    paddingEnd: 15,
+    borderRadius: 5,
+    overflow: 'hidden',
+    textAlign: 'center'
+  },
+  ratingText: {
+    fontSize: 10,
+    fontFamily: 'Poppins-SemiBold',
+    marginStart: 5,
+    color: Colors.white,
+    marginTop: 1,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
+  },
 })

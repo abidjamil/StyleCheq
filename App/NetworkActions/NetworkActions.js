@@ -387,11 +387,12 @@ async function LikePost(Request, Token) {
     )
 
 }
-async function GetNotifications(Token) {
+async function GetNotifications(Request, Token) {
     console.log("GetNotifications Token", Token)
     return await Promise.resolve(API({
         method: 'GET',
         url: '/api/v1/notification/me',
+        params: Request,
         headers: {
             'Authorization': "Bearer " + Token
         }
@@ -404,4 +405,42 @@ async function GetNotifications(Token) {
         })
     )
 }
-export { GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }
+async function GetUserPosts(Request, Token) {
+    console.log("GetNotifications Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/post/user',
+        params: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+
+async function FollowUser(Request, Token) {
+    console.log("FollowUser Token", Token)
+    return await Promise.resolve(API({
+        method: 'POST',
+        url: '/api/v1/people/follow',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+export { FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }

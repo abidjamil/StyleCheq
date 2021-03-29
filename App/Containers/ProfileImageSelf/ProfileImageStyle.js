@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Helpers, Metrics, Fonts, Colors } from 'App/Theme'
 
 export default StyleSheet.create({
 
@@ -8,9 +9,16 @@ export default StyleSheet.create({
     paddingHorizontal: 22,
     flexDirection: 'row'
   },
-
-
-
+  ratingText: {
+    fontSize: 10,
+    fontFamily: 'Poppins-SemiBold',
+    marginStart: 5,
+    color: Colors.white,
+    marginTop: 1,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
+  },
   fieldsLine:
   {
     flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8

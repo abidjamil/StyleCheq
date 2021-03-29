@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Modal, Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView } from 'react-native'
+import { Alert, Platform, TouchableOpacity, Text, View, Dimensions, Image, ScrollView, FlatList, ImageBackground, SafeAreaView } from 'react-native'
 import Style from './ProfileImageStyle'
 import { connect } from 'react-redux'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
@@ -16,32 +16,20 @@ import BACK from 'react-native-vector-icons/AntDesign';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height / 1.056;
 import { NetworkActions } from '../../NetworkActions'
+import Modal from "react-native-modal";
+import { Rating, AirbnbRating } from 'react-native-elements';
 
 var that;
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
+      isLoading: false,
       modalVisible: false,
+      pageNumber: 1,
+      rowsPerPage: 50,
       userData: props.navigation.state.params,
-      data: [
-        {
-          id: "1",
-          picture: Images.two,
-        },
-        {
-          id: "2",
-          picture: Images.one,
-        },
-        {
-          id: "3",
-          picture: Images.three,
-        },
-        {
-          id: "4",
-          picture: Images.two,
-        }],
+      userPosts: [],
       starCount: 3.5
     }
     that = this;
@@ -52,6 +40,7 @@ class ProfileScreen extends React.Component {
 
   getProfile() {
     var Request = null
+    that.setState({ isLoading: true })
     if (this.state.userData.userId) {
       Request = {
         userId: this.state.userData.userId
@@ -65,11 +54,32 @@ class ProfileScreen extends React.Component {
     console.log(this.state.userData.username)
     NetworkActions.GetProfile(Request, that.props.auth.data.token).then
       (function (response) {
-        console.log(response.data[0])
-        that.setState({ isLoading: false })
-        that.setState({
-          userProfile: response.data[0]
-        })
+        if (response.status === 200) {
+          that.setState({
+            userProfile: response.data[0]
+          })
+
+          if (response?.data[0].isFollowedByYou > 0) {
+            const request = {
+              rowsPerPage: that.state.rowsPerPage,
+              pageNumber: that.state.pageNumber,
+              userId: response?.data[0].UserId
+            }
+            NetworkActions.GetUserPosts(request, that.props.auth.data.token).then
+              (function (response) {
+                that.setState({ isLoading: false })
+                if (response.status === 200) {
+                  that.setState({
+                    userPosts: response.data
+                  })
+                }
+              })
+              .catch(function (error) {
+                alert(error)
+                that.setState({ isLoading: false })
+              })
+          }
+        }
       })
       .catch(function (error) {
         alert(error)
@@ -107,6 +117,46 @@ class ProfileScreen extends React.Component {
       { cancelable: false }
     );
   }
+  followPeople(id) {
+    const request = {
+      followTo: id,
+    }
+    NetworkActions.FollowUser(request, that.props.auth.data.token).then
+      (function (response) {
+        if (response.status === 200) {
+          that.setState({
+            userProfile: {
+              isFollowedByYou: 1
+            }
+          })
+          const request = {
+            rowsPerPage: that.state.rowsPerPage,
+            pageNumber: that.state.pageNumber,
+            userId: id
+          }
+          NetworkActions.GetUserPosts(request, that.props.auth.data.token).then
+            (function (response) {
+              that.setState({ isLoading: false })
+              if (response.status === 200) {
+                that.setState({
+                  userPosts: response.data
+                })
+              }
+            })
+            .catch(function (error) {
+              alert(error)
+              that.setState({ isLoading: false })
+            })
+        }
+      })
+      .catch(function (error) {
+        alert(JSON.stringify(error))
+      })
+    this.setState({
+      refresh: !this.state.refresh
+    })
+  }
+
   BlockProfile() {
     Alert.alert(
       'Confirmation',
@@ -181,7 +231,7 @@ class ProfileScreen extends React.Component {
             style={{ height: Platform.OS === 'ios' ? windowHeight - 40 : windowHeight - 10 }}
             source={Images.background}>
             <OrientationLoadingOverlay
-              visible={this.state.loading}
+              visible={this.state.isLoading}
               color={Colors.black}
               indicatorSize="large"
               messageFontSize={12}
@@ -194,6 +244,17 @@ class ProfileScreen extends React.Component {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Style.trisaemail}>@{this.state.userProfile?.username}</Text>
               <View style={{ flexDirection: 'row', marginEnd: 20 }}>
+                {this.state.userProfile?.isFollowedByYou == 0 ?
+                  <TouchableOpacity
+                    onPress={() => this.followPeople(this.state.userProfile?.UserId)}>
+                    <Text style={Style.rowStatusFollow}>
+                      Follow
+                    </Text>
+                  </TouchableOpacity> :
+                  <Text style={Style.rowStatusFollowing}>
+                    Following
+                    </Text>
+                }
                 <TouchableOpacity
                   onPress={() => this.toggleModal()}>
                   <Dot name="dots-three-vertical" size={25} color='#fff' />
@@ -246,41 +307,75 @@ class ProfileScreen extends React.Component {
 
           </ImageBackground>
         </View>
+        <Modal
+          onSwipeComplete={() => this.setState({ postRatingModal: false })}
+          swipeDirection="left"
+          animationIn="zoomIn"
+          animationOut="zoomOut"
+          onBackdropPress={() => this.setState({ postRatingModal: false })}
+          onBackButtonPress={() => this.setState({ postRatingModal: false })}
+          isVisible={this.state.postRatingModal}>
+          <View style={{ width: '100%', height: 200, opacity: 0.7, alignContent: 'center', alignItems: 'center', }}>
+            <View style={{ backgroundColor: 'black', borderRadius: 10, flex: 1, width: '100%', alignContent: 'center', alignItems: 'center', paddingTop: 20 }}>
+              <Image
+                resizeMode="center"
+                style={{ height: 100, width: 100, resizeMode: 'center' }}
+                source={{ uri: this.state.selectedPostForRating?.picture }} />
 
+              <AirbnbRating
+                showRating={false}
+                count={5}
+                defaultRating={0}
+                size={30}
+                onFinishRating={(value) => {
+                  that.setState({
+                    isLoading: true
+                  })
+                  const request = {
+                    postId: this.state.selectedPostForRating.postId,
+                    rating: value
+                  }
+                  NetworkActions.RatePost(request, that.props.auth.data.token).then
+                    (function (response) {
+                      console.log(JSON.stringify(response))
+                      that.setState({ postRatingModal: false })
+                      that.setState({
+                        isLoading: false
+                      })
+                    })
+                    .catch(function (error) {
+                      that.setState({
+                        isLoading: false
+                      })
+                      alert(error)
+                    })
+
+                }}
+              />
+
+            </View>
+          </View>
+        </Modal>
         <SafeAreaView style={{ marginTop: 50 }}>
           <FlatList
             style={{ flex: 1 }}
             contentContainerStyle={{ paddingVertical: 10, }}
             numColumns={2}
             keyExtractor={(item) => item.id}
-            data={this.state.data}
+            data={this.state.userPosts}
             columnWrapperStyle={{ marginHorizontal: 5, marginVertical: 5, }}
             renderItem={({ item }) => {
-              var displayRating = false;
               return (
                 <View style={{ padding: 10, flex: 1 }}>
+
+                  <TouchableOpacity style={{ alignSelf: 'flex-end', marginEnd: 10 }}
+                    onPress={() => this.setState({ postRatingModal: true, selectedPostForRating: item })}>
+                    <Star name="star" size={20} color='#FFC00B' />
+                    <Text style={Style.ratingText}>{item.rating}</Text>
+                  </TouchableOpacity>
                   <Image
-                    style={{ height: 250, width: '100%', borderRadius: 20 }}
-                    source={item.picture} />
-                  <Star name="star" size={20} color='#FFC00B' />
-                  {displayRating == true ?
-                    <StarRating
-
-                      containerStyle={{ width: 50, marginLeft: 20 }}
-                      disabled={false}
-                      maxStars={5}
-                      visible={displayRating}
-                      fullStarColor='#FFC00B'
-                      emptyStarColor='#fff'
-                      starSize={30}
-                      rating={this.state.starCount}
-                      selectedStar={(rating) => this.onStarRatingPress(rating)}
-                    />
-                    : <View>
-
-                    </View>
-
-                  }
+                    style={{ marginTop: -55, zIndex: -1, height: 250, width: '100%', borderRadius: 20 }}
+                    source={{ uri: item.picture }} />
                 </View>
 
               );

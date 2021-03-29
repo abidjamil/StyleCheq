@@ -17,78 +17,6 @@ class SignupUserScreen extends React.Component {
       error: '',
       refresh: true,
       isLoading: false,
-      // data: [
-      //   {
-      //     id: '1',
-      //     name: 'Abid Jamil',
-      //     username: '@Abid',
-      //     picture: 'https://www.w3schools.com/howto/img_avatar.png',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '2',
-      //     name: 'Kashif Asif',
-      //     username: '@Kashif668',
-      //     picture: 'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '3',
-      //     name: 'Atif Mehmood',
-      //     username: '@atiff',
-      //     picture: 'https://i.imgur.com/I80W1Q0.png',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '4',
-      //     name: 'Azka Ramzan',
-      //     username: '@azkaRamzan',
-      //     picture: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_avatar_child_kid-512.png',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '5',
-      //     name: 'Basit Gill',
-      //     username: '@basit123',
-      //     picture: 'https://www.w3schools.com/howto/img_avatar.png',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '6',
-      //     name: 'Anees Ahmad',
-      //     username: '@aneess',
-      //     picture: 'https://i.imgur.com/I80W1Q0.png',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '7',
-      //     name: 'Anees Ahmad',
-      //     username: '@aneess',
-      //     picture: 'https://i.imgur.com/I80W1Q0.png',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '8',
-      //     name: 'Anees Ahmad',
-      //     username: '@aneess',
-      //     picture: 'https://i.imgur.com/I80W1Q0.png',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '9',
-      //     name: 'Anees Ahmad',
-      //     username: '@aneess',
-      //     picture: 'https://i.imgur.com/I80W1Q0.png',
-      //     status: 'Follow'
-      //   },
-      //   {
-      //     id: '10',
-      //     name: 'Anees Ahmad',
-      //     username: '@aneess',
-      //     picture: 'https://i.imgur.com/I80W1Q0.png',
-      //     status: 'Follow'
-      //   },
-      // ]
     }
 
     that = this;
@@ -130,14 +58,25 @@ class SignupUserScreen extends React.Component {
 
   handleSearch(text) {
     this.setState({ searchQuery: text })
+
   }
 
   followPeople(item) {
+    const request = {
+      followTo: item.id,
+    }
+    NetworkActions.FollowUser(request, that.props.auth.data.token).then
+      (function (response) {
+        if (response.status === 200) {
+          item.followStatus = "Following"
+        }
+      })
+      .catch(function (error) {
+        alert(JSON.stringify(error))
+      })
     this.setState({
       refresh: !this.state.refresh
     })
-    console.log(item)
-    item.followStatus = "Following"
   }
   render() {
     return (
