@@ -39,7 +39,7 @@ export default StyleSheet.create({
 
   trisaemail: { color: 'red', paddingHorizontal: 20 },
 
-  textView: { justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, marginTop: 20 },
+  textView: { justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, marginTop: 10 },
 
 
   textView1: { justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, marginTop: 2 },
@@ -47,7 +47,7 @@ export default StyleSheet.create({
 
   postText: { fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' },
 
-  lastView: { marginTop: '20%', paddingHorizontal: 10 },
+  lastView: { bottom: Platform.OS === 'ios' ? 30 : 90, paddingHorizontal: 10 },
 
   lastViewText: { fontSize: 25, fontFamily: 'Poppins-Italic', color: '#fff', },
   modelText: {

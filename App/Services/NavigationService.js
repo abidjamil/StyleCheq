@@ -22,6 +22,12 @@ function setTopLevelNavigator(navigatorRef) {
  * @param params Route parameters.
  */
 function navigate(routeName, params) {
+  if (routeName == "ChatScreen") {
+    global.isChatOpened = true
+  }
+  else {
+    global.isChatOpened = false
+  }
   navigator.dispatch(
     NavigationActions.navigate({
       routeName,
@@ -29,6 +35,7 @@ function navigate(routeName, params) {
     })
   )
 }
+
 
 /**
  * Call this function when you want to navigate to a specific route AND reset the navigation history.
@@ -40,6 +47,12 @@ function navigate(routeName, params) {
  * @param params Route parameters.
  */
 function navigateAndReset(routeName, params) {
+  if (routeName == "ChatScreen") {
+    global.isChatOpened = true
+  }
+  else {
+    global.isChatOpened = false
+  }
   navigator.dispatch(
     StackActions.reset({
       index: 0,
@@ -60,9 +73,15 @@ function goBack() {
   )
 }
 
+function getName() {
+  return navigator.state.routeName
+}
+
+
 export default {
   navigate,
   goBack,
   navigateAndReset,
   setTopLevelNavigator,
+  getName
 }

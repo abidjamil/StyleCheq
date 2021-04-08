@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { Helpers, Metrics, Fonts, Colors } from 'App/Theme'
 
 export default StyleSheet.create({
 
@@ -12,7 +13,19 @@ export default StyleSheet.create({
   {
     fontFamily: 'Poppins-Light', paddingRight: 5, fontSize: 16, paddingLeft: 5
   },
-
+  loginBtn: {
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    backgroundColor: Colors.primaryColorLogin,
+    color: Colors.white,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingStart: 20,
+    paddingEnd: 20,
+    overflow: 'hidden',
+    borderRadius: 17,
+    marginTop: 30,
+  },
   fieldsLine:
   {
     flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8,

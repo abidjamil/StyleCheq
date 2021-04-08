@@ -34,7 +34,7 @@ export default class Splash1 extends React.Component {
 
             <TouchableOpacity
               style={Style.fieldsLine}
-              onPress={() => NavigationService.navigate('UserName')}>
+              onPress={() => NavigationService.navigateAndReset('UserName')}>
               <Text style={{ ...Style.paddingText, paddingLeft: 10 }}>Display Name</Text>
 
               <Text style={{ ...Style.paddingText, paddingRight: 10 }}>@username</Text>
@@ -42,7 +42,7 @@ export default class Splash1 extends React.Component {
           </View>
 
           <TouchableOpacity
-            onPress={() => NavigationService.navigate('EditBio')}
+            onPress={() => NavigationService.navigateAndReset('EditBio')}
             style={Style.fieldsLine}>
 
             <Text style={Style.paddingText}>Bio</Text>

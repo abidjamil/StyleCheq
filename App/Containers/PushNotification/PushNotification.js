@@ -1,38 +1,55 @@
 import React from 'react'
 import { Platform, Text, View, Button, Image, TouchableOpacity, TextInput, ImageBackground } from 'react-native'
 import Style from './PushNotificationStyle'
-import NavigationService from 'App/Services/NavigationService'
 import BACK from 'react-native-vector-icons/AntDesign';
 import ToggleSwitch from 'toggle-switch-react-native'
-
-export default class Splash1 extends React.Component {
-  state = {
-    isOnDefaultToggleSwitch: true,
-    isOnLargeToggleSwitch: false,
-    isOnBlueToggleSwitch: false,
-
-    isOnDefaultToggleSwitch1: true,
-    isOnLargeToggleSwitch1: false,
-    isOnBlueToggleSwitch1: false,
-
-    isOnDefaultToggleSwitch2: true,
-    isOnLargeToggleSwitch2: false,
-    isOnBlueToggleSwitch2: false,
-
-    isOnDefaultToggleSwitch3: true,
-    isOnLargeToggleSwitch3: false,
-    isOnBlueToggleSwitch3: false,
-
-    isOnDefaultToggleSwitch4: true,
-    isOnLargeToggleSwitch4: false,
-    isOnBlueToggleSwitch4: false
-  };
-
-
-
-  onToggle(isOn) {
-    console.log("Changed to " + isOn);
+import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
+import NavigationService from 'App/Services/NavigationService'
+import { NetworkActions } from '../../NetworkActions'
+import { connect } from 'react-redux'
+var that;
+class PrivacySetting extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      AuthData: props.authData.data,
+      notificationPauseAll: false,
+      notificationPostRatingAndComments: true,
+      notificationRatingAndReviews: true,
+      notificationOthers: true,
+      notificationFromStyleCheq: true,
+    };
+    that = this;
   }
+
+  saveSetting() {
+    const request = {
+      notificationPauseAll: this.state.notificationPauseAll + 0,
+      notificationPostRatingAndComments: this.state.notificationPostRatingAndComments + 0,
+      notificationRatingAndReviews: this.state.notificationRatingAndReviews + 0,
+      notificationOthers: this.state.notificationOthers + 0,
+      notificationFromStyleCheq: this.state.notificationFromStyleCheq + 0,
+      accountPrivacy: "public"
+    }
+    NetworkActions.UpdatePrivacy(request, this.state.AuthData.token).then
+      (function (response) {
+        that.setState({ isLoading: false })
+        if (response != null) {
+          if (response.status == 200) {
+            console.log(response)
+            let _AuthData = that.props.authData
+            _AuthData.data.token = response.data,
+              that.props.auth(_AuthData)
+            // NavigationService.goBack()
+          }
+        }
+      })
+      .catch(function (error) {
+        alert(error)
+        that.setState({ isLoading: false })
+      })
+  }
+
   render() {
     return (
       <View style={{ paddingStart: 10, paddingEnd: 10, height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
@@ -66,10 +83,9 @@ export default class Splash1 extends React.Component {
               offColor="#C0C0C0"
               onColor="#0F7EB5"
               size="small"
-              isOn={this.state.isOnDefaultToggleSwitch}
-              onToggle={isOnDefaultToggleSwitch => {
-                this.setState({ isOnDefaultToggleSwitch });
-                this.onToggle(isOnDefaultToggleSwitch);
+              isOn={this.state.notificationPauseAll}
+              onToggle={notificationPauseAll => {
+                this.setState({ notificationPauseAll });
               }}
             />
 
@@ -84,10 +100,9 @@ export default class Splash1 extends React.Component {
               offColor="#C0C0C0"
               onColor="#0F7EB5"
               size="small"
-              isOn={this.state.isOnDefaultToggleSwitch1}
-              onToggle={isOnDefaultToggleSwitch1 => {
-                this.setState({ isOnDefaultToggleSwitch1 });
-                this.onToggle(isOnDefaultToggleSwitch1);
+              isOn={this.state.notificationPostRatingAndComments}
+              onToggle={notificationPostRatingAndComments => {
+                this.setState({ notificationPostRatingAndComments });
               }}
             />
           </View>
@@ -101,10 +116,9 @@ export default class Splash1 extends React.Component {
               offColor="#C0C0C0"
               onColor="#0F7EB5"
               size="small"
-              isOn={this.state.isOnDefaultToggleSwitch4}
-              onToggle={isOnDefaultToggleSwitch4 => {
-                this.setState({ isOnDefaultToggleSwitch4 });
-                this.onToggle(isOnDefaultToggleSwitch4);
+              isOn={this.state.notificationRatingAndReviews}
+              onToggle={notificationRatingAndReviews => {
+                this.setState({ notificationRatingAndReviews });
               }}
             />
 
@@ -117,10 +131,9 @@ export default class Splash1 extends React.Component {
               offColor="#C0C0C0"
               onColor="#0F7EB5"
               size="small"
-              isOn={this.state.isOnDefaultToggleSwitch2}
-              onToggle={isOnDefaultToggleSwitch2 => {
-                this.setState({ isOnDefaultToggleSwitch2 });
-                this.onToggle(isOnDefaultToggleSwitch2);
+              isOn={this.state.notificationOthers}
+              onToggle={notificationOthers => {
+                this.setState({ notificationOthers });
               }}
             />
 
@@ -133,10 +146,9 @@ export default class Splash1 extends React.Component {
               offColor="#C0C0C0"
               onColor="#0F7EB5"
               size="small"
-              isOn={this.state.isOnDefaultToggleSwitch3}
-              onToggle={isOnDefaultToggleSwitch3 => {
-                this.setState({ isOnDefaultToggleSwitch3 });
-                this.onToggle(isOnDefaultToggleSwitch3);
+              isOn={this.state.notificationFromStyleCheq}
+              onToggle={notificationFromStyleCheq => {
+                this.setState({ notificationFromStyleCheq });
               }}
             />
 
@@ -144,10 +156,37 @@ export default class Splash1 extends React.Component {
         </View>
 
 
+        <View
+          style={[
+            Helpers.rowCenter,
+          ]}>
+          <TouchableOpacity
+            onPress={() => this.saveSetting()}>
+            <Text style={Style.loginBtn}>
+              Save
+                   </Text>
+          </TouchableOpacity>
 
+        </View>
       </View>
     )
   }
 
 
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  authData: state.authTypeReducer.authType,
+  timelineData: state.timelineReducer.timeline
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  timeline: () => dispatch({ type: 'Timeline', payload: that.state.data }),
+  auth: (data) => dispatch({ type: 'AUTH_TYPE', payload: data }),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PrivacySetting)
+

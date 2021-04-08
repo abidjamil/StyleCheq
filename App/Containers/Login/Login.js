@@ -40,8 +40,10 @@ class ExampleScreen extends React.Component {
       that.setState({ loading: true })
       const request = {
         username: this.state.email,
-        password: this.state.password
+        password: this.state.password,
+        fcmToken: global?.fcm?.token || "Hello"
       }
+      console.log(request)
       var wrongPass = false
       var message = ""
       NetworkActions.AuthAction(request).then

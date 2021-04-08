@@ -195,7 +195,7 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     position: 'absolute', //Here is the trick
     left: -10,
-    top: Platform.OS === 'ios' ? 70 : 90,
+    top: Platform.OS === 'ios' ? 120 : 90,
     zIndex: 10,
   },
 
@@ -230,10 +230,13 @@ export default StyleSheet.create({
   },
   ratingText: {
     fontSize: 9,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-Bold',
     textAlign: "left",
     marginStart: 5,
-    color: Colors.white
+    color: Colors.white,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
   },
   privacyView: {
     justifyContent: 'space-between',
@@ -264,7 +267,7 @@ export default StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     marginStart: 5,
     color: Colors.white,
-    bottom: 60,
+    bottom: Platform.OS === 'ios' ? 90 : 60,
     marginStart: '5%',
     marginEnd: '5%',
     width: '90%',

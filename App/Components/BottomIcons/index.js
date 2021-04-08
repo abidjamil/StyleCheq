@@ -42,11 +42,14 @@ export default class Splash1 extends React.Component {
               source={Images.addIcon} />
           </TouchableOpacity>
 
+          <TouchableOpacity
+            onPress={() => NavigationService.navigate('Collections')}>
 
-          <Image
-            resizeMode="contain"
-            style={{ width: 30, height: 30 }}
-            source={Images.bottomLike} />
+            <Image
+              resizeMode="contain"
+              style={{ width: 30, height: 30 }}
+              source={Images.bottomLike} />
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => NavigationService.navigate('NewsFeedScreen')}>

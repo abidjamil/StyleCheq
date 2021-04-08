@@ -40,7 +40,7 @@ export default StyleSheet.create({
 
   postText: { fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' },
 
-  lastView: { marginTop: '20%', paddingHorizontal: 10 },
+  lastView: { bottom: Platform.OS === 'ios' ? 30 : 90, paddingHorizontal: 10 },
 
   lastViewText: { fontSize: 25, fontFamily: 'Poppins-Italic', color: '#fff', },
   modelText: {

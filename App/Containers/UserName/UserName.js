@@ -4,13 +4,21 @@ import Style from './UserNameStyle'
 import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
 import BACK from 'react-native-vector-icons/AntDesign';
 import NavigationService from 'App/Services/NavigationService'
+import { NetworkActions } from '../../NetworkActions'
+import { connect } from 'react-redux'
 
-export default class Splash1 extends React.Component {
+var that;
+class Username extends React.Component {
   constructor(props) {
+    console.log(props.authData.data)
     super(props)
     this.state = {
-      loading: false
+      loading: false,
+      firstName: props.authData.data.user.firstName || "",
+      lastName: props.authData.data.user.lastName || "",
+      AuthData: props.authData.data
     }
+    that = this;
   }
   handleFirstName = (text) => {
     this.setState({ firstName: text })
@@ -18,7 +26,36 @@ export default class Splash1 extends React.Component {
   handleLastName = (text) => {
     this.setState({ lastName: text })
   }
+  updateName() {
+    if (this.state.firstName?.length == 0 || this.state.lastName?.length == 0) {
+      alert('Firstname and Lastname is required')
+    }
+    else {
+      const request = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
+      }
+      console.log(this.state.AuthData)
+      NetworkActions.UpdateName(request, this.state.AuthData.token).then
+        (function (response) {
+          that.setState({ isLoading: false })
+          if (response != null) {
+            if (response.status == 200) {
+              let _AuthData = that.props.authData
+              _AuthData.data.user.firstName = that.state.firstName,
+                _AuthData.data.user.lastName = that.state.lastName
 
+              that.props.auth(_AuthData)
+              NavigationService.goBack()
+            }
+          }
+        })
+        .catch(function (error) {
+          alert(error)
+          that.setState({ isLoading: false })
+        })
+    }
+  }
 
   render() {
     return (
@@ -49,6 +86,7 @@ export default class Splash1 extends React.Component {
             <TextInput
               onChangeText={(value) => this.handleFirstName(value)}
               style={Style.searchInput}
+              value={this.state.firstName}
               placeholder='First Name'
               placeholderTextColor='gray'
             />
@@ -66,9 +104,11 @@ export default class Splash1 extends React.Component {
           <Text style={{ marginStart: '3%', }}>Last Name</Text>
           <View style={Style.searchStyle}>
             <TextInput
+              value={this.state.lastName}
               onChangeText={(value) => this.handleLastName(value)}
               style={Style.searchInput}
-              placeholder='Last Name' placeholderTextColor='gray'
+              placeholder='Last Name'
+              placeholderTextColor='gray'
             />
           </View>
 
@@ -77,7 +117,7 @@ export default class Splash1 extends React.Component {
               Helpers.rowCenter,
             ]}>
             <TouchableOpacity
-              onPress={() => NavigationService.goBack()}>
+              onPress={() => this.updateName()}>
               <Text style={Style.loginBtn}>
                 Save
                    </Text>
@@ -94,3 +134,18 @@ export default class Splash1 extends React.Component {
 
 
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  authData: state.authTypeReducer.authType,
+  timelineData: state.timelineReducer.timeline
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  timeline: () => dispatch({ type: 'Timeline', payload: that.state.data }),
+  auth: (data) => dispatch({ type: 'AUTH_TYPE', payload: data }),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Username)

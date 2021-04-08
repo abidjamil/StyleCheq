@@ -167,49 +167,44 @@ class ProfileScreen extends React.Component {
                   style={{ flexDirection: 'row', backgroundColor: '#fff', }}
                   onPress={() => NavigationService.navigate('EditProfile')}>
                   <Text style={{ backgroundColor: '#fff', paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 5, color: 'blue' }}>Edit Profile</Text>
-                  <Verified name="verified" color="green" size={18} style={{ paddingTop: 5, paddingRight: 7 }}></Verified>
+                  <Verified name="verified" color="green" size={18} style={{ paddingTop: 5, paddingRight: 7 }} />
                 </TouchableOpacity>
 
 
               </View>
             </View>
-            <View style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={{ flex: 1 }}>
               <View style={Style.textView}>
                 <Text style={Style.postText}>POSTS</Text>
                 <Text style={Style.postText}>FOLLOWERS</Text>
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>{this.state.userProfile?.totalPosts}</Text>
+                <Text style={Style.postText}>{this.state.userProfile?.totalPost}</Text>
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowBy}</Text>
               </View>
 
               <View style={Style.textView1}>
                 <Text style={Style.postText}>FOLLOWING</Text>
+                <Text style={Style.postText}>RATING</Text>
               </View>
 
               <View style={Style.textView1}>
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
-              </View>
-
-              <View style={{ marginTop: 20 }}>
-
-                <Text style={{ alignSelf: 'flex-end', paddingHorizontal: 30, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>RATING</Text>
-                <View style={{ alignSelf: 'flex-end', paddingHorizontal: 30, flexDirection: 'row', marginLeft: 10 }}>
-
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular', marginLeft: 5 }}>5000</Text>
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>(</Text>
-                  <Star name="star" size={20} color='#FFC00B' />
+                <View style={{ ...Style.postText, flexDirection: 'row' }}>
+                  <Star name="star" size={20} color='#FFC00B' style={{ marginTop: 5 }} />
                   <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>)</Text>
                 </View>
               </View>
-              <View style={Style.lastView}>
-                <Text style={Style.lastViewText}>MODEL,ACTRESS,INFLUENCERS YOU CAN HAVE ANYTHING IN LIFE IF YOU DRESS FOR IT. </Text>
-              </View>
+
+
+
             </View>
 
-
+            <View style={Style.lastView}>
+              <Text style={{ color: '#fff', opacity: 0.6, fontFamily: 'Poppins-Bold', fontSize: 40 }}>BIO</Text>
+              <Text style={Style.lastViewText}>{this.state.userProfile?.bio}</Text>
+            </View>
             <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '5%' }}>
               <BottomIcons />
             </View>

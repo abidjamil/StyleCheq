@@ -45,6 +45,7 @@ class Chat extends React.Component {
                     data: response.data,
                     copyData: response.data
                 })
+
             })
             .catch(function (error) {
                 alert(error)
@@ -127,7 +128,7 @@ class Chat extends React.Component {
                     style={{ marginTop: 10, height: '65%' }}
                     data={this.state.data}
                     extraData={this.state.refresh}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.userId}
                     //ListFooterComponent={this.renderFooter.bind(this)}
                     // onEndReachedThreshold={0.1}
                     // onEndReached={this.handleLoadMore.bind(this)}
@@ -152,15 +153,13 @@ class Chat extends React.Component {
                                             </Text>
                                             <Text style={Style.messageTime}>
                                                 {moment(item.createdAt).format("hh:mm A")}
+
                                             </Text>
-
                                         </View>
-                                        <Text style={Style.messageText}>
-                                            {item.body ? item.body : 'Photo'}
+                                        <Text style={{ ...Style.messageText, fontFamily: item.isRead ? 'Poppins-Regular' : 'Poppins-Bold' }}>
+                                            {item.body ? item.body : 'Photo'} {item.isRead ? <View></View> : <View style={{ paddingStart: 15, borderRadius: 20, width: 10, height: 10, backgroundColor: 'red' }} />}
                                         </Text>
-
                                     </View>
-
 
                                     <View style={{ flex: 1 }}>
                                         <TouchableOpacity

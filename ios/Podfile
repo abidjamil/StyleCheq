@@ -1,7 +1,7 @@
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 
-platform :ios, '9.0'
+platform :ios, '11.0'
 
 target 'StyleCheq' do
   # Pods for StyleCheq
@@ -18,13 +18,15 @@ target 'StyleCheq' do
 
   pod 'toolbar-android', :path => '../node_modules/@react-native-community/toolbar-android'
 
-  target 'StyleCheqTests' do
-    inherit! :complete
-    # Pods for testing
-  end
-   use_flipper!
-  post_install do |installer|
-    flipper_post_install(installer)
-  end
+
+
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
+
+
+  use_flipper!({ 'Flipper-Folly' => '2.3.0' }) # update this part
+post_install do |installer|
+  flipper_post_install(installer)
+end
 end
 

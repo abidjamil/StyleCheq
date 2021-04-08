@@ -33,6 +33,9 @@ import PushNotificationScreen from '../Containers/PushNotification/PushNotificat
 import BecomePartnerScreen from '../Containers/BecomePartner/BecomePartner'
 import Chat from '../Containers/Chat/Chat'
 import ChatHistory from '../Containers/ChatHistory/ChatHistory'
+import Collections from '../Containers/Collections/Collections'
+import CollectionPosts from '../Containers/CollectionPosts/CollectionPosts'
+
 /**
  * The root screen contains the application's navigation.
  *
@@ -76,7 +79,9 @@ const StackNavigator = createStackNavigator(
     PushNotificationScreen: PushNotificationScreen,
     BecomePartnerScreen: BecomePartnerScreen,
     ChatScreen: Chat,
-    ChatHistory: ChatHistory
+    ChatHistory: ChatHistory,
+    Collections: Collections,
+    CollectionPosts: CollectionPosts
   },
   {
     animationEnabled: false,

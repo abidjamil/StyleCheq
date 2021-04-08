@@ -1,9 +1,9 @@
 import API from '../Config/networkSetup';
 async function AuthAction(Body) {
     return await Promise.resolve(API({
-        method: 'GET',
+        method: 'POST',
         url: '/api/v1/user/auth',
-        params: Body,
+        data: Body,
     })
         .then(function (response) {
             console.log("Success Login Response", JSON.stringify(response))
@@ -121,6 +121,26 @@ async function GetPeopleToFollow(Token) {
     return await Promise.resolve(API({
         method: 'GET',
         url: '/api/v1/people/find/top/new',
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+
+async function GetPeopleToFollowSearch(Request, Token) {
+    console.log("Forgot Password Body", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/people/find/top/new',
+        params: Request,
         headers: {
             'Authorization': "Bearer " + Token
         }
@@ -443,4 +463,151 @@ async function FollowUser(Request, Token) {
     )
 
 }
-export { FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }
+
+async function UpdateName(Body, Token) {
+    console.log("Update Name", Body)
+    return await Promise.resolve(API({
+        method: 'PUT',
+        url: '/api/v1/user/account/update/name',
+        data: Body,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+
+async function UpdateBio(Body, Token) {
+    console.log("Update Bio", Body)
+    return await Promise.resolve(API({
+        method: 'PUT',
+        url: '/api/v1/user/account/update/bio',
+        data: Body,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+async function UpdatePrivacy(Body, Token) {
+    console.log("UpdatePrivacy", Body)
+    return await Promise.resolve(API({
+        method: 'PUT',
+        url: '/api/v1/accountSetting/update',
+        data: Body,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+async function GetTrendingWithHash(Request, Token) {
+    console.log("GetNotifications Token", Request)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/post/search/hashtag',
+        params: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+
+async function GetTrending(Token) {
+    console.log("GetNotifications Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/post/tophashtag',
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+async function GetCollections(Token) {
+    console.log("GetNotifications Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/collection/all',
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+async function NewCollection(Request, Token) {
+    console.log("FollowUser Token", Token)
+    return await Promise.resolve(API({
+        method: 'POST',
+        url: '/api/v1/collection/new',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+async function GetCollectionPosts(Request, Token) {
+    console.log("GetNotifications Token", Token)
+    return await Promise.resolve(API({
+        method: 'GET',
+        url: '/api/v1/collection/post/all',
+        params: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+}
+export { GetCollectionPosts, NewCollection, GetCollections, UpdatePrivacy, GetPeopleToFollowSearch, GetTrendingWithHash, GetTrending, UpdateName, UpdateBio, FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }

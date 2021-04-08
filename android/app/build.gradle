@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-
+apply plugin: 'com.google.gms.google-services'
 import com.android.build.OutputFile
 
 /**
@@ -179,8 +179,10 @@ android {
 }
 
 dependencies {
-    
-
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.android.support:appcompat-v7:28.0.0' 
+  implementation 'com.android.support:support-v4:28.0.0'
+    implementation project(':react-native-push-notification')
     implementation project(':react-native-image-picker')
     implementation project(':@react-native-community_google-signin')
     implementation project(':react-native-fbsdk')
@@ -204,4 +206,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

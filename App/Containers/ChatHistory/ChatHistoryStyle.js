@@ -35,7 +35,7 @@ export default StyleSheet.create({
     },
     messageTime:
     {
-        fontFamily: 'Poppins-Regular', paddingTop: 15, fontSize: 9, color: '#7d7d7c', overflow: 'hidden',
+        fontFamily: 'Poppins-Regular', paddingTop: 15, fontSize: 9, color: '#7d7d7c', marginEnd: 5, overflow: 'hidden',
     },
 
     loginBtn: {

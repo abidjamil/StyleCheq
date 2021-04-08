@@ -25,6 +25,22 @@ export default StyleSheet.create({
     marginEnd: '10%',
     marginTop: Platform.OS === 'ios' ? 50 : 25,
   },
+  
+
+  forgotPasswordLabel: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+    marginStart: '10%',
+    marginTop: 10,
+  },
+  forgotPasswordLabelClickHere: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Bold',
+    marginEnd: '10%',
+    marginTop: 10,
+    marginStart: 5,
+    color: Colors.primaryColorLogin
+  },
   fieldsLabel: {
     fontSize: 12,
     fontFamily: 'Poppins-Regular',
@@ -44,22 +60,6 @@ export default StyleSheet.create({
     borderRadius: 30,
     paddingStart: 20,
   },
-
-  forgotPasswordLabel: {
-    fontSize: 12,
-    fontFamily: 'Poppins-Regular',
-    marginStart: '10%',
-    marginTop: 10,
-  },
-  forgotPasswordLabelClickHere: {
-    fontSize: 12,
-    fontFamily: 'Poppins-Bold',
-    marginEnd: '10%',
-    marginTop: 10,
-    marginStart: 5,
-    color: Colors.primaryColorLogin
-  },
-
   loginBtn: {
     fontSize: 16,
     fontFamily: 'Poppins-Regular',

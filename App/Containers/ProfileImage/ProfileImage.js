@@ -55,10 +55,10 @@ class ProfileScreen extends React.Component {
     NetworkActions.GetProfile(Request, that.props.auth.data.token).then
       (function (response) {
         if (response.status === 200) {
+          console.log(response.data[0])
           that.setState({
             userProfile: response.data[0]
           })
-
           if (response?.data[0].isFollowedByYou > 0) {
             const request = {
               rowsPerPage: that.state.rowsPerPage,
@@ -78,6 +78,9 @@ class ProfileScreen extends React.Component {
                 alert(error)
                 that.setState({ isLoading: false })
               })
+          }
+          else {
+            that.setState({ isLoading: false })
           }
         }
       })
@@ -263,7 +266,7 @@ class ProfileScreen extends React.Component {
 
               </View>
             </View>
-            <View style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={{ flex: 1 }}>
               <View style={Style.textView}>
                 <Text style={Style.postText}>POSTS</Text>
                 <Text style={Style.postText}>FOLLOWERS</Text>
@@ -275,32 +278,26 @@ class ProfileScreen extends React.Component {
               </View>
 
               <View style={Style.textView1}>
-
                 <Text style={Style.postText}>FOLLOWING</Text>
-                <Text style={{ alignSelf: 'flex-end', paddingHorizontal: 30, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>RATING</Text>
+                <Text style={Style.postText}>RATING</Text>
               </View>
 
               <View style={Style.textView1}>
-
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
-                <View style={{ paddingHorizontal: 10, flexDirection: 'row', }}>
-                  <Star name="star" size={20} color='#FFC00B' />
-                  <Text style={{ ...Style.postText, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>{this.state.userProfile?.totalProfileRating}</Text>
-
+                <View style={{ ...Style.postText, flexDirection: 'row' }}>
+                  <Star name="star" size={20} color='#FFC00B' style={{ marginTop: 5 }} />
+                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
                 </View>
               </View>
 
-              <View style={{ marginTop: 5 }}>
 
 
-
-              </View>
-              <View style={Style.lastView}>
-                <Text style={Style.lastViewText}>MODEL,ACTRESS,INFLUENCERS YOU CAN HAVE ANYTHING IN LIFE IF YOU DRESS FOR IT. </Text>
-              </View>
             </View>
 
-
+            <View style={Style.lastView}>
+              <Text style={{ color: '#fff', opacity: 0.6, fontFamily: 'Poppins-Bold', fontSize: 40 }}>BIO</Text>
+              <Text style={Style.lastViewText}>{this.state.userProfile?.bio}</Text>
+            </View>
             {/* <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '10%' }}>
               <BottomIcons />
             </View> */}
@@ -367,7 +364,6 @@ class ProfileScreen extends React.Component {
             renderItem={({ item }) => {
               return (
                 <View style={{ padding: 10, flex: 1 }}>
-
                   <TouchableOpacity style={{ alignSelf: 'flex-end', marginEnd: 10 }}
                     onPress={() => this.setState({ postRatingModal: true, selectedPostForRating: item })}>
                     <Star name="star" size={20} color='#FFC00B' />

@@ -35,9 +35,10 @@ class SignupUserScreen extends React.Component {
     NetworkActions.GetPeopleToFollow(that.props.auth.data.token).then
       (function (response) {
         that.setState({ isLoading: false })
-        console.log(that.state.isLoading)
+        console.log(response.data)
         if (response != null) {
           if (response.status == 200) {
+            console.log(response.data)
             that.setState({ data: response.data })
           }
           else if (response.status == 406) {

@@ -4,19 +4,51 @@ import Style from './EditBioStyle'
 import BACK from 'react-native-vector-icons/AntDesign';
 import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
 import NavigationService from 'App/Services/NavigationService'
+import { NetworkActions } from '../../NetworkActions'
+import { connect } from 'react-redux'
 
-export default class Splash1 extends React.Component {
+var that;
+class Bio extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false
+      loading: false,
+      bio: props.authData.data.user.bio || "",
+      AuthData: props.authData.data
     }
-
+    that = this
   }
   handleBio = (text) => {
-    this.setState({ firstName: text })
+    this.setState({ bio: text })
   }
-
+  updateBio() {
+    if (this.state.bio?.length == 0) {
+      alert('Bio is required')
+    }
+    else {
+      const request = {
+        bio: this.state.bio,
+      }
+      console.log(this.state.AuthData)
+      NetworkActions.UpdateBio(request, this.state.AuthData.token).then
+        (function (response) {
+          that.setState({ isLoading: false })
+          if (response != null) {
+            if (response.status == 200) {
+              console.log(response)
+              let _AuthData = that.props.authData
+              _AuthData.data.user.bio = that.state.bio,
+                that.props.auth(_AuthData)
+              NavigationService.goBack()
+            }
+          }
+        })
+        .catch(function (error) {
+          alert(error)
+          that.setState({ isLoading: false })
+        })
+    }
+  }
   render() {
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
@@ -42,6 +74,7 @@ export default class Splash1 extends React.Component {
             onChangeText={(value) => this.handleBio(value)}
             multiline={true}
             numberOfLines={15}
+            value={this.state.bio}
             style={Style.inputTextStyle}
             placeholder='Write Your Bio here!'
             placeholderTextColor='grey'
@@ -53,7 +86,7 @@ export default class Splash1 extends React.Component {
               Helpers.rowCenter,
             ]}>
             <TouchableOpacity
-              onPress={() => NavigationService.goBack()}>
+              onPress={() => this.updateBio()}>
               <Text style={Style.loginBtn}>
                 Done
                    </Text>
@@ -74,3 +107,18 @@ export default class Splash1 extends React.Component {
 
 
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  authData: state.authTypeReducer.authType,
+  timelineData: state.timelineReducer.timeline
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  timeline: () => dispatch({ type: 'Timeline', payload: that.state.data }),
+  auth: (data) => dispatch({ type: 'AUTH_TYPE', payload: data }),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Bio)

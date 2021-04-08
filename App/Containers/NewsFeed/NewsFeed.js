@@ -64,12 +64,12 @@ class NewsFeed extends React.Component {
         that.setState({ isLoading: false })
       })
   }
-  toggleComments(postId) {
+  toggleComments(item) {
     if (this.state.commentsVisible) {
       this.setState({ commentsPageNumber: 1, commentsData: [] })
     } else {
-      this.setState({ currentPostId: postId })
-      this.getComments(postId)
+      this.setState({ currentPostId: item.postId, postByUserId: item.userId })
+      this.getComments(item.postId)
     }
     this.setState({ commentsVisible: !this.state.commentsVisible })
 
@@ -144,7 +144,10 @@ class NewsFeed extends React.Component {
     that.setState({ isLoading: true })
     const Request = {
       postId: item.postId,
+      postByUserId: item.userId,
+      status: item.isLiked > 0 ? 0 : 1
     }
+    console.log(Request)
     NetworkActions.LikePost(Request, that.props.auth.data.token).then
       (function (response) {
         that.setState({ isLoading: false })
@@ -176,9 +179,11 @@ class NewsFeed extends React.Component {
       })
 
       const Request = {
+        postByUserId: this.state.postByUserId,
         postId: this.state.currentPostId,
         comment: this.state.currentComment
       }
+
       NetworkActions.AddComment(Request, that.props.auth.data.token).then
         (function (response) {
           that.setState({ isLoading: false })
@@ -192,7 +197,7 @@ class NewsFeed extends React.Component {
           }
         })
         .catch(function (error) {
-          alert("error" + error)
+          alert("error" + JSON.stringify(error))
           that.setState({ isLoading: false })
         })
     }
@@ -229,13 +234,13 @@ class NewsFeed extends React.Component {
           }}>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
             <Star name="star" size={10} color='#FFC00B' />
-            <Text style={{ marginTop: 4, color: "white", fontSize: 11, fontFamily: 'Poppins-Regular' }}> {item.avgRating} </Text>
+            <Text style={{ ...Style.ratingText, marginTop: 1, marginStart: 1, fontSize: 11, }}> {item.avgRating} </Text>
           </View>
           <Image
-            resizeMode="center"
+            resizeMode="contain"
             style={{ height: 35, width: 35, resizeMode: 'center' }}
             source={this.getIcon(item.tagName)} />
-          <Text style={{ color: "white", fontSize: 11, fontFamily: 'Poppins-Regular' }}>{item.totalRating}</Text>
+          <Text style={{ ...Style.ratingText, marginTop: 1, marginStart: 1, fontSize: 11, }}>{item.totalRating}</Text>
         </TouchableOpacity>
       </View >
 
@@ -288,8 +293,10 @@ class NewsFeed extends React.Component {
                   const request = {
                     postId: this.state.selectedIcon?.post?.postId,
                     tagName: this.state.selectedIcon?.icon?.tagName,
+                    postByUserId: this.state.selectedIcon?.post?.userId,
                     rating: value
                   }
+                  console.log(request)
                   NetworkActions.RateIcon(request, that.props.auth.data.token).then
                     (function (response) {
                       console.log(JSON.stringify(response))
@@ -302,7 +309,7 @@ class NewsFeed extends React.Component {
                       that.setState({
                         isLoading: false
                       })
-                      alert(error)
+                      alert(JSON.stringify(error))
                     })
 
                 }}
@@ -338,6 +345,7 @@ class NewsFeed extends React.Component {
                   })
                   const request = {
                     postId: this.state.selectedPostForRating.postId,
+                    postByUserId: this.state.selectedPostForRating.userId,
                     rating: value
                   }
                   NetworkActions.RatePost(request, that.props.auth.data.token).then
@@ -557,7 +565,7 @@ class NewsFeed extends React.Component {
 
                         <TouchableOpacity
                           style={{ justifyContent: 'center', alignItems: 'center' }}
-                          onPress={() => this.toggleComments(item.postId)}>
+                          onPress={() => this.toggleComments(item)}>
                           <Image
                             resizeMode="contain"
                             style={{ height: 30, width: 30 }}
@@ -575,7 +583,7 @@ class NewsFeed extends React.Component {
                         <Text style={Style.ratingText}>Share</Text>
                       </View> */}
 
-                      <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                      <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
 
                         <TouchableOpacity
                           style={{ justifyContent: 'center', alignItems: 'center' }}
@@ -584,7 +592,7 @@ class NewsFeed extends React.Component {
                             resizeMode="contain"
                             style={{ height: 30, width: 30 }}
                             source={Images.messageIcon} />
-                          <Text style={Style.ratingText}>Message</Text>
+                          <Text style={{ ...Style.ratingText, marginStart: 0 }}>Message</Text>
                         </TouchableOpacity>
                       </View>
 

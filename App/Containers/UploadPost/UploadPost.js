@@ -52,6 +52,8 @@ class UploadPost extends React.Component {
       media: this.state.userImage,
       description: this.state.value
     }
+
+
     NavigationService.navigate('SelectTags', data)
 
   }
@@ -118,7 +120,12 @@ class UploadPost extends React.Component {
     })
 
   }
-
+  getMatches(theString, theRegex) {
+    return theString.match(theRegex).map(function (el) {
+      var index = theString.indexOf(el);
+      return [index, index + el.length - 1];
+    });
+  }
   callback(keyword) {
 
     keyword = keyword.replace('@', '');

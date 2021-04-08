@@ -42,9 +42,14 @@ class UploadPost extends React.Component {
   onToggle(isOn) {
     console.log("Changed to " + isOn);
   }
-
+  getMatches(theString, theRegex) {
+    return theString.match(theRegex).map(function (el) {
+      var index = theString.indexOf(el);
+      return [index, index + el.length - 1];
+    });
+  }
   onNewPost() {
-
+    var arrayData = this.props.navigation.state.params.description.match(/#(\w+)/g)
     var formData = new FormData();
     formData.append('top', this.state.Top + 0)
     formData.append('shoes', this.state.Shoe + 0)
@@ -56,6 +61,7 @@ class UploadPost extends React.Component {
     formData.append('hairs', this.state.Hairs + 0)
     formData.append('physique', this.state.Body + 0)
     formData.append('tatto', this.state.Tatto + 0)
+    formData.append('hashTags', JSON.stringify(arrayData))
     formData.append('description', this.props.navigation.state.params.description)
     formData.append("picture", {
       uri: Platform.OS === 'ios' ? this.props.navigation.state.params.media.uri : 'file://' + this.props.navigation.state.params.media.path,

@@ -36,6 +36,22 @@ class NotificationsScreen extends React.Component {
         }
       ]
     }
+    // const todayData = props.data.filter((data) =>
+    //   moment(today).utc().isSame(moment(data.createdAt).utc(), 'day')
+    // )
+
+    // const yesterDayData = response.data.filter((data) =>
+    //   moment(yesterday).utc().isSame(moment(data.createdAt).utc(), 'day')
+    // )
+
+    // const previousData = response.data.filter((data) =>
+    //   moment(data.createdAt).utc().isBefore(moment(yesterday).utc(), 'day')
+    // )
+    // that.setState({
+    //   todayNotificationData: todayData,
+    //   yesterdayNotificationData: yesterDayData,
+    //   thisMonthNotificationData: previousData
+    // })
     that = this;
 
   }
@@ -72,6 +88,7 @@ class NotificationsScreen extends React.Component {
       (function (response) {
 
         if (response.status === 200) {
+          that.setState({ data: response })
           const todayData = response.data.filter((data) =>
             moment(today).utc().isSame(moment(data.createdAt).utc(), 'day')
           )
@@ -88,7 +105,7 @@ class NotificationsScreen extends React.Component {
             yesterdayNotificationData: yesterDayData,
             thisMonthNotificationData: previousData
           })
-
+          that.props.notificationData()
         }
       })
       .catch(function (error) {
@@ -157,8 +174,6 @@ class NotificationsScreen extends React.Component {
                   }
                 </View>
 
-
-
               </View>
             }
             keyExtractor={(item, index) => index}
@@ -166,92 +181,7 @@ class NotificationsScreen extends React.Component {
 
           />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          <FlatList
-
-            contentContainerStyle={{ paddingVertical: 3, }}
-            numColumns={1}
-            keyExtractor={(item) => item.id}
-
-            data={this.state.data}
-
-            renderItem={({ item }) => {
-
-              return (
-                <View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Image style={Style.image1Style}
-                      source={item.picture} />
-                    <Text style={Style.notifiyText}>{item.text}</Text>
-                    <Image style={Style.image2Style}
-                      source={item.picture} />
-                  </View>
-                  <View style={{ height: 10, paddingBottom: 20 }}>
-                    <Text style={{ marginLeft: 50, marginTop: -10, color: 'grey' }}>{item.time}</Text>
-                  </View>
-                  <View style={{ marginTop: 10, flexDirection: 'row' }}>
-                    <Image style={{ height: 40, width: 40, borderRadius: 20, marginLeft: 5 }}
-                      source={item.picture} />
-                    <Text style={Style.notifiyText1}>{item.text}</Text>
-
-                    <Image style={Style.image2Style}
-                      source={item.picture} />
-                  </View>
-
-
-                  <View style={{ height: 10, paddingBottom: 20 }}>
-                    <Text style={{ marginLeft: 50, marginTop: -10, color: 'grey' }}>{item.time}</Text>
-                  </View>
-                  <View style={{ marginTop: 10, flexDirection: 'row' }}>
-                    <Image style={Style.image2Style}
-                      source={item.picture} />
-                    <Text style={Style.notifiyText1}>{item.text}</Text>
-                    <View style={Style.followBtnStyle}>
-                      <Text style={{ color: '#fff', paddingTop: 10 }}>Follow</Text>
-                    </View>
-                  </View>
-                  <View style={{ height: 10, paddingBottom: 20 }}>
-                    <Text style={{ marginLeft: 50, marginTop: -10, color: 'grey' }}>{item.time}</Text>
-                  </View>
-
-
-                </View>
-
-              );
-            }
-
-            }
-
-          />
         </View>
-
-
-
-
-
       </View>
     )
   }
@@ -261,10 +191,11 @@ class NotificationsScreen extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.signUpReducer.signUp,
   auth: state.authTypeReducer.authType,
+  notification: state.notificationReducer.notification
 })
 
 const mapDispatchToProps = (dispatch) => ({
-
+  notificationData: () => dispatch({ type: 'Notification', payload: that.state.data }),
 })
 export default connect(
   mapStateToProps,

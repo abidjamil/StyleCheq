@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import createStore from 'App/Stores'
 import RootScreen from './Containers/Root/RootScreen'
 import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
 const { store, persistor } = createStore()
+import PushNotification from 'react-native-push-notification'
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
-export default class App extends Component {
+var that;
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: false
+    }
+    that = this
+  }
+  UNSAFE_componentWillMount() {
+  }
   render() {
     return (
       /**
@@ -27,3 +39,6 @@ export default class App extends Component {
     )
   }
 }
+
+
+export default App

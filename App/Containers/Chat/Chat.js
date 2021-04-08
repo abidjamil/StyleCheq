@@ -15,12 +15,14 @@ import NavigationService from 'App/Services/NavigationService'
 import { NetworkActions } from '../../NetworkActions'
 import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay';
 import API from '../../Config/networkSetup';
+import { NavigationEvents } from 'react-navigation';
 
 console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
 var that;
 class Chat extends React.Component {
     constructor(props) {
         console.log(props.navigation.state.params)
+        global.isChatOpened = true
         super(props)
         this.state = {
             pageNumber: 0,
@@ -32,6 +34,7 @@ class Chat extends React.Component {
             userData: props.navigation.state.params
         }
         that = this;
+
     }
 
 
@@ -153,18 +156,22 @@ class Chat extends React.Component {
 
             })
             .catch(function (error) {
-
+                console.log(JSON.stringify(error))
             })
     }
 
     UNSAFE_componentWillMount() {
+
         this.GetPreviousChat()
         // const socket = io.connect('http://ec2-3-224-83-45.compute-1.amazonaws.com:4000?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1QzMxNDgwLTNBNDAtMTFFQi04MzMxLTAzNTNGQ0UwNzc0MyIsInVzZXJuYW1lIjoiYWJpZDU1IiwidHlwZSI6IlVTRVIiLCJjcmVhdGVkT24iOiIyMDIxLTAyLTAyVDA5OjA0OjAwWiIsImlhdCI6MTYxMjI1NjY0MCwiZXhwIjoxNjEzNTUyNjQwfQ.7AxmICQulTatNss_BkiSlM6AzVaLkbKWyg9ZBkw71y0&name=abid');
-
+        const name = ((this.props.auth.data?.user.firstName || "First") + " " + (this.props.auth.data?.user.lastName || "Last"))
+        console.log(name)
         this.socket = io('http://ec2-3-224-83-45.compute-1.amazonaws.com:4000', {
+
             query: {
                 token: this.props.auth.data?.token,
-                sendToUserId: this.state.userData.userId
+                sendToUserId: this.state.userData.userId,
+                senderName: name
             }
         });
 
@@ -304,7 +311,9 @@ class Chat extends React.Component {
     }
     render() {
         return (
+
             <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 10, paddingBottom: Platform.OS === 'ios' ? 80 : 15 }}>
+
                 <OrientationLoadingOverlay
                     visible={this.state.loading}
                     color={Colors.black}
@@ -316,7 +325,7 @@ class Chat extends React.Component {
                     <View style={Style.fieldsLine}>
                         <View style={{ flexDirection: 'row' }}>
                             <TouchableOpacity
-                                onPress={() => NavigationService.goBack()}
+                                onPress={() => { global.isChatOpened = false; NavigationService.goBack() }}
                                 style={{ flexDirection: 'row' }}>
                                 <BACK name="left" size={23}></BACK>
                                 <Text style={Style.privacyBtn}>back</Text>
