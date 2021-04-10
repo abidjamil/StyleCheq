@@ -44,9 +44,7 @@ const styles = StyleSheet.create({
 // styled-component
 
 export const Wrapper = styled.View`
-  justify-content: space-around;
   padding: 20px;
-  align-items: center;
   flex-direction: column;
   overflow: hidden;
   height: 100%;
