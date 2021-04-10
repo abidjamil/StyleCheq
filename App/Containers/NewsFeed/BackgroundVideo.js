@@ -11,7 +11,6 @@ export default class BackgroundVideo extends Component {
   }
 
   render() {
-console.log('dfihdhf', this.props.children)
     return (
       <View>
         <Video

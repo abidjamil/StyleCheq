@@ -550,7 +550,6 @@ class NewsFeed extends React.Component {
             // onEndReachedThreshold={0.1}
             // onEndReached={this.handleLoadMore.bind(this)}
             renderItem={({ item, index }) => {
-              if (index === 0) console.log('item--------------', item)
               return (
                 <View
                   style={{
