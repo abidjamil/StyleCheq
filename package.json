@@ -72,6 +72,7 @@
     "react-native-textarea": "^1.0.4",
     "react-native-timeago": "^0.5.0",
     "react-native-vector-icons": "^7.1.0",
+    "react-native-video": "^5.1.1",
     "react-navigation": "^4.4.1",
     "react-navigation-stack": "2.8.3",
     "react-redux": "^6.0.1",
@@ -80,6 +81,7 @@
     "redux-saga": "^1.0.2",
     "reduxsauce": "^1.0.1",
     "socket.io-client": "^3.1.1",
+    "styled-components": "^5.2.3",
     "toggle-switch-react-native": "^2.3.0"
   },
   "devDependencies": {
