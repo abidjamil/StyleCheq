@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import io.invertase.firebase.RNFirebasePackage;
+import com.brentvatne.react.ReactVideoPackage;
 import com.staltz.reactnativeandroidlocalnotification.NotificationPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.reactnativecommunity.toolbarandroid.ReactToolbarPackage;

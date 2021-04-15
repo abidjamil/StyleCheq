@@ -170,15 +170,17 @@ class UploadPost extends React.Component {
 
       }
       else if (response != null) {
-
+        console.log(response)
         const source = { uri: response.path }
         const imagesource = source.uri
         const picture = {
           uri: response.uri,
           data: response.data,
           type: response.type,
-          path: response.path
+          path: response.path,
+          name: response.fileName
         }
+
         if (picture.uri != null) {
           this.setState({ userImage: picture })
         }
@@ -204,14 +206,15 @@ class UploadPost extends React.Component {
 
       }
       else if (response != null) {
-        console.log("URI" + JSON.stringify(response))
+        console.log(response)
         const source = { uri: response.path }
         const imagesource = source.uri
         const video = {
           uri: response.uri,
           data: response.data,
           type: response.type,
-          path: response.path
+          path: response.path,
+          name: response.path.substring(response.path.lastIndexOf('/') + 1)
         }
         if (video.uri != null) {
           this.setState({ userImage: video })

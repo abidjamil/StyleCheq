@@ -212,13 +212,13 @@ export default StyleSheet.create({
   },
 
   topRightSide: {
-    width: 60,
+    width: 50,
     height: '10%',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     position: 'absolute', //Here is the trick
     right: 10,
-    top: 0,
+    top: 5,
     zIndex: 10,
   },
   footerImage: {

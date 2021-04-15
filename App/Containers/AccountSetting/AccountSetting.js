@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 class AccountSetting extends React.Component {
 
   logout() {
-
+    this.props.auth()
     NavigationService.navigateAndReset('LoginScreen')
   }
   render() {

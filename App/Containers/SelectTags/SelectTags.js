@@ -21,6 +21,7 @@ import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay'
 var that;
 class UploadPost extends React.Component {
   constructor(props) {
+    console.log(props.navigation.state.params.media.name)
     super(props)
     this.state = {
       isLoading: false,
@@ -65,10 +66,10 @@ class UploadPost extends React.Component {
     formData.append('description', this.props.navigation.state.params.description)
     formData.append("picture", {
       uri: Platform.OS === 'ios' ? this.props.navigation.state.params.media.uri : 'file://' + this.props.navigation.state.params.media.path,
-      type: this.props.navigation.state.params.media.type,
-      name: "temp",
+      type: this.props.navigation.state.params.media.type || "video/mp4",
+      name: this.props.navigation.state.params.media.name,
     });
-    console.log(formData)
+    console.log(this.props.navigation.state.params.media.name)
     if (this.state.count < 5) {
       alert('Please select atleast 5 tags')
     }

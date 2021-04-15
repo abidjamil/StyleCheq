@@ -610,4 +610,26 @@ async function GetCollectionPosts(Request, Token) {
         })
     )
 }
-export { GetCollectionPosts, NewCollection, GetCollections, UpdatePrivacy, GetPeopleToFollowSearch, GetTrendingWithHash, GetTrending, UpdateName, UpdateBio, FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }
+async function GETFCM(Request) {
+    console.log("ChatAttachment Token", Request)
+    return await Promise.resolve(API({
+        method: 'POST',
+        url: 'https://iid.googleapis.com/iid/v1:batchImport',
+        data: Request,
+        headers: {
+            'Authorization': "key=AAAAFsrnE1w:APA91bHsGNFkcCkAb_u2xECsvf7gJi90gZE31v5LNy9FSrDB6AdbOWdCZgZ1h4KON9C2FlpmMXgG96O20Alyr4pa3BNvgGHttoIG7cgTf9jkTRJWb7lhxVERW8Kqb1Wa1eFszqupWPX7"
+        },
+
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            console.log(JSON.stringify(error))
+            return Promise.reject(error)
+        })
+    )
+
+}
+
+export { GETFCM, GetCollectionPosts, NewCollection, GetCollections, UpdatePrivacy, GetPeopleToFollowSearch, GetTrendingWithHash, GetTrending, UpdateName, UpdateBio, FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }
