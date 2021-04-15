@@ -8,16 +8,37 @@ import { PropTypes } from 'prop-types'
 import { Helpers } from 'App/Theme'
 import PushNotification from 'react-native-push-notification'
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { NetworkActions } from '../../NetworkActions'
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function (token) {
     console.log('TOKEN:', token)
-    global.fcm = token
+    if (token.os == "ios") {
+      const request = {
+        application: "org.crecode.stylecheqApp",
+        sandbox: true,
+        apns_tokens: [
+          token.token
+        ]
+      }
+      console.log(request)
+      NetworkActions.GETFCM(request).then(
+        function (response) {
+          global.fcm = response?.results[0]?.registration_token
+          console.log(response?.results[0]?.registration_token)
+        })
+        .catch(function (error) {
+          console.log(JSON.stringify(error))
+        })
+    }
+    else {
+      global.fcm = token.token
+    }
+
   },
   onRegistrationError: function (error) {
     console.log('Error:', error)
-    global.fcm = token
   },
   // (required) Called when a remote or local notification is opened or received
   onNotification: function (notification) {
@@ -66,7 +87,6 @@ PushNotification.configure({
       }
 
     }
-
     notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
   // Android only: GCM or FCM Sender ID

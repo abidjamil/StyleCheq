@@ -12,6 +12,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <Firebase.h>
 
 
 @implementation AppDelegate
@@ -20,9 +21,17 @@
   [FBSDKAppEvents activateApp];
 }
 
+// Required to register for notifications
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+  (NSLog(@"RNPN USER"));
+  [RNCPushNotificationIOS didRegisterUserNotificationSettings:notificationSettings];
+}
+
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+  (NSLog(@"RNPN REGISTERED"));
  [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 // Required for the notification event. You must call the completion handler after handling the remote notification.
@@ -41,6 +50,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 didReceiveNotificationResponse:(UNNotificationResponse *)response
          withCompletionHandler:(void (^)(void))completionHandler
 {
+  (NSLog(@"RNPN FAILED"));
   [RNCPushNotificationIOS didReceiveNotificationResponse:response];
 }
 
@@ -55,9 +65,11 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-
-
 {
+  if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
+
   [[FBSDKApplicationDelegate sharedInstance] application:application
     didFinishLaunchingWithOptions:launchOptions];
 

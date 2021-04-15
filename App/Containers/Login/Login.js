@@ -41,7 +41,7 @@ class ExampleScreen extends React.Component {
       const request = {
         username: this.state.email,
         password: this.state.password,
-        fcmToken: global?.fcm?.token || "Hello"
+        fcmToken: global?.fcm
       }
       console.log(request)
       var wrongPass = false

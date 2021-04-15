@@ -21,7 +21,7 @@ class SplashScreen extends React.Component {
         NavigationService.navigateAndReset('NewsFeedScreen')
       }
 
-    }, 3000)
+    }, 5000)
   }
   render() {
 
