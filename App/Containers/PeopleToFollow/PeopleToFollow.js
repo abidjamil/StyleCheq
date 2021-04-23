@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, Text, View, FlatList, Button, ActivityIndicator, TouchableOpacity, ImageBackground } from 'react-native'
+import { Platform, TextInput, Text, View, FlatList, Button, ActivityIndicator, TouchableOpacity, ImageBackground } from 'react-native'
 import { connect } from 'react-redux'
 import { NetworkActions } from '../../NetworkActions'
 import Style from './PeopleToFollowStyle'
@@ -7,7 +7,9 @@ import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay';
 import NavigationService from 'App/Services/NavigationService'
 import { Avatar, Accessory, Icon, Input } from 'react-native-elements';
-import { Searchbar } from 'react-native-paper';
+import { SearchBar } from 'react-native-elements';
+import SCAN from 'react-native-vector-icons/AntDesign';
+import Search from 'react-native-vector-icons/EvilIcons';
 var that;
 class SignupUserScreen extends React.Component {
   constructor(props) {
@@ -17,6 +19,7 @@ class SignupUserScreen extends React.Component {
       error: '',
       refresh: true,
       isLoading: false,
+      data: []
     }
 
     that = this;
@@ -55,24 +58,58 @@ class SignupUserScreen extends React.Component {
         that.setState({ isLoading: false })
       })
   }
+  onSearch() {
+    if (this.state.searchQuery.length == 0) {
+      that.setState({ isLoading: true })
+      that.getDataFromServer()
+      that.setState({ isLoading: false })
+    }
+    else {
+      const request = {
+        query: this.state.searchQuery
+      }
+      console.log(request)
+      NetworkActions.GetPeopleToFollowSearch(request, that.props.auth.data.token).then
+        (function (response) {
+          if (response.status === 200) {
+            console.log(response.data)
+            that.setState({ data: response.data })
+          }
+        })
+        .catch(function (error) {
+          alert(JSON.stringify(error))
+        })
 
+    }
+  }
 
   handleSearch(text) {
-    this.setState({ searchQuery: text })
-
+    if (text === "") {
+      that.setState({ isLoading: true })
+      that.getDataFromServer()
+      that.setState({ isLoading: false })
+    }
+    else {
+      this.setState({ searchQuery: text })
+    }
   }
 
   followPeople(item) {
     const request = {
       followTo: item.id,
     }
+    item.followStatus = "Following"
+    that.setState({ isLoading: true })
     NetworkActions.FollowUser(request, that.props.auth.data.token).then
       (function (response) {
+        that.setState({ isLoading: false })
+        console.log(response)
         if (response.status === 200) {
           item.followStatus = "Following"
         }
       })
       .catch(function (error) {
+        that.setState({ isLoading: false })
         alert(JSON.stringify(error))
       })
     this.setState({
@@ -83,7 +120,6 @@ class SignupUserScreen extends React.Component {
     return (
       <View
         style={{ flex: 1, backgroundColor: 'white' }}>
-
         <OrientationLoadingOverlay
           visible={that.state.isLoading}
           color={Colors.primaryColorLogin}
@@ -93,78 +129,83 @@ class SignupUserScreen extends React.Component {
         />
 
         <View>
-          <Text style={{ ...Style.skipHeaderText, textAlign: 'right' }}>
-            Skip
+          <TouchableOpacity
+            onPress={() => this.handleLetsExploreAction()}>
+            <Text style={{ ...Style.skipHeaderText, textAlign: 'right' }}>
+              Skip
               </Text>
-
+          </TouchableOpacity>
           <Text style={Style.loginHeaderText}>
             People to Follow
                 </Text>
 
-          <View>
-            <Searchbar
-              inputStyle={{ fontSize: 14 }}
-              style={{ margin: 20, marginBottom: 0, borderRadius: 20, color: 'black' }}
-              placeholder="Search by username"
-              onChangeText={(text) => this.handleSearch(text)}
-              value={this.state.searchQuery}
+          <View style={Style.searchStyle}>
+            <Search name="search" size={30} color='gray' style={{}} />
+            <TextInput
+              onChangeText={(value) => this.handleSearch(value)}
+              value={this.state.value}
+              style={Style.searchInput}
+              placeholder='Search' placeholderTextColor='gray'
             />
-
+            <TouchableOpacity onPress={() => this.onSearch()}>
+              <SCAN name="scan1" size={25} color='gray' />
+            </TouchableOpacity>
           </View>
-          <Text style={Style.fieldsError}>
-            {this.state.error}
-          </Text>
-
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            style={{ marginTop: 0, height: '65%' }}
-            data={this.state.data}
-            extraData={this.state.refresh}
-            keyExtractor={(item) => item.id}
-            //ListFooterComponent={this.renderFooter.bind(this)}
-            // onEndReachedThreshold={0.1}
-            // onEndReached={this.handleLoadMore.bind(this)}
-            renderItem={({ item }) => (
-              < View style={{ flex: 1, backgroundColor: 'white', marginStart: '5%', marginEnd: '5%' }}>
-                <View style={{ flexDirection: 'row', margin: 10, height: 50 }}>
-
-                  <View style={{ flex: 1 }}>
-                    <Avatar
-                      size="medium"
-                      rounded
-                      title={this.state.data.name}
-                      source={{ uri: item.profilePicture || "https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg" }}
-
-                    />
-                  </View>
-                  <View style={{ flex: 3 }}>
-                    <Text style={Style.rowName}>
-                      {item.name || "Missing Name"}
-                    </Text>
-
-                    <Text style={Style.rowUsername}>
-                      {item.username}
-                    </Text>
-                  </View>
 
 
-                  <View style={{ flex: 1 }}>
-                    <TouchableOpacity
-                      onPress={() => this.followPeople(item)}>
-                      <Text style={item.followStatus == 'Following' ? Style.rowStatusFollowing : Style.rowStatusFollow}>
-                        {item.followStatus}
+          {this.state.data.length > 0 ?
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              style={{ marginTop: 40, height: '65%' }}
+              data={this.state.data}
+              extraData={this.state.refresh}
+              keyExtractor={(item) => item.id}
+              //ListFooterComponent={this.renderFooter.bind(this)}
+              // onEndReachedThreshold={0.1}
+              // onEndReached={this.handleLoadMore.bind(this)}
+              renderItem={({ item }) => (
+                < View style={{ flex: 1, backgroundColor: 'white', marginStart: '5%', marginEnd: '5%' }}>
+                  <View style={{ flexDirection: 'row', margin: 10, height: 50 }}>
+
+                    <View style={{ flex: 1 }}>
+                      <Avatar
+                        size="medium"
+                        rounded
+                        title={this.state.data.firstName}
+                        source={{ uri: item.profilePicture || "https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg" }}
+
+                      />
+                    </View>
+                    <View style={{ flex: 3 }}>
+                      <Text style={Style.rowName}>
+                        {item.firstName || "Missing "} {item.lastName || " Name"}
                       </Text>
-                    </TouchableOpacity>
+
+                      <Text style={Style.rowUsername}>
+                        @{item.username}
+                      </Text>
+                    </View>
+
+
+                    <View style={{ flex: 1 }}>
+                      <TouchableOpacity
+                        onPress={() => this.followPeople(item)}>
+                        <Text style={item.followStatus == 'Following' ? Style.rowStatusFollowing : Style.rowStatusFollow}>
+                          {item.followStatus}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
                   </View>
+
 
                 </View>
-
-
-              </View>
-            )
-            }
-          />
-
+              )
+              }
+            />
+            : <Text style={Style.fieldsError}>
+              No Record Found
+            </Text>}
           <View
             style={[
               Helpers.rowCenter,

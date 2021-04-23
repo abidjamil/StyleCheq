@@ -3,6 +3,11 @@ import { Helpers, Metrics, Fonts, Colors } from 'App/Theme'
 
 export default StyleSheet.create({
 
+  searchStyle: {
+    top: 15, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', width: '90%', height: 40, shadowColor: "#000", shadowOpacity: 1, shadowRadius: 2, shadowOffset: { height: 1, width: 1 }, elevation: 10, fontSize: 20, backgroundColor: '#ECEFF4', borderRadius: 20, marginLeft: 15
+  },
+  searchInput: { width: '75%', height: '160%', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontFamily: 'Poppins-Regular' },
+
   logoContainer: {
     ...Helpers.fullWidth,
     height: 300,
@@ -102,10 +107,11 @@ export default StyleSheet.create({
 
   fieldsError: {
     fontSize: 12,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-Bold',
     marginStart: '12%',
     marginEnd: '12%',
     marginTop: 1,
+    marginTop: 50,
     textAlign: "center",
     color: Colors.error
   },

@@ -1,11 +1,12 @@
 import React from 'react'
 import { Platform, ScrollView, TouchableOpacity, Text, View, Button, Image, FlatList, TextInput, Dimensions } from 'react-native'
 import Style from './ExploreTrendingStyle'
-import Search from 'react-native-vector-icons/EvilIcons';
+
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import BACK from 'react-native-vector-icons/AntDesign';
 import NavigationService from 'App/Services/NavigationService'
 import SCAN from 'react-native-vector-icons/AntDesign';
+import Search from 'react-native-vector-icons/EvilIcons';
 import { NetworkActions } from '../../NetworkActions';
 import { connect } from 'react-redux'
 

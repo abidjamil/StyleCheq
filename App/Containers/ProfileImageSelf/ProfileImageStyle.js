@@ -35,22 +35,53 @@ export default StyleSheet.create({
   {
     fontFamily: 'Poppins-Light', paddingRight: 5, fontSize: 14, paddingLeft: 5
   },
-  trisaStyle: { fontSize: 50, color: '#fff', fontWeight: 'bold', fontFamily: 'Poppins-Regular' },
+  trisaStyle: {
+    fontSize: 50, color: '#fff', fontWeight: 'bold', fontFamily: 'Poppins-Regular', textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
+  },
 
-  trisaemail: { color: 'red', paddingHorizontal: 20 },
+  trisaemail: {
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1, color: 'red', paddingHorizontal: 20
+  },
 
-  textView: { justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, marginTop: 10 },
+  textView: {
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1, justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, marginTop: 10
+  },
 
 
-  textView1: { justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, marginTop: 2 },
+  textView1: {
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1, justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 30, marginTop: 2
+  },
 
 
-  postText: { fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' },
+  postText: {
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular'
+  },
 
-  lastView: { bottom: Platform.OS === 'ios' ? 30 : 90, paddingHorizontal: 10 },
+  lastView: {
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1, bottom: Platform.OS === 'ios' ? 30 : 90, paddingHorizontal: 10
+  },
 
-  lastViewText: { fontSize: 25, fontFamily: 'Poppins-Italic', color: '#fff', },
+  lastViewText: {
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1, fontSize: 25, fontFamily: 'Poppins-Italic', color: '#fff',
+  },
   modelText: {
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1,
     paddingVertical: 10, fontFamily: 'Poppins-Regular'
   },
   ModelView: {

@@ -156,7 +156,7 @@ class ProfileScreen extends React.Component {
           />
           <ImageBackground
             style={{ height: Platform.OS === 'ios' ? windowHeight - 40 : windowHeight - 10 }}
-            source={Images.background}>
+            source={{ uri: this.state.userProfile?.profilePicture }}>
             <View style={{ marginLeft: 10 }}>
               <Text style={Style.trisaStyle}>{this.state.userProfile?.firstName} {this.state.userProfile?.lastName}</Text>
             </View>
@@ -193,7 +193,7 @@ class ProfileScreen extends React.Component {
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
                 <View style={{ ...Style.postText, flexDirection: 'row' }}>
                   <Star name="star" size={20} color='#FFC00B' style={{ marginTop: 5 }} />
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
+                  <Text style={{ ...Style.ratingText, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
                 </View>
               </View>
 

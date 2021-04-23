@@ -232,7 +232,7 @@ class ProfileScreen extends React.Component {
 
           <ImageBackground
             style={{ height: Platform.OS === 'ios' ? windowHeight - 40 : windowHeight - 10 }}
-            source={Images.background}>
+            source={{ uri: this.state.userProfile?.profilePicture }}>
             <OrientationLoadingOverlay
               visible={this.state.isLoading}
               color={Colors.black}
@@ -242,7 +242,7 @@ class ProfileScreen extends React.Component {
             />
 
             <View style={{ marginLeft: 10 }}>
-              <Text style={Style.trisaStyle}>TRISA SNOW</Text>
+              <Text style={Style.trisaStyle}>{this.state.userProfile?.firstName} {this.state.userProfile?.lastName}</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Style.trisaemail}>@{this.state.userProfile?.username}</Text>

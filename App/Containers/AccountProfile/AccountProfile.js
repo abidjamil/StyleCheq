@@ -3,9 +3,10 @@ import { Platform, Text, View, Button, Image, TouchableOpacity, TextInput, Image
 import Style from './AccountProfileStyle'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import BACK from 'react-native-vector-icons/AntDesign';
+import { connect } from 'react-redux'
 
 
-export default class Splash1 extends React.Component {
+class AccountProfile extends React.Component {
 
   render() {
     return (
@@ -35,8 +36,8 @@ export default class Splash1 extends React.Component {
         </View>
 
         <View style={Style.nameStyle}>
-          <Text style={{ fontSize: 30 }}>Ghulam Farid</Text>
-          <Text style={Style.emailStyle}>farid@email.com</Text>
+          <Text style={{ fontSize: 30 }}>{this.props.auth.data.user.firstName} {this.props.auth.data.user.lastName}</Text>
+          <Text style={Style.emailStyle}>{this.props.auth.data.user.email}</Text>
         </View>
 
         <View >
@@ -64,3 +65,14 @@ export default class Splash1 extends React.Component {
 
 
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  auth: state.authTypeReducer.authType,
+  timelineData: state.timelineReducer.timeline,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  timeline: () => dispatch({ type: 'Timeline', payload: that.state.data }),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile)

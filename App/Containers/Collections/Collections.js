@@ -21,7 +21,8 @@ class Trending extends React.Component {
       resultError: "",
       refresh: false,
       collectionModal: false,
-      usersData: []
+      usersData: [],
+      collectionName: ""
     }
     that = this
   }
@@ -124,29 +125,35 @@ class Trending extends React.Component {
                     ]}>
                     <TouchableOpacity
                       onPress={() => {
-
-                        that.setState({
-                          isLoading: true
-                        })
-                        const request = {
-                          name: this.state.collectionName
+                        console.log(this.state.collectionName)
+                        if (this.state.collectionName === "") {
+                          alert("Please Enter Collection Name")
                         }
-                        console.log(request)
-                        NetworkActions.NewCollection(request, that.props.authData.data.token).then
-                          (function (response) {
-                            console.log(response)
-                            that.setState({
-                              isLoading: false,
-                              collectionModal: false
-                            })
-                            that.getCollections()
+                        else {
+                          that.setState({
+                            isLoading: true
                           })
-                          .catch(function (error) {
-                            that.setState({
-                              isLoading: false
+                          const request = {
+                            name: this.state.collectionName
+                          }
+                          console.log(request)
+                          NetworkActions.NewCollection(request, that.props.authData.data.token).then
+                            (function (response) {
+                              console.log(response)
+                              that.setState({
+                                isLoading: false,
+                                collectionModal: false
+                              })
+                              that.getCollections()
                             })
-                            alert(JSON.stringify(error))
-                          })
+                            .catch(function (error) {
+                              that.setState({
+                                isLoading: false
+                              })
+                              alert(JSON.stringify(error))
+                            })
+                        }
+
                       }}>
                       <Text style={Style.loginBtn}>
                         Save
@@ -154,7 +161,7 @@ class Trending extends React.Component {
                     </TouchableOpacity>
 
                   </View>
-                  }
+
 
                 </View>
               </View>
@@ -212,9 +219,7 @@ class Trending extends React.Component {
                                       </SafeAreaView>
 
                                     );
-                                  }
-
-                                  }
+                                  }}
 
                                 />
                               </View> :

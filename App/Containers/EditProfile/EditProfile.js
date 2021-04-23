@@ -4,9 +4,12 @@ import Style from './EditProfileStyle'
 import BACK from 'react-native-vector-icons/AntDesign';
 import RIGHT from 'react-native-vector-icons/AntDesign';
 import NavigationService from 'App/Services/NavigationService'
+import { connect } from 'react-redux'
 
-export default class Splash1 extends React.Component {
-
+class EditProfile extends React.Component {
+  componentDidMount() {
+    console.log(this.props.auth)
+  }
   render() {
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
@@ -34,15 +37,15 @@ export default class Splash1 extends React.Component {
 
             <TouchableOpacity
               style={Style.fieldsLine}
-              onPress={() => NavigationService.navigateAndReset('UserName')}>
+              onPress={() => NavigationService.navigate('UserName')}>
               <Text style={{ ...Style.paddingText, paddingLeft: 10 }}>Display Name</Text>
 
-              <Text style={{ ...Style.paddingText, paddingRight: 10 }}>@username</Text>
+              <Text style={{ ...Style.paddingText, paddingRight: 10 }}>@{this.props.auth.data.user.username}</Text>
             </TouchableOpacity>
           </View>
 
           <TouchableOpacity
-            onPress={() => NavigationService.navigateAndReset('EditBio')}
+            onPress={() => NavigationService.navigate('EditBio')}
             style={Style.fieldsLine}>
 
             <Text style={Style.paddingText}>Bio</Text>
@@ -88,3 +91,14 @@ export default class Splash1 extends React.Component {
 
 
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  auth: state.authTypeReducer.authType,
+  timelineData: state.timelineReducer.timeline,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  timeline: () => dispatch({ type: 'Timeline', payload: that.state.data }),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)

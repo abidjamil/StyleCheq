@@ -34,12 +34,12 @@ class AccountSetting extends React.Component {
         <View style={Style.firstBox}>
           <View style={Style.fieldsLine}>
             <Text style={Style.label}>Email</Text>
-            <Text style={Style.fieldsStyle}> info@styleCheq.com</Text>
+            <Text style={Style.fieldsStyle}>{this.props.authData.data.user.email}</Text>
           </View>
 
           <View style={Style.fieldsLine}>
-            <Text style={Style.label}>Phone Number</Text>
-            <Text style={Style.fieldsStyle}> +4421234123412</Text>
+            <Text style={Style.label}>Username</Text>
+            <Text style={Style.fieldsStyle}>{this.props.authData.data.user.username}</Text>
           </View>
 
           <View style={Style.fieldsLine}>
@@ -100,7 +100,7 @@ class AccountSetting extends React.Component {
 
 }
 const mapStateToProps = (state) => ({
-
+  authData: state.authTypeReducer.authType,
 })
 const mapDispatchToProps = (dispatch) => ({
   auth: () => dispatch({ type: 'AUTH_TYPE', payload: null }),

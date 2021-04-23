@@ -533,204 +533,34 @@ class NewsFeed extends React.Component {
             </TouchableOpacity>
           </View>
 
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ marginTop: 0 }}
-            data={this.state.data?.data}
-            extraData={this.state.refresh}
-            pagingEnabled={true}
-            snapToInterval={windowHeight - 80} // Adjust to your content width
-            decelerationRate={'fast'}
-            snapToAlignment={'start'}
-            keyExtractor={(item) => item.postId}
-            //ListFooterComponent={this.renderFooter.bind(this)}
-            // onEndReachedThreshold={0.1}
-            // onEndReached={this.handleLoadMore.bind(this)}
-            renderItem={({ item, index }) => {
-              console.log(item.postPicture)
-              return (
-                <View
-                  style={{
-                    width: '100%',
-                    height: windowHeight - 80,
-                    justifyContent: 'center',
-                    alignItems: 'stretch',
-                  }}
-                >
-                  <View>
-                    {item.postPicture.substring(item.postPicture.lastIndexOf('.') + 1) == "mp4" ? (
-                      <BackgroundVideo
-                        resizeMode="cover"
-                        uri={item.postPicture}
-                        index={index}
-                        style={{
-                          width: '100%',
-                          justifyContent: 'space-around',
-                          overflow: 'hidden',
-                          height: '100%',
-                        }}
-                        source={{
-                          uri: item.postPicture,
-                        }}
-                      >
-                        <View style={{ flex: 1, marginStart: -20, marginTop: -15, alignSelf: 'flex-start', flexDirection: 'row', padding: 10 }}>
-                          <TouchableOpacity
-                            onPress={() =>
-                              NavigationService.navigate(
-                                item.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf',
-                                item
-                              )
-                            }
-                          >
-                            <Avatar
-                              size="medium"
-                              rounded
-                              source={{
-                                uri:
-                                  item.profilePicture ||
-                                  'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
-                              }}
-                            />
-                          </TouchableOpacity>
-
-                          <View>
-                            <Text style={Style.rowUsername}>{item.username}</Text>
-
-                            <Text style={Style.rowTime}>
-                              {moment(item.postCreatedAt).fromNow()}
-                            </Text>
-                          </View>
-                        </View>
-                        <View style={Style.leftSide}>
-                          <FlatList
-                            ref={(list) => {
-                              this.commentsList = list
-                            }}
-                            showsVerticalScrollIndicator={false}
-                            style={{ marginTop: 0 }}
-                            data={item.tags}
-                            extraData={this.state.refresh}
-                            keyExtractor={(item) => item.tagName}
-                            renderItem={this.renderIcon.bind(this, item)}
-                          />
-                        </View>
-
-                        <View style={Style.rightSide}>
-                          <View
-                            style={{
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                            }}
-                          >
-                            <TouchableOpacity
-                              style={{ alignItems: 'center', justifyContent: 'center' }}
-                              onPress={() =>
-                                this.setState({
-                                  postRatingModal: true,
-                                  selectedPostForRating: item,
-                                })
-                              }
-                            >
-                              <Text style={Style.ratingText}>{item.avgRating}</Text>
-                              <Image
-                                resizeMode="contain"
-                                style={{ height: 35, width: 35 }}
-                                source={Images.big_star}
-                              />
-                              <Text style={Style.ratingText}>Rate {item.totalRating}</Text>
-                            </TouchableOpacity>
-                          </View>
-
-                          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                            <TouchableOpacity
-                              style={{ justifyContent: 'center', alignItems: 'center' }}
-                              onPress={() => this.toggleComments(item)}
-                            >
-                              <Image
-                                resizeMode="contain"
-                                style={{ height: 30, width: 30 }}
-                                source={Images.commentIcon}
-                              />
-                              <Text style={Style.ratingText}>
-                                {item.totalComments?.length > 100 ? '100 +' : item.totalComments}
-                              </Text>
-                            </TouchableOpacity>
-                          </View>
-
-                          {/* <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-
-                        <Image
-                          resizeMode="contain"
-                          style={{ height: 30, width: 30 }}
-                          source={Images.shareIcon} />
-                        <Text style={Style.ratingText}>Share</Text>
-                      </View> */}
-
-                          <View
-                            style={{
-                              flexDirection: 'column',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                            }}
-                          >
-                            <TouchableOpacity
-                              style={{ justifyContent: 'center', alignItems: 'center' }}
-                              onPress={() =>
-                                NavigationService.navigate(
-                                  item.isMinePost == 0 ? 'ChatScreen' : 'ChatHistory',
-                                  item
-                                )
-                              }
-                            >
-                              <Image
-                                resizeMode="contain"
-                                style={{ height: 30, width: 30 }}
-                                source={Images.messageIcon}
-                              />
-                              <Text style={{ ...Style.ratingText, marginStart: 0 }}>Message</Text>
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-
-                        <View style={Style.topRightSide}>
-                          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            {/* <Image
-                          resizeMode="contain"
-                          style={{ height: 20, width: 10 }}
-                          source={Images.three_dots} /> */}
-                            <TouchableOpacity onPress={() => this.onLikePost(item)}>
-                              <Image
-                                resizeMode="contain"
-                                style={{ height: 30, width: 30 }}
-                                source={item.isLiked > 0 ? Images.handIconBlue : Images.handIcon}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-
-                        <ParsedText
-                          style={Style.description}
-                          parse={[
-                            {
-                              pattern: RegExp(item.username),
-                              style: Style.name,
-                              onPress: this.handleNamePress,
-                            },
-                            {
-                              pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
-                              style: Style.username,
-                              onPress: this.handleNamePress,
-                            },
-                            { pattern: /#(\w+)/, style: Style.hashtag },
-                          ]}
-                          childrenProps={{ allowFontScaling: true }}
-                        >
-                          {item.username + ' : ' + item.description}
-                        </ParsedText>
-                      </BackgroundVideo>
-                    ) : (
-                        <ImageBackground
+          {this.state.data?.data.length > 0 ?
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ marginTop: 0 }}
+              data={this.state.data?.data}
+              extraData={this.state.refresh}
+              pagingEnabled={true}
+              snapToInterval={windowHeight - 80} // Adjust to your content width
+              decelerationRate={'fast'}
+              snapToAlignment={'start'}
+              keyExtractor={(item) => item.postId}
+              //ListFooterComponent={this.renderFooter.bind(this)}
+              // onEndReachedThreshold={0.1}
+              // onEndReached={this.handleLoadMore.bind(this)}
+              renderItem={({ item, index }) => {
+                console.log(item.postPicture)
+                return (
+                  <View
+                    style={{
+                      width: '100%',
+                      height: windowHeight - 80,
+                      justifyContent: 'center',
+                      alignItems: 'stretch',
+                    }}
+                  >
+                    <View>
+                      {item.postPicture.substring(item.postPicture.lastIndexOf('.') + 1) == "mp4" ? (
+                        <BackgroundVideo
                           resizeMode="cover"
                           uri={item.postPicture}
                           index={index}
@@ -744,7 +574,7 @@ class NewsFeed extends React.Component {
                             uri: item.postPicture,
                           }}
                         >
-                          <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
+                          <View style={{ flex: 1, marginStart: -20, marginTop: -15, alignSelf: 'flex-start', flexDirection: 'row', padding: 10 }}>
                             <TouchableOpacity
                               onPress={() =>
                                 NavigationService.navigate(
@@ -765,8 +595,7 @@ class NewsFeed extends React.Component {
                             </TouchableOpacity>
 
                             <View>
-                              <Text style={Style.rowUsername}>{item.username + index}</Text>
-
+                              <Text style={Style.rowUsername}>{item.username}</Text>
                               <Text style={Style.rowTime}>
                                 {moment(item.postCreatedAt).fromNow()}
                               </Text>
@@ -899,14 +728,190 @@ class NewsFeed extends React.Component {
                           >
                             {item.username + ' : ' + item.description}
                           </ParsedText>
-                        </ImageBackground>
-                      )}
-                  </View>
-                </View>
-              )
-            }}
-          />
+                        </BackgroundVideo>
+                      ) : (
+                          <ImageBackground
+                            resizeMode="cover"
+                            uri={item.postPicture}
+                            index={index}
+                            style={{
+                              width: '100%',
+                              justifyContent: 'space-around',
+                              overflow: 'hidden',
+                              height: '100%',
+                            }}
+                            source={{
+                              uri: item.postPicture,
+                            }}
+                          >
+                            <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
+                              <TouchableOpacity
+                                onPress={() =>
+                                  NavigationService.navigate(
+                                    item.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf',
+                                    item
+                                  )
+                                }
+                              >
+                                <Avatar
+                                  size="medium"
+                                  rounded
+                                  source={{
+                                    uri:
+                                      item.profilePicture ||
+                                      'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
+                                  }}
+                                />
+                              </TouchableOpacity>
 
+                              <View>
+                                <Text style={Style.rowUsername}>{item.username}</Text>
+
+                                <Text style={Style.rowTime}>
+                                  {moment(item.postCreatedAt).fromNow()}
+                                </Text>
+                              </View>
+                            </View>
+                            <View style={Style.leftSide}>
+                              <FlatList
+                                ref={(list) => {
+                                  this.commentsList = list
+                                }}
+                                showsVerticalScrollIndicator={false}
+                                style={{ marginTop: 0 }}
+                                data={item.tags}
+                                extraData={this.state.refresh}
+                                keyExtractor={(item) => item.tagName}
+                                renderItem={this.renderIcon.bind(this, item)}
+                              />
+                            </View>
+
+                            <View style={Style.rightSide}>
+                              <View
+                                style={{
+                                  flexDirection: 'column',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                }}
+                              >
+                                <TouchableOpacity
+                                  style={{ alignItems: 'center', justifyContent: 'center' }}
+                                  onPress={() =>
+                                    this.setState({
+                                      postRatingModal: true,
+                                      selectedPostForRating: item,
+                                    })
+                                  }
+                                >
+                                  <Text style={Style.ratingText}>{item.avgRating}</Text>
+                                  <Image
+                                    resizeMode="contain"
+                                    style={{ height: 35, width: 35 }}
+                                    source={Images.big_star}
+                                  />
+                                  <Text style={Style.ratingText}>Rate {item.totalRating}</Text>
+                                </TouchableOpacity>
+                              </View>
+
+                              <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                                <TouchableOpacity
+                                  style={{ justifyContent: 'center', alignItems: 'center' }}
+                                  onPress={() => this.toggleComments(item)}
+                                >
+                                  <Image
+                                    resizeMode="contain"
+                                    style={{ height: 30, width: 30 }}
+                                    source={Images.commentIcon}
+                                  />
+                                  <Text style={Style.ratingText}>
+                                    {item.totalComments?.length > 100 ? '100 +' : item.totalComments}
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
+
+                              {/* <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+
+                        <Image
+                          resizeMode="contain"
+                          style={{ height: 30, width: 30 }}
+                          source={Images.shareIcon} />
+                        <Text style={Style.ratingText}>Share</Text>
+                      </View> */}
+
+                              <View
+                                style={{
+                                  flexDirection: 'column',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                <TouchableOpacity
+                                  style={{ justifyContent: 'center', alignItems: 'center' }}
+                                  onPress={() =>
+                                    NavigationService.navigate(
+                                      item.isMinePost == 0 ? 'ChatScreen' : 'ChatHistory',
+                                      item
+                                    )
+                                  }
+                                >
+                                  <Image
+                                    resizeMode="contain"
+                                    style={{ height: 30, width: 30 }}
+                                    source={Images.messageIcon}
+                                  />
+                                  <Text style={{ ...Style.ratingText, marginStart: 0 }}>Message</Text>
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+
+                            <View style={Style.topRightSide}>
+                              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                {/* <Image
+                          resizeMode="contain"
+                          style={{ height: 20, width: 10 }}
+                          source={Images.three_dots} /> */}
+                                <TouchableOpacity onPress={() => this.onLikePost(item)}>
+                                  <Image
+                                    resizeMode="contain"
+                                    style={{ height: 30, width: 30 }}
+                                    source={item.isLiked > 0 ? Images.handIconBlue : Images.handIcon}
+                                  />
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+
+                            <ParsedText
+                              style={Style.description}
+                              parse={[
+                                {
+                                  pattern: RegExp(item.username),
+                                  style: Style.name,
+                                  onPress: this.handleNamePress,
+                                },
+                                {
+                                  pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
+                                  style: Style.username,
+                                  onPress: this.handleNamePress,
+                                },
+                                { pattern: /#(\w+)/, style: Style.hashtag },
+                              ]}
+                              childrenProps={{ allowFontScaling: true }}
+                            >
+                              {item.username + ' : ' + item.description}
+                            </ParsedText>
+                          </ImageBackground>
+                        )}
+                    </View>
+                  </View>
+                )
+              }}
+            />
+            : <View style={{ height: '91%', backgroundColor: 'black', alignContent: 'center', justifyContent: 'center' }}>
+              <Text style={{ color: 'white', fontFamily: 'Poppins-Bold', textAlign: 'center' }}>
+                No Posts Found
+            </Text>
+            </View>
+          }
           <BottomIcons />
         </View>
       </SafeAreaView>
