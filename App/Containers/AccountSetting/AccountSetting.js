@@ -10,6 +10,7 @@ class AccountSetting extends React.Component {
   logout() {
     NavigationService.navigateAndReset('LoginScreen')
     this.props.auth()
+    this.props.timeline()
   }
   render() {
     return (
@@ -103,6 +104,7 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
   auth: () => dispatch({ type: 'AUTH_TYPE', payload: null }),
+  timeline: () => dispatch({ type: 'Timeline', payload: null }),
 })
 export default connect(
   mapStateToProps,

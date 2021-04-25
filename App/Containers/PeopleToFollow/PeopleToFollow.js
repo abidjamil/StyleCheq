@@ -35,7 +35,7 @@ class SignupUserScreen extends React.Component {
   }
 
   getDataFromServer = () => {
-    NetworkActions.GetPeopleToFollow(that.props.auth.data.token).then
+    NetworkActions.GetPeopleToFollow(that.props.auth?.data?.token).then
       (function (response) {
         that.setState({ isLoading: false })
         console.log(response.data)
@@ -69,7 +69,7 @@ class SignupUserScreen extends React.Component {
         query: this.state.searchQuery
       }
       console.log(request)
-      NetworkActions.GetPeopleToFollowSearch(request, that.props.auth.data.token).then
+      NetworkActions.GetPeopleToFollowSearch(request, that.props.auth?.data?.token).then
         (function (response) {
           if (response.status === 200) {
             console.log(response.data)
@@ -100,7 +100,7 @@ class SignupUserScreen extends React.Component {
     }
     item.followStatus = "Following"
     that.setState({ isLoading: true })
-    NetworkActions.FollowUser(request, that.props.auth.data.token).then
+    NetworkActions.FollowUser(request, that.props.auth?.data?.token).then
       (function (response) {
         that.setState({ isLoading: false })
         console.log(response)

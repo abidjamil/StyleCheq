@@ -70,7 +70,7 @@ export default StyleSheet.create({
   lastView: {
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 1, bottom: Platform.OS === 'ios' ? 30 : 90, paddingHorizontal: 10
+    textShadowRadius: 1, bottom: Platform.OS === 'ios' ? 140 : 90, paddingHorizontal: 10
   },
 
   lastViewText: {
