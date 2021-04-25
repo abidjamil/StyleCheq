@@ -7,11 +7,13 @@ import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
 import NavigationService from 'App/Services/NavigationService'
 import { NetworkActions } from '../../NetworkActions'
 import { connect } from 'react-redux'
+import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay';
 var that;
 class PrivacySetting extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      isLoading: false,
       AuthData: props.authData.data,
       notificationPauseAll: false,
       notificationPostRatingAndComments: true,
@@ -22,7 +24,32 @@ class PrivacySetting extends React.Component {
     that = this;
   }
 
+  componentDidMount() {
+    this.getSetting()
+  }
+  getSetting() {
+    that.setState({ isLoading: true })
+    NetworkActions.GetAccountSettings(this.state.AuthData.token).then
+      (function (response) {
+        that.setState({ isLoading: false })
+        if (response != null) {
+          console.log(response)
+          that.setState({
+            notificationPauseAll: response.data[0].notificationPauseAll,
+            notificationPostRatingAndComments: response.data[0].notificationPostRatingAndComments,
+            notificationRatingAndReviews: response.data[0].notificationRatingAndReviews,
+            notificationOthers: response.data[0].notificationOthers,
+            notificationFromStyleCheq: response.data[0].notificationFromStyleCheq,
+          })
+        }
+      })
+      .catch(function (error) {
+        alert(error)
+        that.setState({ isLoading: false })
+      })
+  }
   saveSetting() {
+    that.setState({ isLoading: true })
     const request = {
       notificationPauseAll: this.state.notificationPauseAll + 0,
       notificationPostRatingAndComments: this.state.notificationPostRatingAndComments + 0,
@@ -40,7 +67,7 @@ class PrivacySetting extends React.Component {
             let _AuthData = that.props.authData
             _AuthData.data.token = response.data,
               that.props.auth(_AuthData)
-            // NavigationService.goBack()
+            that.getSetting()
           }
         }
       })
@@ -53,6 +80,14 @@ class PrivacySetting extends React.Component {
   render() {
     return (
       <View style={{ paddingStart: 10, paddingEnd: 10, height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
+        <OrientationLoadingOverlay
+          visible={this.state.isLoading}
+          color={Colors.black}
+          indicatorSize="large"
+          messageFontSize={12}
+          message=""
+        />
+
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
             <View style={{ flexDirection: 'row' }}>

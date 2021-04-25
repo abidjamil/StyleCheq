@@ -100,12 +100,30 @@ class ProfileScreen extends React.Component {
   ReportProfile() {
     Alert.alert(
       'Confirmation',
-      'Are you sure to report profile?',
+      'Are you sure to mute profile?',
       [
         {
           text: 'Yes',
           onPress: () => {
-            this.setState({ modalVisible: false })
+            this.setState({ isLoading: true })
+            const request = {
+              privacyForUserId: this.state.userProfile?.UserId,
+              privacyType: "Mute"
+            }
+            console.log(request)
+            NetworkActions.BlockUser(request, that.props.auth.data.token).then(
+              function (response) {
+                that.setState({ isLoading: false })
+                if (response.status === 200) {
+                  console.log(response)
+                  that.setState({ modalVisible: false })
+                  NavigationService.goBack()
+                }
+              })
+              .catch(function (error) {
+                that.setState({ isLoading: false })
+                alert(JSON.stringify(error))
+              })
           }
 
         },
@@ -140,6 +158,7 @@ class ProfileScreen extends React.Component {
           NetworkActions.GetUserPosts(request, that.props.auth.data.token).then
             (function (response) {
               that.setState({ isLoading: false })
+              console.log(response)
               if (response.status === 200) {
                 that.setState({
                   userPosts: response.data
@@ -160,6 +179,12 @@ class ProfileScreen extends React.Component {
     })
   }
 
+  openChat() {
+    const item = {
+      userId: this.state.userProfile?.UserId
+    }
+    NavigationService.navigate('ChatScreen', item)
+  }
   BlockProfile() {
     Alert.alert(
       'Confirmation',
@@ -168,7 +193,25 @@ class ProfileScreen extends React.Component {
         {
           text: 'Yes',
           onPress: () => {
-            this.setState({ modalVisible: false })
+            this.setState({ isLoading: true })
+            const request = {
+              privacyForUserId: this.state.userProfile?.UserId,
+              privacyType: "Block"
+            }
+            console.log(request)
+            NetworkActions.BlockUser(request, that.props.auth.data.token).then(
+              function (response) {
+                that.setState({ isLoading: false })
+                if (response.status === 200) {
+                  console.log(response)
+                  that.setState({ modalVisible: false })
+                  NavigationService.goBack()
+                }
+              })
+              .catch(function (error) {
+                that.setState({ isLoading: false })
+                alert(JSON.stringify(error))
+              })
           }
 
         },
@@ -201,7 +244,7 @@ class ProfileScreen extends React.Component {
               <View style={{ alignSelf: 'flex-start', paddingHorizontal: 20, paddingTop: 20, }}>
                 <TouchableOpacity
                   onPress={() => this.ReportProfile()}>
-                  <Text style={Style.modelText}>Report...</Text>
+                  <Text style={Style.modelText}>Mute</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -246,7 +289,14 @@ class ProfileScreen extends React.Component {
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Style.trisaemail}>@{this.state.userProfile?.username}</Text>
-              <View style={{ flexDirection: 'row', marginEnd: 20 }}>
+              <View style={{ flexDirection: 'row', marginEnd: 20, justifyContent: 'space-between' }}>
+                <TouchableOpacity
+                  style={{ marginRight: 5 }}
+                  onPress={() => this.openChat()}>
+                  <Text style={Style.rowStatusFollow}>
+                    Message
+                    </Text>
+                </TouchableOpacity>
                 {this.state.userProfile?.isFollowedByYou == 0 ?
                   <TouchableOpacity
                     onPress={() => this.followPeople(this.state.userProfile?.UserId)}>
@@ -286,7 +336,7 @@ class ProfileScreen extends React.Component {
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
                 <View style={{ ...Style.postText, flexDirection: 'row' }}>
                   <Star name="star" size={20} color='#FFC00B' style={{ marginTop: 5 }} />
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
+                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>{this.state.userProfile?.totalProfileRating.toFixed(2)}</Text>
                 </View>
               </View>
 
@@ -295,7 +345,11 @@ class ProfileScreen extends React.Component {
             </View>
 
             <View style={Style.lastView}>
-              <Text style={{ color: '#fff', opacity: 0.6, fontFamily: 'Poppins-Bold', fontSize: 40 }}>BIO</Text>
+              <Text style={{
+                textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                textShadowOffset: { width: -1, height: 1 },
+                textShadowRadius: 10, color: '#fff', opacity: 0.6, fontFamily: 'Poppins-Bold', fontSize: 40
+              }}>BIO</Text>
               <Text style={Style.lastViewText}>{this.state.userProfile?.bio}</Text>
             </View>
             {/* <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '10%' }}>
@@ -358,7 +412,7 @@ class ProfileScreen extends React.Component {
             style={{ flex: 1 }}
             contentContainerStyle={{ paddingVertical: 10, }}
             numColumns={2}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.postId}
             data={this.state.userPosts}
             columnWrapperStyle={{ marginHorizontal: 5, marginVertical: 5, }}
             renderItem={({ item }) => {
@@ -385,7 +439,7 @@ class ProfileScreen extends React.Component {
         </SafeAreaView>
 
 
-      </ScrollView>
+      </ScrollView >
     )
   }
 

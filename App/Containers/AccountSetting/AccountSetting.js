@@ -8,13 +8,12 @@ import { connect } from 'react-redux'
 class AccountSetting extends React.Component {
 
   logout() {
-    this.props.auth()
     NavigationService.navigateAndReset('LoginScreen')
+    this.props.auth()
   }
   render() {
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
-
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
             <TouchableOpacity
@@ -34,12 +33,12 @@ class AccountSetting extends React.Component {
         <View style={Style.firstBox}>
           <View style={Style.fieldsLine}>
             <Text style={Style.label}>Email</Text>
-            <Text style={Style.fieldsStyle}>{this.props.authData.data.user.email}</Text>
+            <Text style={Style.fieldsStyle}>{this.props.authData?.data?.user?.email}</Text>
           </View>
 
           <View style={Style.fieldsLine}>
             <Text style={Style.label}>Username</Text>
-            <Text style={Style.fieldsStyle}>{this.props.authData.data.user.username}</Text>
+            <Text style={Style.fieldsStyle}>{this.props.authData?.data?.user?.username}</Text>
           </View>
 
           <View style={Style.fieldsLine}>

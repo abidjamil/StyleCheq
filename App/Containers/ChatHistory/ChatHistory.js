@@ -80,7 +80,22 @@ class Chat extends React.Component {
         }
     }
 
+    navigateToChat(item) {
+        NavigationService.navigate('ChatScreen', item)
+        const request = {
+            messageUserId: item.userId,
+            createdAt: new Date().toISOString()
+        }
+        console.log(request)
+        NetworkActions.ReadAllMessage(request, this.props.auth.data?.token).then
+            (function (response) {
+                console.log(response)
 
+            })
+            .catch(function (error) {
+                alert(JSON.stringify(error))
+            })
+    }
     render() {
         return (
             <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 10, paddingBottom: Platform.OS === 'ios' ? 80 : 10, backgroundColor: 'white' }}>
@@ -134,7 +149,7 @@ class Chat extends React.Component {
                     // onEndReached={this.handleLoadMore.bind(this)}
                     renderItem={({ item }) => (
                         <TouchableOpacity
-                            onPress={() => NavigationService.navigate('ChatScreen', item)}>
+                            onPress={() => this.navigateToChat(item)}>
                             <View style={{ flex: 1, backgroundColor: 'white', marginStart: '5%', marginEnd: '5%' }}>
                                 <View style={{ flexDirection: 'row', margin: 10, height: 50 }}>
                                     <View style={{ flex: 1 }}>
@@ -162,12 +177,7 @@ class Chat extends React.Component {
                                     </View>
 
                                     <View style={{ flex: 1 }}>
-                                        <TouchableOpacity
-                                            onPress={() => this.followPeople(item)}>
-                                            <Text style={item.followStatus == 'Following' ? Style.rowStatusFollowing : Style.rowStatusFollow}>
-                                                {item.followStatus}
-                                            </Text>
-                                        </TouchableOpacity>
+
                                     </View>
 
                                 </View>

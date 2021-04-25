@@ -40,6 +40,7 @@ class ProfileScreen extends React.Component {
     that.setState({ isLoading: true })
     NetworkActions.GetProfileSelf(that.props.auth.data.token).then
       (function (response) {
+        console.log(response)
         if (response.status === 200) {
           that.setState({
             userProfile: response?.data[0]
@@ -162,7 +163,7 @@ class ProfileScreen extends React.Component {
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={Style.trisaemail}>@{this.state.userProfile?.username}</Text>
-              <View style={{ flexDirection: 'row', marginEnd: 20 }}>
+              <View style={{ flexDirection: 'row', marginEnd: 20, borderWidth: 1, borderColor: '#ddd' }}>
                 <TouchableOpacity
                   style={{ flexDirection: 'row', backgroundColor: '#fff', }}
                   onPress={() => NavigationService.navigate('EditProfile')}>
@@ -193,7 +194,7 @@ class ProfileScreen extends React.Component {
                 <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
                 <View style={{ ...Style.postText, flexDirection: 'row' }}>
                   <Star name="star" size={20} color='#FFC00B' style={{ marginTop: 5 }} />
-                  <Text style={{ ...Style.ratingText, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>3.8</Text>
+                  <Text style={{ ...Style.ratingText, fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>{this.state.userProfile?.totalProfileRating.toFixed(2)}</Text>
                 </View>
               </View>
 
@@ -202,7 +203,11 @@ class ProfileScreen extends React.Component {
             </View>
 
             <View style={Style.lastView}>
-              <Text style={{ color: '#fff', opacity: 0.6, fontFamily: 'Poppins-Bold', fontSize: 40 }}>BIO</Text>
+              <Text style={{
+                textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                textShadowOffset: { width: -1, height: 1 },
+                textShadowRadius: 10, color: '#fff', opacity: 0.9, fontFamily: 'Poppins-Bold', fontSize: 40
+              }}>BIO</Text>
               <Text style={Style.lastViewText}>{this.state.userProfile?.bio}</Text>
             </View>
             <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '5%' }}>

@@ -60,21 +60,25 @@ class NotificationsScreen extends React.Component {
     this.getNotifications()
   }
   followPeople(item) {
-    const request = {
-      followTo: item.id,
+    if (item.isFollowedByYou === 0) {
+      const request = {
+        followTo: item.byUserId,
+      }
+      item.followStatus = "Following"
+
+      NetworkActions.FollowUser(request, that.props.auth.data.token).then
+        (function (response) {
+          if (response.status === 200) {
+            item.followStatus = "Following"
+          }
+        })
+        .catch(function (error) {
+          alert(JSON.stringify(error))
+        })
+      this.setState({
+        refresh: !this.state.refresh
+      })
     }
-    NetworkActions.FollowUser(request, that.props.auth.data.token).then
-      (function (response) {
-        if (response.status === 200) {
-          item.followStatus = "Following"
-        }
-      })
-      .catch(function (error) {
-        alert(JSON.stringify(error))
-      })
-    this.setState({
-      refresh: !this.state.refresh
-    })
   }
   getNotifications() {
     const request = {
@@ -165,8 +169,8 @@ class NotificationsScreen extends React.Component {
                   </View>
                   {item.notificationType == "followedBy" ? <TouchableOpacity
                     onPress={() => this.followPeople(item)}>
-                    <Text style={item.followStatus == 'Following' ? Style.rowStatusFollowing : Style.rowStatusFollow}>
-                      Follow
+                    <Text style={item.isFollowedByYou == 1 ? Style.rowStatusFollowing : Style.rowStatusFollow}>
+                      {item.isFollowedByYou === 1 ? "Following" : "Follow"}
                     </Text>
                   </TouchableOpacity> :
                     <Image style={{ ...Style.image2Style, }}

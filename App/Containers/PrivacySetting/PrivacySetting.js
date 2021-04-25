@@ -47,21 +47,25 @@ export default class Splash1 extends React.Component {
 
 
 
-          <View style={Style.fieldsLine}>
+          <TouchableOpacity
+            onPress={() => NavigationService.navigate('BlockedPeople')}
+            style={Style.fieldsLine}>
             <View style={{ flexDirection: 'row' }}>
               <ACCOUNT name="account-multiple-remove-outline" size={20}></ACCOUNT>
               <Text style={Style.paddingText}>Blocked Account</Text>
             </View>
             <RIGHT name="right" color='#000' size={20} />
 
-          </View>
-          <View style={Style.fieldsLine}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => NavigationService.navigate('MutedPeople')}
+            style={Style.fieldsLine}>
             <View style={{ flexDirection: 'row' }}>
               <ACCOUNT name="account-off-outline" size={20}></ACCOUNT>
               <Text style={Style.paddingText}>Muted Account</Text></View>
             <RIGHT name="right" color='#000' size={20} />
 
-          </View>
+          </TouchableOpacity>
 
         </View>
 

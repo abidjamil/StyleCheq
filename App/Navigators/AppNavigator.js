@@ -35,6 +35,8 @@ import Chat from '../Containers/Chat/Chat'
 import ChatHistory from '../Containers/ChatHistory/ChatHistory'
 import Collections from '../Containers/Collections/Collections'
 import CollectionPosts from '../Containers/CollectionPosts/CollectionPosts'
+import BlockedPeople from '../Containers/BlockedPeople/BlockedPeople'
+import MutedPeople from '../Containers/MutePeople/MutePeople'
 
 /**
  * The root screen contains the application's navigation.
@@ -81,7 +83,9 @@ const StackNavigator = createStackNavigator(
     ChatScreen: Chat,
     ChatHistory: ChatHistory,
     Collections: Collections,
-    CollectionPosts: CollectionPosts
+    CollectionPosts: CollectionPosts,
+    BlockedPeople: BlockedPeople,
+    MutedPeople: MutedPeople,
   },
   {
     animationEnabled: false,
