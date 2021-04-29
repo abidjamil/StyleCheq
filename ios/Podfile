@@ -18,10 +18,10 @@ target 'StyleCheq' do
   pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
   
 
-  use_flipper!({ 'Flipper-Folly' => '2.3.0' }) # update this part
+#use_flipper!({ 'Flipper-Folly' => '2.3.0' }) # update this part
 
-post_install do |installer|
-  flipper_post_install(installer)
-end
+#post_install do |installer|
+#  flipper_post_install(installer)
+#end
 end
 

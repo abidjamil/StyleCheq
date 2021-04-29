@@ -17,11 +17,9 @@ import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay'
 import API from '../../Config/networkSetup';
 import { NavigationEvents } from 'react-navigation';
 
-console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
 var that;
 class Chat extends React.Component {
     constructor(props) {
-        console.log(props.navigation.state.params)
         global.isChatOpened = true
         super(props)
         this.state = {
@@ -131,10 +129,10 @@ class Chat extends React.Component {
         const request = {
             pageNumber: ++this.state.pageNumber,
             rowsPerPage: 10,
-            receiverId: this.state.userData.userId
+            receiverId: this.state.userData?.userId
         }
 
-        NetworkActions.GetPreviousChat(request, this.props.auth.data?.token).then
+        NetworkActions.GetPreviousChat(request, this.props.auth?.data?.token).then
             (function (response) {
                 that.setState({
                     isLoadingEarlier: false
@@ -170,7 +168,7 @@ class Chat extends React.Component {
 
             query: {
                 token: this.props.auth.data?.token,
-                sendToUserId: this.state.userData.userId,
+                sendToUserId: this.state.userData?.userId,
                 senderName: name
             }
         });

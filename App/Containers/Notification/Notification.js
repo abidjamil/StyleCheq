@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import moment from "moment";
 const windowHeight = Dimensions.get("screen").height
 import { Avatar, Accessory, Icon, Input } from 'react-native-elements';
+import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay';
 const windowWidth = Dimensions.get("screen").width
 
 const B = (props) => {
@@ -23,6 +24,7 @@ class NotificationsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      isLoading: false,
       pageNumber: 1,
       rowsPerPage: 100,
       loading: false,
@@ -61,6 +63,7 @@ class NotificationsScreen extends React.Component {
   }
   followPeople(item) {
     if (item.isFollowedByYou === 0) {
+      that.setState({ isLoading: true })
       const request = {
         followTo: item.byUserId,
       }
@@ -68,11 +71,13 @@ class NotificationsScreen extends React.Component {
 
       NetworkActions.FollowUser(request, that.props.auth.data.token).then
         (function (response) {
+          that.setState({ isLoading: false })
           if (response.status === 200) {
             item.followStatus = "Following"
           }
         })
         .catch(function (error) {
+          that.setState({ isLoading: false })
           alert(JSON.stringify(error))
         })
       this.setState({
@@ -81,6 +86,7 @@ class NotificationsScreen extends React.Component {
     }
   }
   getNotifications() {
+    that.setState({ isLoading: true })
     const request = {
       pageNumber: this.state.pageNumber,
       rowsPerPage: this.state.rowsPerPage
@@ -90,7 +96,7 @@ class NotificationsScreen extends React.Component {
     const previous = moment().subtract(2, 'day');
     NetworkActions.GetNotifications(request, that.props.auth.data.token).then
       (function (response) {
-
+        that.setState({ isLoading: false })
         if (response.status === 200) {
           that.setState({ data: response })
           const todayData = response.data.filter((data) =>
@@ -105,25 +111,31 @@ class NotificationsScreen extends React.Component {
             moment(data.createdAt).utc().isBefore(moment(yesterday).utc(), 'day')
           )
           that.setState({
-            todayNotificationData: todayData,
-            yesterdayNotificationData: yesterDayData,
-            thisMonthNotificationData: previousData
+            todayNotificationData: todayData.reverse(),
+            yesterdayNotificationData: yesterDayData.reverse(),
+            thisMonthNotificationData: previousData.reverse()
           })
-          that.props.notificationData()
+
         }
       })
       .catch(function (error) {
+        that.setState({ isLoading: false })
         alert(JSON.stringify(error))
       })
   }
 
   render() {
-
-
     return (
       <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
         <View style={Style.firstBox, { paddingHorizontal: 20 }}>
           <View style={Style.fieldsLine}>
+            <OrientationLoadingOverlay
+              visible={this.state.isLoading}
+              color={Colors.black}
+              indicatorSize="large"
+              messageFontSize={12}
+              message=""
+            />
 
             <TouchableOpacity
               onPress={() => NavigationService.goBack()}
@@ -142,9 +154,9 @@ class NotificationsScreen extends React.Component {
 
           <SectionList
             sections={[
-              { title: 'Today', data: this.state.todayNotificationData.length > 0 ? this.state.todayNotificationData.reverse() : this.state.emptyNotification },
-              { title: 'Yesterday', data: this.state.yesterdayNotificationData.length > 0 ? this.state.yesterdayNotificationData.reverse() : this.state.emptyNotification },
-              { title: 'Older', data: this.state.thisMonthNotificationData.length > 0 ? this.state.thisMonthNotificationData.reverse() : this.state.emptyNotification },
+              { title: 'Today', data: this.state.todayNotificationData.length > 0 ? this.state.todayNotificationData : this.state.emptyNotification },
+              { title: 'Yesterday', data: this.state.yesterdayNotificationData.length > 0 ? this.state.yesterdayNotificationData : this.state.emptyNotification },
+              { title: 'Older', data: this.state.thisMonthNotificationData.length > 0 ? this.state.thisMonthNotificationData : this.state.emptyNotification },
             ]}
             renderItem={({ item }) =>
               <View style={{ paddingTop: 10, marginStart: 5, marginEnd: 5 }}>
@@ -165,7 +177,7 @@ class NotificationsScreen extends React.Component {
                     <HTML source={{ html: item.body }}
                       contentWidth={500}
                     />
-                    <Text style={{ marginTop: -3, color: 'grey', fontSize: 9, fontFamily: 'Poppins-Regular' }}>{moment(item.createdAt).fromNow()}</Text>
+                    <Text style={{ marginTop: -3, color: 'grey', fontSize: 9, fontFamily: 'Poppins-Regular' }}>{item.createdAt ? moment(item.createdAt).fromNow() : ""}</Text>
                   </View>
                   {item.notificationType == "followedBy" ? <TouchableOpacity
                     onPress={() => this.followPeople(item)}>

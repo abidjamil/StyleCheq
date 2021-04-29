@@ -142,13 +142,14 @@ class ProfileScreen extends React.Component {
     const request = {
       followTo: id,
     }
+    console.log(request)
     NetworkActions.FollowUser(request, that.props.auth.data.token).then
       (function (response) {
         if (response.status === 200) {
+          var data = that.state.userProfile
+          data.isFollowedByYou = 1
           that.setState({
-            userProfile: {
-              isFollowedByYou: 1
-            }
+            userProfile: data
           })
           const request = {
             rowsPerPage: that.state.rowsPerPage,

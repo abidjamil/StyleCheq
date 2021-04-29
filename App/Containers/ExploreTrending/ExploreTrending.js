@@ -9,6 +9,7 @@ import SCAN from 'react-native-vector-icons/AntDesign';
 import Search from 'react-native-vector-icons/EvilIcons';
 import { NetworkActions } from '../../NetworkActions';
 import { connect } from 'react-redux'
+import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay';
 
 var that;
 class Trending extends React.Component {
@@ -30,6 +31,7 @@ class Trending extends React.Component {
     this.getTrending()
   }
   getTrending() {
+    that.setState({ isLoading: true })
     NetworkActions.GetTrending(that.props.authData.data.token).then
       (function (response) {
         that.setState({ isLoading: false })
@@ -120,6 +122,7 @@ class Trending extends React.Component {
         const req = {
           value: this.state.value
         }
+        that.setState({ isLoading: true })
         NetworkActions.GetTrendingWithHash(req, that.props.authData.data.token).then
           (function (response) {
             that.setState({ isLoading: false })
@@ -156,8 +159,10 @@ class Trending extends React.Component {
           query: this.state.value
         }
         console.log(request)
+        that.setState({ isLoading: true })
         NetworkActions.GetPeopleToFollowSearch(request, that.props.authData.data.token).then
           (function (response) {
+            that.setState({ isLoading: false })
             if (response.status === 200) {
               console.log(response.data)
               if (response.data.length == 0) {
@@ -180,6 +185,7 @@ class Trending extends React.Component {
             }
           })
           .catch(function (error) {
+            that.setState({ isLoading: false })
             alert(JSON.stringify(error))
           })
       }
@@ -191,6 +197,7 @@ class Trending extends React.Component {
   }
 
   followPeople(item) {
+    that.setState({ isLoading: true })
     const request = {
       followTo: item.id,
     }
@@ -199,6 +206,7 @@ class Trending extends React.Component {
     })
     NetworkActions.FollowUser(request, that.props.authData.data.token).then
       (function (response) {
+        that.setState({ isLoading: false })
         if (response.status === 200) {
           console.log(response)
           item.isFollowedByYou = 1
@@ -209,6 +217,7 @@ class Trending extends React.Component {
         })
       })
       .catch(function (error) {
+        that.setState({ isLoading: true })
         alert(JSON.stringify(error))
       })
     this.setState({
@@ -219,6 +228,13 @@ class Trending extends React.Component {
     return (
 
       <View style={{ top: Platform.OS === 'ios' ? 50 : 15 }}>
+        <OrientationLoadingOverlay
+          visible={this.state.isLoading}
+          color={Colors.black}
+          indicatorSize="large"
+          messageFontSize={12}
+          message=""
+        />
         <ScrollView
           nestedScrollEnabled>
           <View>

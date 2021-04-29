@@ -267,7 +267,7 @@ export default StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     marginStart: 5,
     color: Colors.white,
-    bottom: Platform.OS === 'ios' ? 90 : 60,
+    bottom: Platform.OS === 'ios' ? 120 : 60,
     marginStart: '5%',
     marginEnd: '5%',
     width: '90%',

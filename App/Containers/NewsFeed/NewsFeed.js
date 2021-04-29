@@ -196,8 +196,11 @@ class NewsFeed extends React.Component {
           console.log(response)
           if (response != null) {
             if (response.status == 200) {
+              var comment = response.data
+              comment.lastName = comment.lastname
+              comment.firstName = comment.firstname
               that.setState({
-                commentsData: [...that.state.commentsData, response.data],
+                commentsData: [comment, ...that.state.commentsData],
               })
             }
           }
@@ -548,7 +551,6 @@ class NewsFeed extends React.Component {
               // onEndReachedThreshold={0.1}
               // onEndReached={this.handleLoadMore.bind(this)}
               renderItem={({ item, index }) => {
-                console.log(item.postPicture)
                 return (
                   <View
                     style={{
