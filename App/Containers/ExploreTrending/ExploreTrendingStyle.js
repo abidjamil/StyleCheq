@@ -73,4 +73,35 @@ export default StyleSheet.create({
     overflow: 'hidden',
     textAlign: 'center'
   },
+  description: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+    marginStart: 5,
+    color: Colors.white,
+    marginStart: '5%',
+    marginEnd: '5%',
+    width: '90%',
+    marginBottom: 20,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
+  },
+  username: {
+    fontSize: 11,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: "#edc307",
+  },
+  name: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: Colors.white,
+  },
+  hashtag: {
+    fontSize: 11,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: "#cf0eaf",
+  },
 })

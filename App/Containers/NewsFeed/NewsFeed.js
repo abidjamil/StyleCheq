@@ -42,9 +42,11 @@ class NewsFeed extends React.Component {
       isCommentLoading: false,
       data: props.timelineData,
       commentsPageNumber: 1,
-      postsPageNumber: 0,
+      postsPageNumber: 1,
       commentsData: [],
       ratingModal: false,
+      loadingPosts: false,
+      collectionModal: false
     }
 
     that = this
@@ -52,19 +54,24 @@ class NewsFeed extends React.Component {
 
   UNSAFE_componentWillMount() {
     this.GetTimelineData()
+    this.getCollections()
   }
   handleLetsExploreAction() { }
 
   GetTimelineData() {
     const Request = {
-      pageNumber: ++this.state.postsPageNumber,
+      pageNumber: this.state.postsPageNumber,
       rowsPerPage: 10,
     }
     NetworkActions.GetTimeline(Request, that.props.auth.data.token)
       .then(function (response) {
-        that.setState({ isLoading: false })
+        console.log()
+        that.setState({ isLoading: false, loadingPosts: false })
+        if (that.state.postsPageNumber === 1) {
+          that.setState({ data: [] })
+        }
         that.setState({
-          data: response,
+          data: [...that.state.data, ...response.data],
         })
         that.props.timeline()
       })
@@ -144,38 +151,70 @@ class NewsFeed extends React.Component {
     console.log(item)
     item.followStatus = 'Following'
   }
+  getCollections() {
+    NetworkActions.GetCollections(that.props.auth.data.token).then
+      (function (response) {
+        that.setState({ isLoading: false })
+        if (response != null) {
+          console.log("Collection", response)
+          if (response.status == 200) {
+            that.setState({
+              collectionsData: response.data
+            })
+          }
+          if (response.data.length == 0) {
+            that.setState({
+              resultError: "No collections found"
+            })
+          }
+          else {
+            that.setState({
+              resultError: ""
+            })
+          }
+        }
+
+      })
+      .catch(function (error) {
+        alert(JSON.stringify(error))
+        that.setState({ isLoading: false })
+      })
+  }
   handleComment = (text) => {
     that.setState({ currentComment: text })
   }
   onLikePost(item) {
-    that.setState({ isLoading: true })
-    const Request = {
-      postId: item.postId,
-      postByUserId: item.userId,
-      status: item.isLiked > 0 ? 0 : 1,
-    }
-    console.log(Request)
-    NetworkActions.LikePost(Request, that.props.auth.data.token)
-      .then(function (response) {
-        that.setState({ isLoading: false })
-        console.log(response)
-        if (response != null) {
-          if (response.status == 200) {
-            if (item.isLiked > 0) {
-              item.isLiked = 0
-            } else {
-              item.isLiked = 1
-            }
-            that.setState({
-              refresh: !that.state.refresh,
-            })
-          }
-        }
-      })
-      .catch(function (error) {
-        alert('error' + JSON.stringify(error))
-        that.setState({ isLoading: false })
-      })
+    console.log(item)
+    that.setState({ collectionModal: true, selectedPostIdForCollection: item.postId })
+
+
+    // const Request = {
+    //   postId: item.postId,
+    //   postByUserId: item.userId,
+    //   status: item.isLiked > 0 ? 0 : 1,
+    // }
+    // console.log(Request)
+    // NetworkActions.LikePost(Request, that.props.auth.data.token)
+    //   .then(function (response) {
+    //     that.setState({ isLoading: false })
+    //     console.log(response)
+    //     if (response != null) {
+    //       if (response.status == 200) {
+    //         if (item.isLiked > 0) {
+    //           item.isLiked = 0
+    //         } else {
+    //           item.isLiked = 1
+    //         }
+    //         that.setState({
+    //           refresh: !that.state.refresh,
+    //         })
+    //       }
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     alert('error' + JSON.stringify(error))
+    //     that.setState({ isLoading: false })
+    //   })
   }
   addComment = () => {
     that.textInput.clear()
@@ -227,7 +266,53 @@ class NewsFeed extends React.Component {
     this.setState({ commentsPageNumber: ++this.state.commentsPageNumber })
     this.getComments(this.state.currentPostId)
   }
+  handlePostsLoadMore() {
+    this.setState({ loadingPosts: true, postsPageNumber: ++this.state.postsPageNumber })
+    this.GetTimelineData()
+  }
 
+  handlePullToRefresh() {
+    this.setState({ postsPageNumber: 1 })
+    this.GetTimelineData()
+  }
+  _renderFooter = () => {
+    return this.state.loadingPosts ? (
+      <View style={{ marginBottom: 30 }}>
+        <ActivityIndicator color="#000000" size="large" />
+      </View>
+    ) : null;
+  };
+  _renderEmptyCollection = () => {
+    return this.state.loadingPosts ? (
+      <View style={{ flex: 1 }}>
+        <ActivityIndicator color="#00FF00" size="large" />
+      </View>
+    ) : null;
+  };
+  addToCollection(item) {
+    const request = {
+      postId: this.state.selectedPostIdForCollection,
+      collectionsId: item
+    }
+    that.setState({
+      isLoading: true,
+    })
+    console.log(request)
+    NetworkActions.AddPostToCollection(request, that.props.auth.data.token).then
+      (function (response) {
+        console.log(response)
+        that.setState({
+          isLoading: false,
+          collectionModal: false
+        })
+      })
+      .catch(function (error) {
+        that.setState({
+          isLoading: false
+        })
+        alert(JSON.stringify(error))
+      })
+  }
   renderIcon = (parentData, { item }) => {
     return (
       <View style={{ paddingTop: 5, paddingBottom: 5, alignItems: 'center' }}>
@@ -290,8 +375,7 @@ class NewsFeed extends React.Component {
           isVisible={this.state.ratingModal}
         >
           <View
-            style={{ width: '100%', height: 200, alignContent: 'center', alignItems: 'center' }}
-          >
+            style={{ width: '100%', height: 200, alignContent: 'center', alignItems: 'center' }}>
             <View
               style={{
                 backgroundColor: 'black',
@@ -408,6 +492,38 @@ class NewsFeed extends React.Component {
                 }}
               />
             </View>
+          </View>
+        </Modal>
+
+        <Modal
+          onSwipeComplete={() => this.setState({ collectionModal: false })}
+          swipeDirection="left"
+          animationIn="zoomIn"
+          animationOut="zoomOut"
+          onBackdropPress={() => this.setState({ collectionModal: false })}
+          onBackButtonPress={() => this.setState({ collectionModal: false })}
+          isVisible={this.state.collectionModal}
+        >
+          <View style={{ width: '100%', backgroundColor: 'white', height: 400, alignContent: 'center', alignItems: 'center' }}>
+            <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 20, padding: 20 }}> Collections </Text>
+
+            <Text style={{ fontFamily: 'Poppins-Regular', fontSize: 16, padding: 20 }}> Select the collection to add the post. </Text>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              style={{ marginTop: 20, width: '90%' }}
+              data={this.state.collectionsData}
+              extraData={this.state.refresh}
+              numColumns={1}
+              keyExtractor={(item) => item.collectionId}
+              ListEmptyComponent={this._renderEmptyCollection}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => this.addToCollection(item.collectionId)}
+                  style={{ width: '100%', height: 50, borderWidth: 1, borderRadius: 10, alignContent: 'center', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+                  <Text style={{ color: 'black', fontFamily: 'Poppins-Bold', fontSize: 16 }}>{item.name}</Text>
+                </TouchableOpacity>
+
+              )} />
           </View>
         </Modal>
 
@@ -536,21 +652,28 @@ class NewsFeed extends React.Component {
             </TouchableOpacity>
           </View>
 
-          {this.state.data?.data.length > 0 ?
+          {this.state.data?.length > 0 ?
             <FlatList
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ marginTop: 0 }}
-              data={this.state.data?.data}
+              data={this.state.data}
               extraData={this.state.refresh}
               pagingEnabled={true}
               snapToInterval={windowHeight - 80} // Adjust to your content width
               decelerationRate={'fast'}
               snapToAlignment={'start'}
               keyExtractor={(item) => item.postId}
-              //ListFooterComponent={this.renderFooter.bind(this)}
-              // onEndReachedThreshold={0.1}
-              // onEndReached={this.handleLoadMore.bind(this)}
+              ListFooterComponent={this._renderFooter}
+              onEndReachedThreshold={0.1}
+              initialNumToRender={2}
+              windowSize={2}
+              removeClippedSubviews={true}
+              maxToRenderPerBatch={2}
+              onRefresh={() => this.handlePullToRefresh()}
+              refreshing={this.state.isLoading}
+              onEndReached={this.handlePostsLoadMore.bind(this)}
               renderItem={({ item, index }) => {
+
                 return (
                   <View
                     style={{
@@ -561,7 +684,7 @@ class NewsFeed extends React.Component {
                     }}
                   >
                     <View>
-                      {item.postPicture.substring(item.postPicture.lastIndexOf('.') + 1) == "mp4" ? (
+                      {item?.postPicture.substring(item?.postPicture.lastIndexOf('.') + 1) == "mp4" ? (
                         <BackgroundVideo
                           resizeMode="cover"
                           uri={item.postPicture}

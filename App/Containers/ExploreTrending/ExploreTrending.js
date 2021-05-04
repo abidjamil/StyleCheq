@@ -1,7 +1,6 @@
 import React from 'react'
-import { Platform, ScrollView, TouchableOpacity, Text, View, Button, Image, FlatList, TextInput, Dimensions } from 'react-native'
+import { Platform, ScrollView, TouchableOpacity, Text, View, Button, Image, FlatList, TextInput, Dimensions, ImageBackground } from 'react-native'
 import Style from './ExploreTrendingStyle'
-
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import BACK from 'react-native-vector-icons/AntDesign';
 import NavigationService from 'App/Services/NavigationService'
@@ -10,7 +9,10 @@ import Search from 'react-native-vector-icons/EvilIcons';
 import { NetworkActions } from '../../NetworkActions';
 import { connect } from 'react-redux'
 import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay';
-
+import Modal from 'react-native-modal'
+import { Avatar, Accessory, Icon, Input } from 'react-native-elements'
+import moment from 'moment'
+import ParsedText from 'react-native-parsed-text';
 var that;
 class Trending extends React.Component {
   constructor(props) {
@@ -23,7 +25,9 @@ class Trending extends React.Component {
       value: "",
       resultError: "",
       refresh: false,
-      usersData: []
+      usersData: [],
+      postModal: false,
+      selectedPost: null
     }
     that = this
   }
@@ -111,6 +115,14 @@ class Trending extends React.Component {
   handleSearch(text) {
     this.setState({
       value: text
+    })
+  }
+
+  onPostClick(item) {
+    console.log(item)
+    this.setState({
+      selectedPost: item,
+      postModal: true
     })
   }
   handleNamePress(name) {
@@ -224,9 +236,12 @@ class Trending extends React.Component {
       refresh: !this.state.refresh
     })
   }
+  handleNamePress(name) {
+    NavigationService.navigate('ProfileImage', name)
+  }
+
   render() {
     return (
-
       <View style={{ top: Platform.OS === 'ios' ? 50 : 15 }}>
         <OrientationLoadingOverlay
           visible={this.state.isLoading}
@@ -235,6 +250,91 @@ class Trending extends React.Component {
           messageFontSize={12}
           message=""
         />
+        <Modal
+          onSwipeComplete={() => this.setState({ postModal: false })}
+          swipeDirection="left"
+          animationIn="zoomIn"
+          animationOut="zoomOut"
+          onBackdropPress={() => this.setState({ postModal: false })}
+          onBackButtonPress={() => this.setState({ postModal: false })}
+          isVisible={this.state.postModal || false}>
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              opacity: 1,
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                width: '100%',
+                alignContent: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <ImageBackground
+                resizeMode="cover"
+                style={{ height: '100%', width: '100%', resizeMode: 'cover' }}
+                source={{ uri: this.state.selectedPost?.Picture }}
+              >
+                <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: 10, marginStart: 10, flexDirection: 'row', padding: 10 }}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      NavigationService.navigate(
+                        item.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf',
+                        item
+                      )
+                    }
+                  >
+                    <Avatar
+                      size="medium"
+                      rounded
+                      source={{
+                        uri:
+                          this.state.selectedPost?.profilePicture ||
+                          'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <View>
+                    <Text style={Style.rowUsername}>{this.state.selectedPost?.username}</Text>
+
+                    <Text style={Style.rowTime}>
+                      {moment(this.state.selectedPost?.postCreatedAt).fromNow()}
+                    </Text>
+                  </View>
+
+
+
+                </View>
+                <ParsedText
+                  style={Style.description}
+                  parse={[
+                    {
+                      pattern: RegExp(this.state.selectedPost?.username || "hellp"),
+                      style: Style.name,
+                      onPress: this.handleNamePress,
+                    },
+                    {
+                      pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
+                      style: Style.username,
+                      onPress: this.handleNamePress,
+                    },
+                    { pattern: /#(\w+)/, style: Style.hashtag },
+                  ]}
+                  childrenProps={{ allowFontScaling: true }}
+                >
+                  {this.state.selectedPost?.username || "asdf" + ' : ' + this.state.selectedPost?.description || "#hello"}
+                </ParsedText>
+              </ImageBackground>
+            </View>
+          </View>
+        </Modal>
         <ScrollView
           nestedScrollEnabled>
           <View>
@@ -330,10 +430,12 @@ class Trending extends React.Component {
                     data={this.state.data1}
                     renderItem={({ item }) => {
                       return (
-                        <View style={{ flexDirection: 'row', paddingBottom: 5 }}>
+                        <TouchableOpacity
+                          onPress={() => this.onPostClick(item)}
+                          style={{ flexDirection: 'row', paddingBottom: 5 }}>
                           <Image style={Style.imageStylee}
                             source={{ uri: item.Picture }} />
-                        </View>
+                        </TouchableOpacity>
                       );
                     }} />
 
@@ -357,12 +459,14 @@ class Trending extends React.Component {
                       renderItem={({ item }) => {
 
                         return (
-                          <View style={{ flexDirection: 'row' }}>
+                          <TouchableOpacity
+                            onPress={() => this.onPostClick(item)}
+                            style={{ flexDirection: 'row', paddingBottom: 5 }}>
                             <Image style={Style.imageStylee}
                               source={{ uri: item.Picture }} />
 
 
-                          </View>
+                          </TouchableOpacity>
 
 
 
@@ -395,13 +499,13 @@ class Trending extends React.Component {
                     data={this.state.data3}
                     renderItem={({ item }) => {
                       return (
-                        <View style={{ flexDirection: 'row', paddingBottom: 50 }}>
+                        <TouchableOpacity
+                          onPress={() => this.onPostClick(item)}
+                          style={{ flexDirection: 'row', paddingBottom: 50 }}>
                           <Image style={Style.imageStylee}
                             source={{ uri: item.Picture }} />
 
-                        </View>
-
-
+                        </TouchableOpacity>
 
 
                       );
