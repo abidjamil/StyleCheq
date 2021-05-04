@@ -97,7 +97,6 @@ class PictureSelection extends React.Component {
     }
     else {
       alert("Please select picture")
-
     }
   }
   render() {
