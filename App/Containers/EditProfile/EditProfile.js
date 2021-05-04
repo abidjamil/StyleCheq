@@ -73,7 +73,7 @@ class EditProfile extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => NavigationService.navigate('PictureSelectionScreen')}
+            onPress={() => NavigationService.navigate('UpdateProfilePicture')}
             style={Style.fieldsLine}>
 
             <Text style={Style.paddingText}>Edit Profile Picture</Text>

@@ -37,6 +37,7 @@ import Collections from '../Containers/Collections/Collections'
 import CollectionPosts from '../Containers/CollectionPosts/CollectionPosts'
 import BlockedPeople from '../Containers/BlockedPeople/BlockedPeople'
 import MutedPeople from '../Containers/MutePeople/MutePeople'
+import UpdateProfilePicture from '../Containers/UpdateProfilePic/PictureSelection'
 
 /**
  * The root screen contains the application's navigation.
@@ -86,6 +87,8 @@ const StackNavigator = createStackNavigator(
     CollectionPosts: CollectionPosts,
     BlockedPeople: BlockedPeople,
     MutedPeople: MutedPeople,
+    UpdateProfilePicture: UpdateProfilePicture
+
   },
   {
     animationEnabled: false,
