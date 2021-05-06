@@ -7,6 +7,8 @@ import {
   View,
   FlatList,
   Button,
+  KeyboardAvoidingView,
+  ScrollView,
   ActivityIndicator,
   TouchableOpacity,
   ImageBackground,
@@ -334,7 +336,7 @@ class NewsFeed extends React.Component {
           </View>
           <Image
             resizeMode="contain"
-            style={{ height: 35, width: 35, resizeMode: 'center', overflow: 'hidden' }}
+            style={{ height: 35, width: 35, resizeMode: 'contain' }}
             source={this.getIcon(item.tagName)}
           />
           <Text style={{ ...Style.ratingText, marginTop: 1, marginStart: 1, fontSize: 11 }}>
@@ -389,8 +391,8 @@ class NewsFeed extends React.Component {
               }}
             >
               <Image
-                resizeMode="center"
-                style={{ height: 100, width: 100, resizeMode: 'center', overflow: 'hidden' }}
+                resizeMode="cover"
+                style={{ height: 80, width: 80, resizeMode: 'contain', overflow: 'hidden' }}
                 source={this.getIcon(this.state.selectedIcon?.icon?.tagName)}
               />
               <AirbnbRating
@@ -500,26 +502,25 @@ class NewsFeed extends React.Component {
           swipeDirection="left"
           animationIn="zoomIn"
           animationOut="zoomOut"
+          propagateSwipe={true}
           onBackdropPress={() => this.setState({ collectionModal: false })}
           onBackButtonPress={() => this.setState({ collectionModal: false })}
           isVisible={this.state.collectionModal}
         >
-          <View style={{ width: '100%', backgroundColor: 'white', height: 400, alignContent: 'center', alignItems: 'center' }}>
+          <View style={{ width: '100%', backgroundColor: 'white', height: 400, alignContent: 'center', alignItems: 'center', paddingBottom: 20 }}>
             <Text style={{ fontFamily: 'Poppins-Bold', fontSize: 20, padding: 20 }}> Collections </Text>
-
             <Text style={{ fontFamily: 'Poppins-Regular', fontSize: 16, padding: 20 }}> Select the collection to add the post. </Text>
             <FlatList
+              disableVirtualization={true}
               showsVerticalScrollIndicator={false}
-              style={{ marginTop: 20, width: '90%' }}
+              style={{ marginTop: 20, width: '100%', height: '100%' }}
               data={this.state.collectionsData}
               extraData={this.state.refresh}
-              numColumns={1}
               keyExtractor={(item) => item.collectionId}
-              ListEmptyComponent={this._renderEmptyCollection}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => this.addToCollection(item.collectionId)}
-                  style={{ width: '100%', height: 50, borderWidth: 1, borderRadius: 10, alignContent: 'center', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+                  style={{ width: '90%', height: 50, borderWidth: 1, alignSelf: 'center', borderRadius: 10, alignContent: 'center', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                   <Text style={{ color: 'black', fontFamily: 'Poppins-Bold', fontSize: 16 }}>{item.name}</Text>
                 </TouchableOpacity>
 
@@ -563,6 +564,7 @@ class NewsFeed extends React.Component {
                   ref={(list) => {
                     this.commentsList = list
                   }}
+                  disableVirtualization={true}
                   showsVerticalScrollIndicator={false}
                   style={{ marginTop: 0 }}
                   data={this.state.commentsData}
@@ -597,10 +599,11 @@ class NewsFeed extends React.Component {
                     </View>
                   )}
                 />
-
-                <View
+                <KeyboardAvoidingView
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
                   style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
+
                   <TextInput
                     ref={(input) => {
                       this.textInput = input
@@ -612,12 +615,12 @@ class NewsFeed extends React.Component {
 
                   <TouchableOpacity onPress={() => this.addComment()}>
                     <Image
-                      resizeMode="center"
-                      style={{ height: 15, width: 15, flex: 1, marginEnd: 20 }}
-                      source={Images.searchIcon}
+                      resizeMode="contain"
+                      style={{ height: 20, width: 20, flex: 1, marginEnd: 20 }}
+                      source={Images.send}
                     />
                   </TouchableOpacity>
-                </View>
+                </KeyboardAvoidingView>
               </View>
             </View>
           </View>
@@ -654,9 +657,11 @@ class NewsFeed extends React.Component {
 
           {this.state.data?.length > 0 ?
             <FlatList
+              disableVirtualization={true}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ marginTop: 0 }}
               data={this.state.data}
+              disableVirtualization={true}
               extraData={this.state.refresh}
               pagingEnabled={true}
               snapToInterval={windowHeight - 80} // Adjust to your content width
@@ -731,6 +736,7 @@ class NewsFeed extends React.Component {
                               ref={(list) => {
                                 this.commentsList = list
                               }}
+                              disableVirtualization={true}
                               showsVerticalScrollIndicator={false}
                               style={{ marginTop: 0 }}
                               data={item.tags}
@@ -899,9 +905,8 @@ class NewsFeed extends React.Component {
                             </View>
                             <View style={Style.leftSide}>
                               <FlatList
-                                ref={(list) => {
-                                  this.commentsList = list
-                                }}
+
+                                disableVirtualization={true}
                                 showsVerticalScrollIndicator={false}
                                 style={{ marginTop: 0 }}
                                 data={item.tags}

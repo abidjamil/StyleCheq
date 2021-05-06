@@ -37,4 +37,5 @@ export default {
   bottomLike: require('App/Assets/Images/bottomLike.png'),
   test: require('App/Assets/Images/test.png'),
   loading: require('App/Assets/Images/loading.jpeg'),
+  send: require('App/Assets/Images/send.png'),
 }

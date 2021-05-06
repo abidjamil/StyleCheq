@@ -13,6 +13,8 @@ import Modal from 'react-native-modal'
 import { Avatar, Accessory, Icon, Input } from 'react-native-elements'
 import moment from 'moment'
 import ParsedText from 'react-native-parsed-text';
+import BackgroundVideo from './BackgroundVideo';
+import Video from 'react-native-video'
 var that;
 class Trending extends React.Component {
   constructor(props) {
@@ -236,6 +238,28 @@ class Trending extends React.Component {
       refresh: !this.state.refresh
     })
   }
+  followPeoplefromPost(id) {
+    const request = {
+      followTo: id,
+    }
+    console.log(request)
+    NetworkActions.FollowUser(request, that.props.authData.data.token).then
+      (function (response) {
+        if (response.status === 200) {
+          that.getTrending()
+          that.setState({
+            postModal: false
+          })
+        }
+      })
+      .catch(function (error) {
+        alert(JSON.stringify(error))
+      })
+    this.setState({
+      refresh: !this.state.refresh
+    })
+  }
+
   handleNamePress(name) {
     NavigationService.navigate('ProfileImage', name)
   }
@@ -266,73 +290,175 @@ class Trending extends React.Component {
               justifyContent: 'center',
               alignContent: 'center',
               alignItems: 'center',
+              backgroundColor: 'white'
             }}
           >
-            <View
-              style={{
-                flex: 1,
-                width: '100%',
-                alignContent: 'center',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <ImageBackground
-                resizeMode="cover"
-                style={{ height: '100%', width: '100%', resizeMode: 'cover' }}
-                source={{ uri: this.state.selectedPost?.Picture }}
+            {this.state.selectedPost?.Picture.substring(this.state.selectedPost?.Picture.lastIndexOf('.') + 1) == "mp4" ? (
+              <View
+                style={{
+                  flex: 1,
+                  width: '100%',
+                  alignContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                }}
               >
-                <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: 10, marginStart: 10, flexDirection: 'row', padding: 10 }}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      NavigationService.navigate(
-                        item.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf',
-                        item
-                      )
-                    }
-                  >
-                    <Avatar
-                      size="medium"
-                      rounded
-                      source={{
-                        uri:
-                          this.state.selectedPost?.profilePicture ||
-                          'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
-                      }}
-                    />
-                  </TouchableOpacity>
-                  <View>
-                    <Text style={Style.rowUsername}>{this.state.selectedPost?.username}</Text>
-
-                    <Text style={Style.rowTime}>
-                      {moment(this.state.selectedPost?.postCreatedAt).fromNow()}
-                    </Text>
-                  </View>
-
-
-
-                </View>
-                <ParsedText
-                  style={Style.description}
-                  parse={[
-                    {
-                      pattern: RegExp(this.state.selectedPost?.username || "hellp"),
-                      style: Style.name,
-                      onPress: this.handleNamePress,
-                    },
-                    {
-                      pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
-                      style: Style.username,
-                      onPress: this.handleNamePress,
-                    },
-                    { pattern: /#(\w+)/, style: Style.hashtag },
-                  ]}
-                  childrenProps={{ allowFontScaling: true }}
+                <BackgroundVideo
+                  resizeMode="cover"
+                  uri={this.state.selectedPost?.Picture}
+                  index={this.state.selectedPost?.id}
+                  style={{
+                    width: '100%',
+                    overflow: 'hidden',
+                    height: '100%',
+                  }}
+                  source={{
+                    uri: this.state.selectedPost?.Picture,
+                  }}
                 >
-                  {this.state.selectedPost?.username || "asdf" + ' : ' + this.state.selectedPost?.description || "#hello"}
-                </ParsedText>
-              </ImageBackground>
-            </View>
+                  <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: 10, marginStart: 10, flexDirection: 'row', padding: 10 }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({ postModal: false })
+                        NavigationService.navigate(
+                          this.state.selectedPost?.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf',
+                          this.state.selectedPost
+                        )
+                      }}>
+                      <Avatar
+                        size="medium"
+                        rounded
+                        source={{
+                          uri:
+                            this.state.selectedPost?.profilePicture ||
+                            'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <View>
+                      <Text style={Style.rowUsername}>{this.state.selectedPost?.username}</Text>
+
+                      <Text style={Style.rowTime}>
+                        {moment(this.state.selectedPost?.CreatedAt).fromNow()}
+                      </Text>
+                    </View>
+
+                    {this.state.selectedPost?.isMineFollower == 0 ?
+                      <TouchableOpacity
+                        onPress={() => this.followPeoplefromPost(this.state.selectedPost?.PostByUserId)}>
+                        <Text style={Style.rowStatusFollow}>
+                          Follow
+                    </Text>
+                      </TouchableOpacity> :
+                      <View>
+                        <Text style={Style.rowStatusFollowing}>
+                          Following
+                    </Text>
+                      </View>
+                    }
+
+                  </View>
+                  <ParsedText
+                    style={Style.description}
+                    parse={[
+                      {
+                        pattern: RegExp(this.state.selectedPost?.username || "hellp"),
+                        style: Style.name,
+                        onPress: this.handleNamePress,
+                      },
+                      {
+                        pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
+                        style: Style.username,
+                        onPress: this.handleNamePress,
+                      },
+                      { pattern: /#(\w+)/, style: Style.hashtag },
+                    ]}
+                    childrenProps={{ allowFontScaling: true }}
+                  >
+                    {this.state.selectedPost?.username + ' : ' + this.state.selectedPost?.description}
+                  </ParsedText>
+
+                </BackgroundVideo>
+              </View>
+            ) : (
+                <View
+                  style={{
+                    flex: 1,
+                    width: '100%',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <ImageBackground
+                    resizeMode="cover"
+                    style={{ height: '100%', width: '100%', resizeMode: 'cover' }}
+                    source={{ uri: this.state.selectedPost?.Picture }}
+                  >
+                    <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: 10, marginStart: 10, flexDirection: 'row', padding: 10 }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({ postModal: false })
+                          NavigationService.navigate(
+                            this.state.selectedPost?.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf',
+                            this.state.selectedPost
+                          )
+                        }}>
+                        <Avatar
+                          size="medium"
+                          rounded
+                          source={{
+                            uri:
+                              this.state.selectedPost?.profilePicture ||
+                              'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
+                          }}
+                        />
+                      </TouchableOpacity>
+                      <View>
+                        <Text style={Style.rowUsername}>{this.state.selectedPost?.username}</Text>
+
+                        <Text style={Style.rowTime}>
+                          {moment(this.state.selectedPost?.CreatedAt).fromNow()}
+                        </Text>
+                      </View>
+
+                      {this.state.selectedPost?.isMineFollower == 0 ?
+                        <TouchableOpacity
+                          onPress={() => this.followPeoplefromPost(this.state.selectedPost?.PostByUserId)}>
+                          <Text style={Style.rowStatusFollow}>
+                            Follow
+                    </Text>
+                        </TouchableOpacity> :
+                        <View>
+                          <Text style={Style.rowStatusFollowing}>
+                            Following
+                    </Text>
+                        </View>
+                      }
+
+                    </View>
+                    <ParsedText
+                      style={Style.description}
+                      parse={[
+                        {
+                          pattern: RegExp(this.state.selectedPost?.username || "hellp"),
+                          style: Style.name,
+                          onPress: this.handleNamePress,
+                        },
+                        {
+                          pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
+                          style: Style.username,
+                          onPress: this.handleNamePress,
+                        },
+                        { pattern: /#(\w+)/, style: Style.hashtag },
+                      ]}
+                      childrenProps={{ allowFontScaling: true }}
+                    >
+                      {this.state.selectedPost?.username + ' : ' + this.state.selectedPost?.description}
+                    </ParsedText>
+                  </ImageBackground>
+                </View>
+              )}
           </View>
         </Modal>
         <ScrollView
@@ -360,7 +486,7 @@ class Trending extends React.Component {
             </View>
 
             <View style={Style.searchStyle}>
-              <Search name="search" size={30} color='gray' style={{}} />
+
               <TextInput
                 onChangeText={(value) => this.handleSearch(value)}
                 value={this.state.value}
@@ -368,7 +494,7 @@ class Trending extends React.Component {
                 placeholder='Search' placeholderTextColor='gray'
               />
               <TouchableOpacity onPress={() => this.onSearch()}>
-                <SCAN name="scan1" size={25} color='gray' />
+                <Search name="search" size={30} color='gray' style={{}} />
               </TouchableOpacity>
             </View>
             {
@@ -433,8 +559,26 @@ class Trending extends React.Component {
                         <TouchableOpacity
                           onPress={() => this.onPostClick(item)}
                           style={{ flexDirection: 'row', paddingBottom: 5 }}>
-                          <Image style={Style.imageStylee}
-                            source={{ uri: item.Picture }} />
+                          {item.Picture.substring(item.Picture.lastIndexOf('.') + 1) == "mp4" ? (
+                            <View style={Style.imageStylee}>
+                              <Video
+                                source={{ uri: item.Picture, type: 'mp4' }}
+                                style={Style.imageStylee}
+                                muted={true}
+                                repeat={true}
+                                filterEnabled={true}
+                                playWhenInactive={true}
+                                posterResizeMode="cover"
+                                onError={(e) => console.log('error video', e)}
+                                resizeMode={'cover'}
+                                rate={1.0}
+                                ignoreSilentSwitch={'obey'}
+                              />
+                            </View>
+                          ) : (
+                              <Image style={Style.imageStylee}
+                                source={{ uri: item.Picture }} />
+                            )}
                         </TouchableOpacity>
                       );
                     }} />
@@ -462,14 +606,27 @@ class Trending extends React.Component {
                           <TouchableOpacity
                             onPress={() => this.onPostClick(item)}
                             style={{ flexDirection: 'row', paddingBottom: 5 }}>
-                            <Image style={Style.imageStylee}
-                              source={{ uri: item.Picture }} />
-
-
+                            {item.Picture.substring(item.Picture.lastIndexOf('.') + 1) == "mp4" ? (
+                              <View style={{ borderRadius: 10, marginLeft: 10, backgroundColor: 'white' }}>
+                                <Video
+                                  source={{ uri: item.Picture, type: 'mp4' }}
+                                  style={Style.imageStylee}
+                                  muted={true}
+                                  repeat={true}
+                                  filterEnabled={true}
+                                  playWhenInactive={true}
+                                  posterResizeMode="cover"
+                                  onError={(e) => console.log('error video', e)}
+                                  resizeMode={'cover'}
+                                  rate={1.0}
+                                  ignoreSilentSwitch={'obey'}
+                                />
+                              </View>
+                            ) : (
+                                <Image style={Style.imageStylee}
+                                  source={{ uri: item.Picture }} />
+                              )}
                           </TouchableOpacity>
-
-
-
 
                         );
                       }
@@ -501,10 +658,27 @@ class Trending extends React.Component {
                       return (
                         <TouchableOpacity
                           onPress={() => this.onPostClick(item)}
-                          style={{ flexDirection: 'row', paddingBottom: 50 }}>
-                          <Image style={Style.imageStylee}
-                            source={{ uri: item.Picture }} />
-
+                          style={{ flexDirection: 'row', paddingBottom: 5 }}>
+                          {item.Picture.substring(item.Picture.lastIndexOf('.') + 1) == "mp4" ? (
+                            <View style={{ borderRadius: 10, marginLeft: 10, backgroundColor: 'white' }}>
+                              <Video
+                                source={{ uri: item.Picture, type: 'mp4' }}
+                                style={Style.imageStylee}
+                                muted={true}
+                                repeat={true}
+                                filterEnabled={true}
+                                playWhenInactive={true}
+                                posterResizeMode="cover"
+                                onError={(e) => console.log('error video', e)}
+                                resizeMode={'cover'}
+                                rate={1.0}
+                                ignoreSilentSwitch={'obey'}
+                              />
+                            </View>
+                          ) : (
+                              <Image style={Style.imageStylee}
+                                source={{ uri: item.Picture }} />
+                            )}
                         </TouchableOpacity>
 
 

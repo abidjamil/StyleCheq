@@ -5,12 +5,39 @@ import BACK from 'react-native-vector-icons/AntDesign';
 import RIGHT from 'react-native-vector-icons/AntDesign';
 import NavigationService from 'App/Services/NavigationService'
 import { connect } from 'react-redux'
-class AccountSetting extends React.Component {
+import { NetworkActions } from '../../NetworkActions'
 
+var that;
+class AccountSetting extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+    }
+    that = this
+  }
   logout() {
-    NavigationService.navigateAndReset('LoginScreen')
-    this.props.auth()
-    this.props.timeline()
+    const request = {
+      fcmToken: global?.fcm
+    }
+    NetworkActions.Logout(request, this.props.authData?.data?.token).then
+      (function (response) {
+        that.setState({ isLoading: false })
+        if (response != null) {
+          if (response.status == 200) {
+            console.log(response)
+            NavigationService.navigateAndReset('LoginScreen')
+            that.props.auth()
+            that.props.timeline()
+          }
+        }
+      })
+      .catch(function (error) {
+        alert(JSON.stringify(error))
+        that.setState({ isLoading: false })
+      })
+
+
+
   }
   render() {
     return (

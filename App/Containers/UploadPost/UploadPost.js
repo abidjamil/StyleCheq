@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Platform, Text, View, Dimensions, Image, TouchableOpacity, TextInput, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, Keyboard, Platform, Text, View, Dimensions, Image, TouchableOpacity, TextInput, FlatList, ScrollView } from 'react-native'
 import Style from './UploadPostStyle'
 import { NetworkActions } from '../../NetworkActions'
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
@@ -86,7 +86,10 @@ class UploadPost extends React.Component {
 
   renderSuggestionsRow({ item }, hidePanel) {
     return (
-      <TouchableOpacity onPress={() => this.onSuggestionTap(item, hidePanel)}>
+      <TouchableOpacity onPress={() => {
+        Keyboard.dismiss()
+        this.onSuggestionTap(item, hidePanel)
+      }}>
         <View style={Style.suggestionsRowContainer}>
           <View style={Style.userIconBox}>
             <Image
@@ -99,7 +102,7 @@ class UploadPost extends React.Component {
             />
           </View>
           <View style={Style.userDetailsBox}>
-            <Text style={Style.displayNameText}>{item.username}</Text>
+            <Text style={Style.displayNameText}>{item.firstName || "Missing"} {item.lastName || "Name"}</Text>
             <Text style={Style.usernameText}>@{item.username}</Text>
           </View>
         </View>
@@ -109,9 +112,9 @@ class UploadPost extends React.Component {
 
   onSuggestionTap(item, hidePanel) {
     hidePanel();
-
-    const _comment = this.state.value + item.username
-    const comment = this.state.value + " " + item.username
+    const comment1 = this.state.value.slice(0, - this.state.keyword.length)
+    const _comment = comment1 + "@" + item.username
+    const comment = comment1 + " " + "@" + item.username
     this.setState({
       value: _comment
     })
@@ -127,9 +130,10 @@ class UploadPost extends React.Component {
     });
   }
   callback(keyword) {
-
-    keyword = keyword.replace('@', '');
-
+    this.setState({
+      keyword: keyword
+    })
+    const searchkeyword = keyword.replace('@', '');
     if (keyword) {      // Inserted text is not blank
       // Filter the masterDataSource and update FilteredDataSource
       const newData = this.state.data.filter(
@@ -138,7 +142,7 @@ class UploadPost extends React.Component {
           const itemData = item.username
             ? item.username.toUpperCase()
             : ''.toUpperCase();
-          const textData = keyword.toUpperCase();
+          const textData = searchkeyword.toUpperCase();
           return itemData.indexOf(textData) > -1;
         }
       );
@@ -308,7 +312,7 @@ class UploadPost extends React.Component {
                 triggerCallback={this.callback.bind(this)}
                 renderSuggestionsRow={this.renderSuggestionsRow.bind(this)}
                 suggestionsData={this.state.data} // array of objects
-                keyExtractor={(item, index) => item.id}
+                keyExtractor={(item, index) => item.userId}
                 suggestionRowHeight={45}
                 horizontal={false} // defaut is true, change the orientation of the list
                 MaxVisibleRowCount={3} // this is required if horizontal={false}

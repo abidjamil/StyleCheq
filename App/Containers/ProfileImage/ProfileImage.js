@@ -54,6 +54,7 @@ class ProfileScreen extends React.Component {
     console.log(this.state.userData.username)
     NetworkActions.GetProfile(Request, that.props.auth.data.token).then
       (function (response) {
+        that.setState({ isLoading: false })
         if (response.status === 200) {
           console.log(response.data[0])
           that.setState({
@@ -135,7 +136,7 @@ class ProfileScreen extends React.Component {
 
         }
       ],
-      { cancelable: false }
+      { cancelable: true }
     );
   }
   followPeople(id) {
@@ -224,7 +225,7 @@ class ProfileScreen extends React.Component {
 
         }
       ],
-      { cancelable: false }
+      { cancelable: true }
     );
   }
   render() {
@@ -238,6 +239,8 @@ class ProfileScreen extends React.Component {
             ref={(ref) => { this.Modal = ref }}
             animationType={"slide"}
             transparent={true}
+            onBackdropPress={() => this.setState({ modalVisible: false })}
+            onBackButtonPress={() => this.setState({ modalVisible: false })}
             visible={this.state.modalVisible}
             onRequestClose={() => { console.log("Modal has been closed.") }}>
 
