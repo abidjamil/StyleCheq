@@ -3,7 +3,7 @@ import { TouchableOpacity, Platform, Text, View, Button, Image, ScrollView, Flat
 
 import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import Search from 'react-native-vector-icons/AntDesign';
-import Plus from 'react-native-vector-icons/EvilIcons';
+import Envelope from 'react-native-vector-icons/EvilIcons';
 import Bell from 'react-native-vector-icons/FontAwesome';
 import Hand from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from 'react-native-vector-icons/Entypo';

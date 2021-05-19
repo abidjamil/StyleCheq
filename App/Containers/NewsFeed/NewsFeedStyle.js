@@ -40,11 +40,11 @@ export default StyleSheet.create({
     marginTop: 1,
   },
   rowUsername: {
-    fontSize: 12,
-    fontFamily: 'Poppins-Bold',
+    fontSize: 10,
+    fontFamily: 'Poppins-Regular',
     marginStart: 5,
     color: Colors.white,
-    marginTop: 5,
+    marginTop: -5,
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 1
@@ -65,11 +65,11 @@ export default StyleSheet.create({
 
   },
   rowTime: {
-    fontSize: 10,
+    fontSize: 9,
     fontFamily: 'Poppins-Regular',
     marginStart: 5,
     color: Colors.white,
-    marginTop: 5,
+    marginTop: -3,
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 1
@@ -190,12 +190,9 @@ export default StyleSheet.create({
 
   leftSide: {
     width: 100,
-    height: '70%',
     flexDirection: 'column',
     justifyContent: 'space-around',
     position: 'absolute', //Here is the trick
-    left: -10,
-    top: Platform.OS === 'ios' ? 120 : 90,
     zIndex: 10,
   },
 
@@ -204,10 +201,8 @@ export default StyleSheet.create({
     height: '50%',
     maxHeight: 300,
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     position: 'absolute', //Here is the trick
-    right: 0,
-    bottom: Platform.OS === 'ios' ? 170 : 120,
     zIndex: 10,
   },
 
@@ -267,10 +262,10 @@ export default StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     marginStart: 5,
     color: Colors.white,
-    bottom: Platform.OS === 'ios' ? 120 : 60,
     marginStart: '5%',
     marginEnd: '5%',
     width: '90%',
+    alignSelf: 'flex-end',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 1

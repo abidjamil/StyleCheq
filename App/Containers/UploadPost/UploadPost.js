@@ -136,7 +136,7 @@ class UploadPost extends React.Component {
     const searchkeyword = keyword.replace('@', '');
     if (keyword) {      // Inserted text is not blank
       // Filter the masterDataSource and update FilteredDataSource
-      const newData = this.state.data.filter(
+      const newData = this.state.copyData.filter(
         function (item) {
           // Applying filter for the inserted text in search bar
           const itemData = item.username
@@ -182,7 +182,7 @@ class UploadPost extends React.Component {
           data: response.data,
           type: response.type,
           path: response.path,
-          name: response.fileName
+          name: Platform.OS === 'ios' ? response.uri.substring(response.uri.lastIndexOf('/') + 1) : response.path.substring(response.path.lastIndexOf('/') + 1)
         }
 
         if (picture.uri != null) {
@@ -218,7 +218,7 @@ class UploadPost extends React.Component {
           data: response.data,
           type: response.type,
           path: response.path,
-          name: response.path.substring(response.path.lastIndexOf('/') + 1)
+          name: Platform.OS === 'ios' ? response.uri.substring(response.uri.lastIndexOf('/') + 1) : response.path.substring(response.path.lastIndexOf('/') + 1)
         }
         if (video.uri != null) {
           this.setState({ userImage: video })

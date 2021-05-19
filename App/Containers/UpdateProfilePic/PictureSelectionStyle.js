@@ -14,8 +14,17 @@ export default StyleSheet.create({
     marginStart: '10%',
     marginEnd: '10%',
     marginTop: 50,
+  }, privacyView: {
+    justifyContent: 'space-between',
+    paddingHorizontal: 22,
+    flexDirection: 'row'
   },
-
+  privacyBtn: {
+    fontFamily: 'Poppins-Light', paddingRight: 5, fontSize: 14, paddingLeft: 5
+  },
+  fieldsLine: {
+    flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 8
+  },
   almostDoneBtn: {
     marginStart: '10%',
     marginEnd: '10%',

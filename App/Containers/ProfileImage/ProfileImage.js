@@ -18,6 +18,11 @@ const windowHeight = Dimensions.get('window').height / 1.056;
 import { NetworkActions } from '../../NetworkActions'
 import Modal from "react-native-modal";
 import { Rating, AirbnbRating } from 'react-native-elements';
+import { Avatar, Accessory, Icon, Input } from 'react-native-elements'
+import moment from 'moment'
+import ParsedText from 'react-native-parsed-text';
+import BackgroundVideo from '../ExploreTrending/BackgroundVideo';
+import Search from 'react-native-vector-icons/EvilIcons';
 
 var that;
 class ProfileScreen extends React.Component {
@@ -30,7 +35,8 @@ class ProfileScreen extends React.Component {
       rowsPerPage: 50,
       userData: props.navigation.state.params,
       userPosts: [],
-      starCount: 3.5
+      starCount: 3.5,
+      postModal: false
     }
     that = this;
   }
@@ -51,7 +57,7 @@ class ProfileScreen extends React.Component {
         username: this.state.userData.substring(1)
       }
     }
-    console.log(this.state.userData.username)
+    console.log(Request)
     NetworkActions.GetProfile(Request, that.props.auth.data.token).then
       (function (response) {
         that.setState({ isLoading: false })
@@ -76,7 +82,7 @@ class ProfileScreen extends React.Component {
                 }
               })
               .catch(function (error) {
-                alert(error)
+                alert(JSON.stringify(error))
                 that.setState({ isLoading: false })
               })
           }
@@ -168,7 +174,7 @@ class ProfileScreen extends React.Component {
               }
             })
             .catch(function (error) {
-              alert(error)
+              alert(JSON.stringify(error))
               that.setState({ isLoading: false })
             })
         }
@@ -180,7 +186,29 @@ class ProfileScreen extends React.Component {
       refresh: !this.state.refresh
     })
   }
-
+  unfollowPeople(id) {
+    const request = {
+      followTo: id,
+    }
+    console.log(request)
+    NetworkActions.FollowUser(request, that.props.auth.data.token).then
+      (function (response) {
+        if (response.status === 200) {
+          var data = that.state.userProfile
+          data.isFollowedByYou = 0
+          that.setState({
+            userProfile: data,
+            userPosts: null
+          })
+        }
+      })
+      .catch(function (error) {
+        alert(JSON.stringify(error))
+      })
+    this.setState({
+      refresh: !this.state.refresh
+    })
+  }
   openChat() {
     const item = {
       userId: this.state.userProfile?.UserId
@@ -308,9 +336,12 @@ class ProfileScreen extends React.Component {
                       Follow
                     </Text>
                   </TouchableOpacity> :
-                  <Text style={Style.rowStatusFollowing}>
-                    Following
+                  <TouchableOpacity
+                    onPress={() => this.unfollowPeople(this.state.userProfile?.UserId)}>
+                    <Text style={Style.rowStatusFollowing}>
+                      Following
                     </Text>
+                  </TouchableOpacity>
                 }
                 <TouchableOpacity
                   onPress={() => this.toggleModal()}>
@@ -411,6 +442,177 @@ class ProfileScreen extends React.Component {
             </View>
           </View>
         </Modal>
+        <Modal
+          onSwipeComplete={() => this.setState({ postModal: false })}
+          swipeDirection="down"
+          animationIn="zoomIn"
+          animationOut="zoomOut"
+          onBackdropPress={() => this.setState({ postModal: false })}
+          onBackButtonPress={() => this.setState({ postModal: false })}
+          isVisible={this.state.postModal || false}>
+          <View
+            style={{
+              width: '100%',
+              height: '100%',
+              opacity: 1,
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'white'
+            }}
+          >
+            {this.state.selectedPost?.picture.substring(this.state.selectedPost?.picture.lastIndexOf('.') + 1) == "mp4" ? (
+              <View
+                style={{
+                  flex: 1,
+                  width: '100%',
+                  alignContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                <BackgroundVideo
+                  resizeMode="cover"
+                  uri={this.state.selectedPost?.picture}
+                  index={this.state.selectedPost?.id}
+                  style={{
+                    width: '100%',
+                    overflow: 'hidden',
+                    height: '100%',
+                  }}
+                  source={{
+                    uri: this.state.selectedPost?.picture,
+                  }}
+                >
+                  <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: -15, marginStart: 10, flexDirection: 'row', padding: 10 }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({ postModal: false })
+                        NavigationService.navigate(
+                          this.state.selectedPost?.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf',
+                          this.state.selectedPost
+                        )
+                      }}>
+                      <Avatar
+                        size="medium"
+                        rounded
+                        source={{
+                          uri:
+                            this.state.selectedPost?.profilePicture ||
+                            'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
+                        }}
+                      />
+                    </TouchableOpacity>
+                    <View>
+                      <Text style={Style.rowUsername}>{this.state.userProfile?.firstName} {this.state.userProfile?.lastName}</Text>
+                      <Text style={Style.rowTime}>@{this.state.userProfile?.username}</Text>
+                      <Text style={Style.rowTime}>
+                        {moment(this.state.selectedPost?.createdAt).fromNow()}
+                      </Text>
+                    </View>
+
+
+
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => { this.setState({ postModal: false }) }}>
+                    <Search name="close" size={30} color='black' style={{ alignSelf: 'flex-end', marginTop: 10, marginEnd: 10 }} />
+                  </TouchableOpacity>
+                  <ParsedText
+                    style={Style.description}
+                    parse={[
+                      {
+                        pattern: RegExp(this.state.userProfile?.username || "hellp"),
+                        style: Style.name,
+                        onPress: this.handleNamePress,
+                      },
+                      {
+                        pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
+                        style: Style.username,
+                        onPress: this.handleNamePress,
+                      },
+                      { pattern: /#(\w+)/, style: Style.hashtag },
+                    ]}
+                    childrenProps={{ allowFontScaling: true }}
+                  >
+                    {this.state.userProfile?.username + ' : ' + this.state.selectedPost?.description}
+                  </ParsedText>
+
+                </BackgroundVideo>
+              </View>
+            ) : (
+                <View
+                  style={{
+                    flex: 1,
+                    width: '100%',
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <ImageBackground
+                    resizeMode="cover"
+                    style={{ height: '100%', width: '100%', resizeMode: 'cover' }}
+                    source={{ uri: this.state.selectedPost?.picture }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => { this.setState({ postModal: false }) }}>
+                      <Search name="close" size={30} color='black' style={{ alignSelf: 'flex-end', marginTop: 10, marginEnd: 10 }} />
+                    </TouchableOpacity>
+                    <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: -15, marginStart: 10, flexDirection: 'row', padding: 10 }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({ postModal: false })
+                          NavigationService.navigate(
+                            this.state.selectedPost?.isMinePost == 0 ? 'ProfileImage' : 'ProfileImageSelf',
+                            this.state.selectedPost
+                          )
+                        }}>
+                        <Avatar
+                          size="medium"
+                          rounded
+                          source={{
+                            uri:
+                              this.state.selectedPost?.profilePicture ||
+                              'https://i.pinimg.com/originals/64/57/c1/6457c16c1691edc5041e437cda422d98.jpg',
+                          }}
+                        />
+                      </TouchableOpacity>
+                      <View>
+                        <Text style={Style.rowUsername}>{this.state.userProfile?.firstName} {this.state.userProfile?.lastName}</Text>
+                        <Text style={Style.rowTime}>@{this.state.userProfile?.username}</Text>
+                        <Text style={Style.rowTime}>
+                          {moment(this.state.selectedPost?.createdAt).fromNow()}
+                        </Text>
+                      </View>
+
+
+
+                    </View>
+                    <ParsedText
+                      style={Style.description}
+                      parse={[
+                        {
+                          pattern: RegExp(this.state.userProfile?.username || "hellp"),
+                          style: Style.name,
+                          onPress: this.handleNamePress,
+                        },
+                        {
+                          pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
+                          style: Style.username,
+                          onPress: this.handleNamePress,
+                        },
+                        { pattern: /#(\w+)/, style: Style.hashtag },
+                      ]}
+                      childrenProps={{ allowFontScaling: true }}
+                    >
+                      {this.state.userProfile?.username + ' : ' + this.state.selectedPost?.description}
+                    </ParsedText>
+                  </ImageBackground>
+                </View>
+              )}
+          </View>
+        </Modal>
         <SafeAreaView style={{ marginTop: 50 }}>
           <FlatList
             style={{ flex: 1 }}
@@ -421,16 +623,37 @@ class ProfileScreen extends React.Component {
             columnWrapperStyle={{ marginHorizontal: 5, marginVertical: 5, }}
             renderItem={({ item }) => {
               return (
-                <View style={{ padding: 10, flex: 1 }}>
+                <TouchableOpacity
+                  onPress={() => this.setState({ postModal: true, selectedPost: item })}
+                  style={{ padding: 10, flex: 1 }}>
                   <TouchableOpacity style={{ alignSelf: 'flex-end', marginEnd: 10 }}
                     onPress={() => this.setState({ postRatingModal: true, selectedPostForRating: item })}>
                     <Star name="star" size={20} color='#FFC00B' />
                     <Text style={Style.ratingText}>{item.rating}</Text>
                   </TouchableOpacity>
-                  <Image
-                    style={{ marginTop: -55, zIndex: -1, height: 250, width: '100%', borderRadius: 20 }}
-                    source={{ uri: item.picture }} />
-                </View>
+                  {item.picture.substring(item.picture.lastIndexOf('.') + 1) == "mp4" ? (
+                    <View style={{ backgroundColor: 'black', height: 250, width: '100%', borderRadius: 10 }}
+                    >
+                      <Video
+                        source={{ uri: item.picture, type: 'mp4' }}
+                        style={{ height: 250, width: '100%', borderRadius: 10 }}
+                        muted={true}
+                        repeat={true}
+                        filterEnabled={true}
+                        playWhenInactive={true}
+                        posterResizeMode="cover"
+                        onError={(e) => console.log('error video', e)}
+                        resizeMode={'cover'}
+                        rate={1.0}
+                        ignoreSilentSwitch={'obey'}
+                      />
+                    </View>
+                  ) : (
+                      <Image
+                        style={{ marginTop: -55, zIndex: -1, height: 250, width: '100%', borderRadius: 20 }}
+                        source={{ uri: item.picture }} />
+                    )}
+                </TouchableOpacity>
 
               );
             }

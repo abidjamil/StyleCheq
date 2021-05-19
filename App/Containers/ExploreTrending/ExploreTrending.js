@@ -42,6 +42,7 @@ class Trending extends React.Component {
       (function (response) {
         that.setState({ isLoading: false })
         if (response != null) {
+          console.log(response)
           if (response.status == 200) {
             that.setState({
               data: response.data
@@ -49,6 +50,7 @@ class Trending extends React.Component {
             const req = {
               value: response.data[0].hashTagName
             }
+
             NetworkActions.GetTrendingWithHash(req, that.props.authData.data.token).then
               (function (response) {
                 that.setState({ isLoading: false })
@@ -128,7 +130,8 @@ class Trending extends React.Component {
     })
   }
   handleNamePress(name) {
-    NavigationService.navigate('ProfileImage', '@' + name)
+    const username = '@' + name.username
+    NavigationService.navigate('ProfileImage', username)
   }
   onSearch() {
     if (this.state.value.length > 0) {
@@ -206,6 +209,7 @@ class Trending extends React.Component {
 
     }
     else {
+      this.setState({ resultError: "" })
       this.getTrending()
     }
   }
@@ -276,7 +280,7 @@ class Trending extends React.Component {
         />
         <Modal
           onSwipeComplete={() => this.setState({ postModal: false })}
-          swipeDirection="left"
+          swipeDirection="down"
           animationIn="zoomIn"
           animationOut="zoomOut"
           onBackdropPress={() => this.setState({ postModal: false })}
@@ -298,9 +302,6 @@ class Trending extends React.Component {
                 style={{
                   flex: 1,
                   width: '100%',
-                  alignContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  justifyContent: 'flex-start',
                 }}
               >
                 <BackgroundVideo
@@ -316,7 +317,11 @@ class Trending extends React.Component {
                     uri: this.state.selectedPost?.Picture,
                   }}
                 >
-                  <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: 10, marginStart: 10, flexDirection: 'row', padding: 10 }}>
+                  <TouchableOpacity
+                    onPress={() => { this.setState({ postModal: false }) }}>
+                    <Search name="close" size={30} color='black' style={{ alignSelf: 'flex-end', marginTop: 10, marginEnd: 10 }} />
+                  </TouchableOpacity>
+                  <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: -15, marginStart: 10, flexDirection: 'row', padding: 10 }}>
                     <TouchableOpacity
                       onPress={() => {
                         this.setState({ postModal: false })
@@ -336,8 +341,7 @@ class Trending extends React.Component {
                       />
                     </TouchableOpacity>
                     <View>
-                      <Text style={Style.rowUsername}>{this.state.selectedPost?.username}</Text>
-
+                      <Text style={Style.rowUsername}>@{this.state.selectedPost?.username}</Text>
                       <Text style={Style.rowTime}>
                         {moment(this.state.selectedPost?.CreatedAt).fromNow()}
                       </Text>
@@ -358,6 +362,7 @@ class Trending extends React.Component {
                     }
 
                   </View>
+
                   <ParsedText
                     style={Style.description}
                     parse={[
@@ -395,7 +400,11 @@ class Trending extends React.Component {
                     style={{ height: '100%', width: '100%', resizeMode: 'cover' }}
                     source={{ uri: this.state.selectedPost?.Picture }}
                   >
-                    <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: 10, marginStart: 10, flexDirection: 'row', padding: 10 }}>
+                    <TouchableOpacity
+                      onPress={() => { this.setState({ postModal: false }) }}>
+                      <Search name="close" size={30} color='black' style={{ alignSelf: 'flex-end', marginTop: 10, marginEnd: 10 }} />
+                    </TouchableOpacity>
+                    <View style={{ flex: 1, zIndex: 2, alignSelf: 'flex-start', marginTop: -15, marginStart: 10, flexDirection: 'row', padding: 10 }}>
                       <TouchableOpacity
                         onPress={() => {
                           this.setState({ postModal: false })
@@ -415,8 +424,7 @@ class Trending extends React.Component {
                         />
                       </TouchableOpacity>
                       <View>
-                        <Text style={Style.rowUsername}>{this.state.selectedPost?.username}</Text>
-
+                        <Text style={Style.rowUsername}>@{this.state.selectedPost?.username}</Text>
                         <Text style={Style.rowTime}>
                           {moment(this.state.selectedPost?.CreatedAt).fromNow()}
                         </Text>
@@ -462,6 +470,7 @@ class Trending extends React.Component {
           </View>
         </Modal>
         <ScrollView
+          style={{ marginBottom: 20 }}
           nestedScrollEnabled>
           <View>
             <View style={Style.firstBox, { paddingHorizontal: 20 }}>
@@ -560,7 +569,7 @@ class Trending extends React.Component {
                           onPress={() => this.onPostClick(item)}
                           style={{ flexDirection: 'row', paddingBottom: 5 }}>
                           {item.Picture.substring(item.Picture.lastIndexOf('.') + 1) == "mp4" ? (
-                            <View style={Style.imageStylee}>
+                            <View style={{ borderRadius: 10, marginLeft: 10, backgroundColor: 'white' }}>
                               <Video
                                 source={{ uri: item.Picture, type: 'mp4' }}
                                 style={Style.imageStylee}

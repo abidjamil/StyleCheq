@@ -1208,7 +1208,7 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/picker/-/picker-1.8.1.tgz"
   "version" "1.8.1"
 
-"@react-native-community/push-notification-ios@1.8.0":
+"@react-native-community/push-notification-ios@^1.8.0", "@react-native-community/push-notification-ios@1.8.0":
   "integrity" "sha512-vxvkeampafjmtDoQBN8Q4azP21l6cMX93+OQZemyIWZmG++OjCVDQVitobf/kWLm5zyGwdylejbpMGo75qo7rA=="
   "resolved" "https://registry.npmjs.org/@react-native-community/push-notification-ios/-/push-notification-ios-1.8.0.tgz"
   "version" "1.8.0"
@@ -7156,10 +7156,10 @@
     "@react-native-picker/picker" "^1.8.3"
     "lodash.isequal" "^4.5.0"
 
-"react-native-push-notification@7.2.3":
-  "integrity" "sha512-MWwzGXGD22vQ35roDWBQ4EJl1jS4kuuAAdxqe2C88gULgzT6rQkR9wszl5b5K+hIWqve50qg4zJoSgarr//2KA=="
-  "resolved" "https://registry.npmjs.org/react-native-push-notification/-/react-native-push-notification-7.2.3.tgz"
-  "version" "7.2.3"
+"react-native-push-notification@7.3.0":
+  "integrity" "sha512-Ofy8dYAhIkFJKxQDvAn7BnXxwtun1SMnqLjZUhRTRzhPEqN0tW7TmIjfyYanNf/lnggRYZqFO+b14Ul3nhlMGw=="
+  "resolved" "https://registry.npmjs.org/react-native-push-notification/-/react-native-push-notification-7.3.0.tgz"
+  "version" "7.3.0"
 
 "react-native-ratings@^7.2.0":
   "integrity" "sha512-NCDIkmrVPnxPzP9zKdlcNpa2rPs3Hiv2qXsojUr3FpwbANWfgYE+jjGSSCBcS3vpXndTjhoaTGFDnybnUSFPFA=="
@@ -7283,6 +7283,16 @@
   "resolved" "https://registry.npmjs.org/react-native-timeago/-/react-native-timeago-0.5.0.tgz"
   "version" "0.5.0"
 
+"react-native-uuid-generator@^6.1.1":
+  "integrity" "sha512-jWF0wiGTUTkCBTpspUZatC7wlhjN3GRbW9YblaxxpuMuhk0DEOQXOp1qgsDd2vLTL8GsM3i7Hnatvfj1kwf88w=="
+  "resolved" "https://registry.npmjs.org/react-native-uuid-generator/-/react-native-uuid-generator-6.1.1.tgz"
+  "version" "6.1.1"
+
+"react-native-uuid@^2.0.1":
+  "integrity" "sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g=="
+  "resolved" "https://registry.npmjs.org/react-native-uuid/-/react-native-uuid-2.0.1.tgz"
+  "version" "2.0.1"
+
 "react-native-vector-icons@^4.5.0":
   "integrity" "sha512-rpfhfPiXCK2PX1nrNhdxSMrEGB/Gw/SvKoPM0G2wAkSoqynnes19K0VYI+Up7DqR1rFIpE4hP2erpT1tNx2tfg=="
   "resolved" "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-4.6.0.tgz"
@@ -7324,7 +7334,7 @@
     "prop-types" "^15.7.2"
     "shaka-player" "^2.5.9"
 
-"react-native@*", "react-native@^0.63.4":
+"react-native@*", "react-native@^0.63.4", "react-native@>=0.33", "react-native@>=0.47":
   "integrity" "sha512-I4kM8kYO2mWEYUFITMcpRulcy4/jd+j9T6PbIzR0FuMcz/xwd+JwHoLPa1HmCesvR1RDOw9o4D+OFLwuXXfmGw=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.4.tgz"
   "version" "0.63.4"

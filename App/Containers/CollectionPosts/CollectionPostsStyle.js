@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Helpers, Metrics, Fonts, Colors } from 'App/Theme'
+import Modal from 'react-native-modal'
+import { Avatar, Accessory, Icon, Input } from 'react-native-elements'
+import moment from 'moment'
+import ParsedText from 'react-native-parsed-text';
+import BackgroundVideo from '../ExploreTrending/BackgroundVideo';
+import Video from 'react-native-video'
 
 export default StyleSheet.create({
 
@@ -104,5 +110,56 @@ export default StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     textAlign: 'center'
+  },
+  rowTime: {
+    fontSize: 10,
+    fontFamily: 'Poppins-Regular',
+    marginStart: 5,
+    color: Colors.white,
+    marginTop: -3,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
+  },
+  description: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+    marginStart: 5,
+    color: Colors.white,
+    marginStart: '5%',
+    marginEnd: '5%',
+    width: '90%',
+    marginBottom: 20,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
+  },
+  username: {
+    fontSize: 11,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: "#edc307",
+  },
+  name: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: Colors.white,
+  },
+  hashtag: {
+    fontSize: 11,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: "#cf0eaf",
+  },
+  rowUsername: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Bold',
+    marginStart: 5,
+    color: Colors.white,
+    marginTop: -3,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1
   },
 })

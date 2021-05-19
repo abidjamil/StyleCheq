@@ -58,7 +58,7 @@ class Chat extends React.Component {
 
     handleSearch(text) {
         this.setState({ searchQuery: text })
-        if (text) {
+        if (text && this.state.data.length > 0) {
             // Inserted text is not blank
             // Filter the masterDataSource and update FilteredDataSource
             const newData = this.state.data.filter(

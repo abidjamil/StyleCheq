@@ -7,6 +7,8 @@ import { ApplicationStyles, Helpers, Images, Metrics, Colors } from 'App/Theme'
 import OrientationLoadingOverlay from 'react-native-orientation-loading-overlay';
 import NavigationService from 'App/Services/NavigationService'
 import ImagePicker from 'react-native-image-picker'
+import BACK from 'react-native-vector-icons/AntDesign';
+
 var that;
 class PictureSelection extends React.Component {
   constructor(props) {
@@ -103,12 +105,21 @@ class PictureSelection extends React.Component {
     var image = Platform.OS === 'ios' ? this.state.userImage.uri : 'file://' + this.state.userImage.path
     console.log(this.state.userImage)
     return (
-      <View
-        style={[
-          Helpers.fill,
-          Helpers.rowMain,
-        ]}
-      >
+      <View style={{ height: '100%', top: Platform.OS === 'ios' ? 50 : 25 }}>
+        <View style={Style.firstBox, { paddingHorizontal: 20 }}>
+          <View style={Style.fieldsLine}>
+            <TouchableOpacity
+              onPress={() => NavigationService.goBack()}
+              style={{ flexDirection: 'row' }}>
+              <BACK name="left" size={23}></BACK>
+              <Text style={Style.privacyBtn}>back</Text>
+            </TouchableOpacity>
+
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={Style.privacyBtn}>Update Profile Picture</Text>
+            </View>
+          </View>
+        </View>
         <ImageBackground
           style={[Helpers.fullSize]}>
           <OrientationLoadingOverlay

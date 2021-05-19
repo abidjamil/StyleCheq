@@ -203,19 +203,21 @@ class Trending extends React.Component {
                                   {item.name}
                                 </Text>
                                 <FlatList
-                                  style={{ flex: 1 }}
-                                  numColumns={2}
-                                  contentContainerStyle={{ paddingVertical: 5, }}
-                                  columnWrapperStyle={{ marginHorizontal: 5, marginVertical: 5, }}
+                                  style={{ height: 170, overflow: 'hidden' }}
+                                  numColumns={3}
+                                  contentContainerStyle={{}}
+                                  columnWrapperStyle={{ marginHorizontal: 2, marginVertical: 2, }}
                                   keyExtractor={(item) => item.postId}
                                   data={item.posts}
                                   renderItem={({ item }) => {
                                     return (
-                                      <SafeAreaView style={{ padding: 5, flex: 1 }}>
+                                      <SafeAreaView style={{ padding: 2, flex: 1 }}>
+
                                         <Image
-                                          style={{ width: 70, height: 100, borderRadius: 5 }}
+                                          style={{ backgroundColor: 'black', width: 55, height: 70, borderRadius: 5 }}
                                           resizeMode="cover"
                                           source={{ uri: item.picture }} />
+
                                       </SafeAreaView>
 
                                     );

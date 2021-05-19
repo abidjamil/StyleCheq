@@ -30,6 +30,7 @@ import Star from 'react-native-vector-icons/AntDesign'
 import Modal from 'react-native-modal'
 import { Rating, AirbnbRating } from 'react-native-elements'
 import BackgroundVideo from './BackgroundVideo'
+import Message from 'react-native-vector-icons/Entypo';
 var that
 
 class NewsFeed extends React.Component {
@@ -72,9 +73,11 @@ class NewsFeed extends React.Component {
         if (that.state.postsPageNumber === 1) {
           that.setState({ data: [] })
         }
-        that.setState({
-          data: [...that.state.data, ...response.data],
-        })
+        if (response.data.length > 0) {
+          that.setState({
+            data: [...that.state.data, ...response.data],
+          })
+        }
         that.props.timeline()
       })
       .catch(function (error) {
@@ -263,7 +266,9 @@ class NewsFeed extends React.Component {
   handleNamePress(name) {
     NavigationService.navigate('ProfileImage', name)
   }
-
+  handleHashTagPress() {
+    NavigationService.navigate('ExploreTrending')
+  }
   handleCommentsLoadMore() {
     this.setState({ commentsPageNumber: ++this.state.commentsPageNumber })
     this.getComments(this.state.currentPostId)
@@ -626,7 +631,7 @@ class NewsFeed extends React.Component {
           </View>
         </BottomSheet>
 
-        <View style={{ paddingBottom: Platform.OS === 'ios' ? 80 : '27%' }}>
+        <View style={{ marginBottom: Platform.OS === 'ios' ? 80 : 120 }}>
           {/* Posts Section */}
 
           <View
@@ -637,12 +642,8 @@ class NewsFeed extends React.Component {
               paddingRight: 20,
             }}
           >
-            <TouchableOpacity onPress={() => NavigationService.navigate('UploadPost')}>
-              <Image
-                resizeMode="contain"
-                style={{ width: 30, height: 30 }}
-                source={Images.cameraIcon}
-              />
+            <TouchableOpacity onPress={() => NavigationService.navigate('ChatHistory')}>
+              <Message name="mail" size={30} color="#0E7EB5" style={{ marginTop: 5 }} />
             </TouchableOpacity>
             <Text style={{ fontSize: 16, fontFamily: 'Poppins-Light' }}>Timeline</Text>
 
@@ -657,11 +658,10 @@ class NewsFeed extends React.Component {
 
           {this.state.data?.length > 0 ?
             <FlatList
-              disableVirtualization={true}
+              legacyImplementation={true}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ marginTop: 0 }}
               data={this.state.data}
-              disableVirtualization={true}
               extraData={this.state.refresh}
               pagingEnabled={true}
               snapToInterval={windowHeight - 80} // Adjust to your content width
@@ -670,10 +670,10 @@ class NewsFeed extends React.Component {
               keyExtractor={(item) => item.postId}
               ListFooterComponent={this._renderFooter}
               onEndReachedThreshold={0.1}
-              initialNumToRender={2}
-              windowSize={2}
+              initialNumToRender={10}
+              windowSize={10}
               removeClippedSubviews={true}
-              maxToRenderPerBatch={2}
+              maxToRenderPerBatch={10}
               onRefresh={() => this.handlePullToRefresh()}
               refreshing={this.state.isLoading}
               onEndReached={this.handlePostsLoadMore.bind(this)}
@@ -725,105 +725,13 @@ class NewsFeed extends React.Component {
                             </TouchableOpacity>
 
                             <View>
+                              <Text style={Style.rowUsername}>{item.firstName || "Missing"} {item.lastName || "Name"}</Text>
                               <Text style={Style.rowUsername}>{item.username}</Text>
                               <Text style={Style.rowTime}>
                                 {moment(item.postCreatedAt).fromNow()}
                               </Text>
                             </View>
                           </View>
-                          <View style={Style.leftSide}>
-                            <FlatList
-                              ref={(list) => {
-                                this.commentsList = list
-                              }}
-                              disableVirtualization={true}
-                              showsVerticalScrollIndicator={false}
-                              style={{ marginTop: 0 }}
-                              data={item.tags}
-                              extraData={this.state.refresh}
-                              keyExtractor={(item) => item.tagName}
-                              renderItem={this.renderIcon.bind(this, item)}
-                            />
-                          </View>
-
-                          <View style={Style.rightSide}>
-                            <View
-                              style={{
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                              }}
-                            >
-                              <TouchableOpacity
-                                style={{ alignItems: 'center', justifyContent: 'center' }}
-                                onPress={() =>
-                                  this.setState({
-                                    postRatingModal: true,
-                                    selectedPostForRating: item,
-                                  })
-                                }
-                              >
-                                <Text style={Style.ratingText}>{item.avgRating}</Text>
-                                <Image
-                                  resizeMode="contain"
-                                  style={{ height: 35, width: 35 }}
-                                  source={Images.big_star}
-                                />
-                                <Text style={Style.ratingText}>Rate {item.totalRating}</Text>
-                              </TouchableOpacity>
-                            </View>
-
-                            <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                              <TouchableOpacity
-                                style={{ justifyContent: 'center', alignItems: 'center' }}
-                                onPress={() => this.toggleComments(item)}
-                              >
-                                <Image
-                                  resizeMode="contain"
-                                  style={{ height: 30, width: 30 }}
-                                  source={Images.commentIcon}
-                                />
-                                <Text style={Style.ratingText}>
-                                  {item.totalComments?.length > 100 ? '100 +' : item.totalComments}
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
-
-                            {/* <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-
-                        <Image
-                          resizeMode="contain"
-                          style={{ height: 30, width: 30 }}
-                          source={Images.shareIcon} />
-                        <Text style={Style.ratingText}>Share</Text>
-                      </View> */}
-
-                            <View
-                              style={{
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                              }}
-                            >
-                              <TouchableOpacity
-                                style={{ justifyContent: 'center', alignItems: 'center' }}
-                                onPress={() =>
-                                  NavigationService.navigate(
-                                    item.isMinePost == 0 ? 'ChatScreen' : 'ChatHistory',
-                                    item
-                                  )
-                                }
-                              >
-                                <Image
-                                  resizeMode="contain"
-                                  style={{ height: 30, width: 30 }}
-                                  source={Images.messageIcon}
-                                />
-                                <Text style={{ ...Style.ratingText, marginStart: 0 }}>Message</Text>
-                              </TouchableOpacity>
-                            </View>
-                          </View>
-
                           <View style={Style.topRightSide}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                               {/* <Image
@@ -834,31 +742,133 @@ class NewsFeed extends React.Component {
                                 <Image
                                   resizeMode="contain"
                                   style={{ height: 30, width: 30 }}
-                                  source={item.isLiked > 0 ? Images.handIconBlue : Images.handIcon}
+                                  source={Images.handIcon}
                                 />
                               </TouchableOpacity>
                             </View>
                           </View>
 
-                          <ParsedText
-                            style={Style.description}
-                            parse={[
-                              {
-                                pattern: RegExp(item.username),
-                                style: Style.name,
-                                onPress: this.handleNamePress,
-                              },
-                              {
-                                pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
-                                style: Style.username,
-                                onPress: this.handleNamePress,
-                              },
-                              { pattern: /#(\w+)/, style: Style.hashtag },
-                            ]}
-                            childrenProps={{ allowFontScaling: true }}
-                          >
-                            {item.username + ' : ' + item.description}
-                          </ParsedText>
+                          <View style={{ flex: 10, height: '100%', marginBottom: Platform.OS === 'ios' ? 120 : 60 }}>
+                            <View style={{ flexDirection: 'column-reverse', flex: 1 }}>
+                              <View style={{ ...Style.leftSide, alignSelf: 'flex-start' }}>
+                                <FlatList
+                                  ref={(list) => {
+                                    this.commentsList = list
+                                  }}
+                                  disableVirtualization={true}
+                                  showsVerticalScrollIndicator={false}
+                                  style={{ marginTop: 0 }}
+                                  data={item.tags}
+                                  extraData={this.state.refresh}
+                                  keyExtractor={(item) => item.tagName}
+                                  renderItem={this.renderIcon.bind(this, item)}
+                                />
+                              </View>
+
+                              <View style={{ ...Style.rightSide, alignSelf: 'flex-end' }}>
+                                <View
+                                  style={{
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                  }}
+                                >
+                                  <TouchableOpacity
+                                    style={{ alignItems: 'center', justifyContent: 'center' }}
+                                    onPress={() =>
+                                      this.setState({
+                                        postRatingModal: true,
+                                        selectedPostForRating: item,
+                                      })
+                                    }
+                                  >
+                                    <Text style={Style.ratingText}>{item.avgRating}</Text>
+                                    <Image
+                                      resizeMode="contain"
+                                      style={{ height: 35, width: 35 }}
+                                      source={Images.big_star}
+                                    />
+                                    <Text style={Style.ratingText}>Rate {item.totalRating}</Text>
+                                  </TouchableOpacity>
+                                </View>
+
+                                <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                                  <TouchableOpacity
+                                    style={{ justifyContent: 'center', alignItems: 'center' }}
+                                    onPress={() => this.toggleComments(item)}
+                                  >
+                                    <Image
+                                      resizeMode="contain"
+                                      style={{ height: 30, width: 30 }}
+                                      source={Images.commentIcon}
+                                    />
+                                    <Text style={Style.ratingText}>
+                                      {item.totalComments?.length > 100 ? '100 +' : item.totalComments}
+                                    </Text>
+                                  </TouchableOpacity>
+                                </View>
+
+                                {/* <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+
+                        <Image
+                          resizeMode="contain"
+                          style={{ height: 30, width: 30 }}
+                          source={Images.shareIcon} />
+                        <Text style={Style.ratingText}>Share</Text>
+                      </View> */}
+
+                                <View
+                                  style={{
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                  }}
+                                >
+                                  <TouchableOpacity
+                                    style={{ justifyContent: 'center', alignItems: 'center' }}
+                                    onPress={() =>
+                                      NavigationService.navigate(
+                                        item.isMinePost == 0 ? 'ChatScreen' : 'ChatHistory',
+                                        item
+                                      )
+                                    }
+                                  >
+                                    <Image
+                                      resizeMode="contain"
+                                      style={{ height: 30, width: 30 }}
+                                      source={Images.messageIcon}
+                                    />
+                                    <Text style={{ ...Style.ratingText, marginStart: 0 }}>Message</Text>
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
+
+
+                            </View>
+                            <ParsedText
+                              style={Style.description}
+                              parse={[
+                                {
+                                  pattern: RegExp(item.username),
+                                  style: Style.name,
+                                  onPress: this.handleNamePress,
+                                },
+                                {
+                                  pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
+                                  style: Style.username,
+                                  onPress: this.handleNamePress,
+                                },
+                                {
+                                  pattern: /#(\w+)/,
+                                  style: Style.hashtag,
+                                  onPress: this.handleHashTagPress
+                                },
+                              ]}
+                              childrenProps={{ allowFontScaling: true }}
+                            >
+                              {item.username + ' : ' + item.description}
+                            </ParsedText>
+                          </View>
                         </BackgroundVideo>
                       ) : (
                           <ImageBackground
@@ -875,7 +885,7 @@ class NewsFeed extends React.Component {
                               uri: item.postPicture,
                             }}
                           >
-                            <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
+                            <View style={{ flex: 1, flexDirection: 'row', padding: 10, alignItems: 'center' }}>
                               <TouchableOpacity
                                 onPress={() =>
                                   NavigationService.navigate(
@@ -896,104 +906,13 @@ class NewsFeed extends React.Component {
                               </TouchableOpacity>
 
                               <View>
-                                <Text style={Style.rowUsername}>{item.username}</Text>
-
+                                <Text style={Style.rowName}>{item.firstName || "Missing"} {item.lastName || "Name"}</Text>
+                                <Text style={Style.rowUsername}>@ {item.username}</Text>
                                 <Text style={Style.rowTime}>
                                   {moment(item.postCreatedAt).fromNow()}
                                 </Text>
                               </View>
                             </View>
-                            <View style={Style.leftSide}>
-                              <FlatList
-
-                                disableVirtualization={true}
-                                showsVerticalScrollIndicator={false}
-                                style={{ marginTop: 0 }}
-                                data={item.tags}
-                                extraData={this.state.refresh}
-                                keyExtractor={(item) => item.tagName}
-                                renderItem={this.renderIcon.bind(this, item)}
-                              />
-                            </View>
-
-                            <View style={Style.rightSide}>
-                              <View
-                                style={{
-                                  flexDirection: 'column',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                }}
-                              >
-                                <TouchableOpacity
-                                  style={{ alignItems: 'center', justifyContent: 'center' }}
-                                  onPress={() =>
-                                    this.setState({
-                                      postRatingModal: true,
-                                      selectedPostForRating: item,
-                                    })
-                                  }
-                                >
-                                  <Text style={Style.ratingText}>{item.avgRating}</Text>
-                                  <Image
-                                    resizeMode="contain"
-                                    style={{ height: 35, width: 35 }}
-                                    source={Images.big_star}
-                                  />
-                                  <Text style={Style.ratingText}>Rate {item.totalRating}</Text>
-                                </TouchableOpacity>
-                              </View>
-
-                              <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                <TouchableOpacity
-                                  style={{ justifyContent: 'center', alignItems: 'center' }}
-                                  onPress={() => this.toggleComments(item)}
-                                >
-                                  <Image
-                                    resizeMode="contain"
-                                    style={{ height: 30, width: 30 }}
-                                    source={Images.commentIcon}
-                                  />
-                                  <Text style={Style.ratingText}>
-                                    {item.totalComments?.length > 100 ? '100 +' : item.totalComments}
-                                  </Text>
-                                </TouchableOpacity>
-                              </View>
-
-                              {/* <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-
-                        <Image
-                          resizeMode="contain"
-                          style={{ height: 30, width: 30 }}
-                          source={Images.shareIcon} />
-                        <Text style={Style.ratingText}>Share</Text>
-                      </View> */}
-
-                              <View
-                                style={{
-                                  flexDirection: 'column',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                }}
-                              >
-                                <TouchableOpacity
-                                  style={{ justifyContent: 'center', alignItems: 'center' }}
-                                  onPress={() =>
-                                    NavigationService.navigate(
-                                      item.isMinePost == 0 ? 'ChatScreen' : 'ChatHistory',
-                                      item
-                                    )
-                                  }
-                                >
-                                  <Image
-                                    resizeMode="contain"
-                                    style={{ height: 30, width: 30 }}
-                                    source={Images.messageIcon}
-                                  />
-                                  <Text style={{ ...Style.ratingText, marginStart: 0 }}>Message</Text>
-                                </TouchableOpacity>
-                              </View>
-                            </View>
-
                             <View style={Style.topRightSide}>
                               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 {/* <Image
@@ -1009,26 +928,122 @@ class NewsFeed extends React.Component {
                                 </TouchableOpacity>
                               </View>
                             </View>
+                            <View style={{ flex: 10, height: '100%', marginBottom: Platform.OS === 'ios' ? 120 : 60 }}>
+                              <View style={{ flexDirection: 'column-reverse', flex: 1 }}>
+                                <View style={{ ...Style.leftSide, alignSelf: 'flex-start' }}>
+                                  <FlatList
+                                    disableVirtualization={true}
+                                    showsVerticalScrollIndicator={false}
+                                    style={{ marginTop: 0 }}
+                                    data={item.tags}
+                                    extraData={this.state.refresh}
+                                    keyExtractor={(item) => item.tagName}
+                                    renderItem={this.renderIcon.bind(this, item)}
+                                  />
+                                </View>
 
-                            <ParsedText
-                              style={Style.description}
-                              parse={[
-                                {
-                                  pattern: RegExp(item.username),
-                                  style: Style.name,
-                                  onPress: this.handleNamePress,
-                                },
-                                {
-                                  pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
-                                  style: Style.username,
-                                  onPress: this.handleNamePress,
-                                },
-                                { pattern: /#(\w+)/, style: Style.hashtag },
-                              ]}
-                              childrenProps={{ allowFontScaling: true }}
-                            >
-                              {item.username + ' : ' + item.description}
-                            </ParsedText>
+                                <View style={{ ...Style.rightSide, alignSelf: 'flex-end' }}>
+                                  <View
+                                    style={{
+                                      flexDirection: 'column',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                    }}
+                                  >
+                                    <TouchableOpacity
+                                      style={{ alignItems: 'center', justifyContent: 'center' }}
+                                      onPress={() =>
+                                        this.setState({
+                                          postRatingModal: true,
+                                          selectedPostForRating: item,
+                                        })
+                                      }
+                                    >
+                                      <Text style={Style.ratingText}>{item.avgRating}</Text>
+                                      <Image
+                                        resizeMode="contain"
+                                        style={{ height: 35, width: 35 }}
+                                        source={Images.big_star}
+                                      />
+                                      <Text style={Style.ratingText}>Rate {item.totalRating}</Text>
+                                    </TouchableOpacity>
+                                  </View>
+
+                                  <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                                    <TouchableOpacity
+                                      style={{ justifyContent: 'center', alignItems: 'center' }}
+                                      onPress={() => this.toggleComments(item)}
+                                    >
+                                      <Image
+                                        resizeMode="contain"
+                                        style={{ height: 30, width: 30 }}
+                                        source={Images.commentIcon}
+                                      />
+                                      <Text style={Style.ratingText}>
+                                        {item.totalComments?.length > 100 ? '100 +' : item.totalComments}
+                                      </Text>
+                                    </TouchableOpacity>
+                                  </View>
+
+                                  {/* <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+
+                        <Image
+                          resizeMode="contain"
+                          style={{ height: 30, width: 30 }}
+                          source={Images.shareIcon} />
+                        <Text style={Style.ratingText}>Share</Text>
+                      </View> */}
+
+                                  <View
+                                    style={{
+                                      flexDirection: 'column',
+                                      justifyContent: 'center',
+                                      alignItems: 'center',
+                                    }}
+                                  >
+                                    <TouchableOpacity
+                                      style={{ justifyContent: 'center', alignItems: 'center' }}
+                                      onPress={() =>
+                                        NavigationService.navigate(
+                                          item.isMinePost == 0 ? 'ChatScreen' : 'ChatHistory',
+                                          item
+                                        )
+                                      }
+                                    >
+                                      <Image
+                                        resizeMode="contain"
+                                        style={{ height: 30, width: 30 }}
+                                        source={Images.messageIcon}
+                                      />
+                                      <Text style={{ ...Style.ratingText, marginStart: 0 }}>Message</Text>
+                                    </TouchableOpacity>
+                                  </View>
+                                </View>
+                              </View>
+                              <ParsedText
+                                style={Style.description}
+                                parse={[
+                                  {
+                                    pattern: RegExp(item.username),
+                                    style: Style.name,
+                                    onPress: this.handleNamePress,
+                                  },
+                                  {
+                                    pattern: /@(\w+)+([.\s]?[a-zA-Z0-9]\w+)/,
+                                    style: Style.username,
+                                    onPress: this.handleNamePress,
+                                  },
+                                  {
+                                    pattern: /#(\w+)/,
+                                    style: Style.hashtag,
+                                    onPress: this.handleHashTagPress
+                                  },
+                                ]}
+                                childrenProps={{ allowFontScaling: true }}
+                              >
+                                {item.username + ' : ' + item.description}
+                              </ParsedText>
+                            </View>
                           </ImageBackground>
                         )}
                     </View>

@@ -36,7 +36,7 @@ export default StyleSheet.create({
     { marginTop: 50, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, flexDirection: 'row' },
 
   trendingView1:
-    { marginTop: 10, justifyContent: 'space-between', paddingHorizontal: 20, flexDirection: 'row' },
+    { marginTop: 10, justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, flexDirection: 'row' },
 
   textStyle: { color: '#000', borderWidth: 1, borderRadius: 10, paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 5 }
   ,

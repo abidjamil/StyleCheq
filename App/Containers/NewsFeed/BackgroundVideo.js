@@ -40,7 +40,7 @@ export default class BackgroundVideo extends Component {
           onLoadStart={this.onLoadStart}
           onLoad={this.onLoad}
           filterEnabled={true}
-          playWhenInactive={true}
+          playWhenInactive={false}
           posterResizeMode="cover"
           onError={(e) => console.log('error video', e)}
           resizeMode={'cover'}
