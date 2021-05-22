@@ -23,7 +23,7 @@ import moment from 'moment'
 import ParsedText from 'react-native-parsed-text';
 import BackgroundVideo from '../ExploreTrending/BackgroundVideo';
 import Search from 'react-native-vector-icons/EvilIcons';
-
+import Video from 'react-native-video'
 var that;
 class ProfileScreen extends React.Component {
   constructor(props) {
@@ -317,10 +317,10 @@ class ProfileScreen extends React.Component {
             />
 
             <View style={{ marginLeft: 10 }}>
-              <Text style={Style.trisaStyle}>{this.state.userProfile?.firstName} {this.state.userProfile?.lastName}</Text>
+              <Text style={{ ...Style.trisaStyle, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>{this.state.userProfile?.firstName} {this.state.userProfile?.lastName}</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={Style.trisaemail}>@{this.state.userProfile?.username}</Text>
+              <Text style={{ ...Style.trisaemail, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>@{this.state.userProfile?.username}</Text>
               <View style={{ flexDirection: 'row', marginEnd: 20, justifyContent: 'space-between' }}>
                 <TouchableOpacity
                   style={{ marginRight: 5 }}
@@ -353,25 +353,29 @@ class ProfileScreen extends React.Component {
             </View>
             <View style={{ flex: 1 }}>
               <View style={Style.textView}>
-                <Text style={Style.postText}>POSTS</Text>
-                <Text style={Style.postText}>FOLLOWERS</Text>
+                <Text style={{ ...Style.postText, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>POSTS</Text>
+                <Text style={{ ...Style.postText, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>FOLLOWERS</Text>
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>{this.state.userProfile?.totalPost}</Text>
-                <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowBy}</Text>
+                <Text style={{ ...Style.postText, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>{this.state.userProfile?.totalPost}</Text>
+                <Text style={{ ...Style.postText, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>{this.state.userProfile?.NoOfFollowBy}</Text>
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>FOLLOWING</Text>
-                <Text style={Style.postText}>RATING</Text>
+                <Text style={{ ...Style.postText, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>FOLLOWING</Text>
+                <Text style={{ ...Style.postText, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>RATING</Text>
               </View>
 
               <View style={Style.textView1}>
-                <Text style={Style.postText}>{this.state.userProfile?.NoOfFollowTo}</Text>
-                <View style={{ ...Style.postText, flexDirection: 'row' }}>
+                <Text style={{ ...Style.postText, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>{this.state.userProfile?.NoOfFollowTo}</Text>
+                <View style={{ ...Style.postText, flexDirection: 'row', color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>
                   <Star name="star" size={20} color='#FFC00B' style={{ marginTop: 5 }} />
-                  <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Poppins-Regular' }}>{this.state.userProfile?.totalProfileRating.toFixed(2)}</Text>
+                  <Text style={{
+                    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+                    textShadowOffset: { width: -1, height: 1 },
+                    textShadowRadius: 1, fontSize: 20, color: '#fff', color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular'
+                  }}>{this.state.userProfile?.totalProfileRating.toFixed(2)}</Text>
                 </View>
               </View>
 
@@ -383,9 +387,9 @@ class ProfileScreen extends React.Component {
               <Text style={{
                 textShadowColor: 'rgba(0, 0, 0, 0.75)',
                 textShadowOffset: { width: -1, height: 1 },
-                textShadowRadius: 10, color: '#fff', opacity: 0.6, fontFamily: 'Poppins-Bold', fontSize: 40
+                textShadowRadius: 10, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular', fontWeight: 'bold', opacity: 0.6, fontSize: 40
               }}>BIO</Text>
-              <Text style={Style.lastViewText}>{this.state.userProfile?.bio}</Text>
+              <Text style={{ ...Style.lastViewText, color: this.state.userProfile?.fontColor || 'white', fontFamily: this.state.userProfile?.fontFamily || 'Poppins-Regular' }}>{this.state.userProfile?.bio}</Text>
             </View>
             {/* <View style={{ backgroundColor: '#f5f5f5', width: '100%', position: 'absolute', bottom: 0, paddingBottom: Platform.OS === 'ios' ? 20 : '10%' }}>
               <BottomIcons />

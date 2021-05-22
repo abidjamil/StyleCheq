@@ -19,6 +19,8 @@
 		3BEBC4592E9A4A7A9B6884D8 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A52761CD34B168C76E5D8 /* Roboto.ttf */; };
 		4DFD138E353C4D869349F0C5 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF6791E6163B46159C4437E5 /* Feather.ttf */; };
 		5098182B730A45D3976B79C5 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DFA9A4F863504061AF5B5512 /* AntDesign.ttf */; };
+		526C578626599CEA0050C2DB /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 526C578526599CEA0050C2DB /* Lato-Regular.ttf */; };
+		526C578826599D020050C2DB /* times-new-roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 526C578726599D020050C2DB /* times-new-roman.ttf */; };
 		52B50FAD2621F106007213AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B50FAC2621F106007213AA /* GoogleService-Info.plist */; };
 		52EFDAC225265C3E008DE9EE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFDAC125265C3E008DE9EE /* File.swift */; };
 		52EFDAD5252660E3008DE9EE /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52EFDAC3252660E1008DE9EE /* Poppins-Light.ttf */; };
@@ -82,6 +84,8 @@
 		3BEAA1D4F3C9433D9EE62F5A /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		4D5A52761CD34B168C76E5D8 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		5256946A26165DA900C665D0 /* StyleCheqRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = StyleCheqRelease.entitlements; path = StyleCheq/StyleCheqRelease.entitlements; sourceTree = "<group>"; };
+		526C578526599CEA0050C2DB /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		526C578726599D020050C2DB /* times-new-roman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "times-new-roman.ttf"; sourceTree = "<group>"; };
 		52B50FAC2621F106007213AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52CAF2AA2614FD55001EDF0E /* StyleCheq.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = StyleCheq.entitlements; path = StyleCheq/StyleCheq.entitlements; sourceTree = "<group>"; };
 		52EFDAC025265C3E008DE9EE /* StyleCheq-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StyleCheq-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -180,6 +184,8 @@
 		13B07FAE1A68108700A75B9A /* StyleCheq */ = {
 			isa = PBXGroup;
 			children = (
+				526C578726599D020050C2DB /* times-new-roman.ttf */,
+				526C578526599CEA0050C2DB /* Lato-Regular.ttf */,
 				52B50FAC2621F106007213AA /* GoogleService-Info.plist */,
 				5256946A26165DA900C665D0 /* StyleCheqRelease.entitlements */,
 				52CAF2AA2614FD55001EDF0E /* StyleCheq.entitlements */,
@@ -395,6 +401,7 @@
 				52EFDAE3252660E3008DE9EE /* Poppins-ThinItalic.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				52EFDAD5252660E3008DE9EE /* Poppins-Light.ttf in Resources */,
+				526C578626599CEA0050C2DB /* Lato-Regular.ttf in Resources */,
 				5098182B730A45D3976B79C5 /* AntDesign.ttf in Resources */,
 				D404EAD173424231928A3E16 /* Entypo.ttf in Resources */,
 				1BD01BEAF15F48CD8516AE41 /* EvilIcons.ttf in Resources */,
@@ -406,6 +413,7 @@
 				042813E14B5040EF9DDDBC08 /* Fontisto.ttf in Resources */,
 				3BD83034DF304938A3E16C44 /* Foundation.ttf in Resources */,
 				DF11CF1F7E3C46B6A28AA1BD /* Ionicons.ttf in Resources */,
+				526C578826599D020050C2DB /* times-new-roman.ttf in Resources */,
 				A4D9044B1FA949DC9142CB22 /* MaterialCommunityIcons.ttf in Resources */,
 				DF027A1A7A89490887D6DC7E /* MaterialIcons.ttf in Resources */,
 				F5396AAB66A34366AF2E25AF /* Octicons.ttf in Resources */,

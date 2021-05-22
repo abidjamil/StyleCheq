@@ -6,13 +6,17 @@ import NavigationService from 'App/Services/NavigationService'
 
 import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
 import { ColorPicker, TriangleColorPicker } from 'react-native-color-picker'
+import { connect } from 'react-redux'
+import { NetworkActions } from '../../NetworkActions'
 
-export default class Splash1 extends React.Component {
+var that;
+class FontColor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      oldColor: "#FF7700",
+      selectedColor: "#FFFFFF",
     };
+    that = this;
   }
 
   changeColor = (colorHsvOrRgb, resType) => {
@@ -22,7 +26,24 @@ export default class Splash1 extends React.Component {
       });
     }
   }
-
+  save() {
+    const request = {
+      fontColor: this.state.selectedColor
+    }
+    console.log(request)
+    NetworkActions.UpdateFontColor(request, that.props.auth.data.token).then
+      (function (response) {
+        that.setState({ isLoading: false })
+        console.log(response)
+        if (response.status === 200) {
+          NavigationService.goBack()
+        }
+      })
+      .catch(function (error) {
+        that.setState({ isLoading: false })
+        alert(JSON.stringify(error))
+      })
+  }
   render() {
     const {
       oldColor,
@@ -47,8 +68,9 @@ export default class Splash1 extends React.Component {
         </View>
         <Text style={{ marginLeft: 30, marginTop: 20, fontFamily: 'Poppins-Regular', }}>Select Font Color</Text>
         <View style={Style.container}>
+          <View style={{ alignSelf: 'center', width: 100, height: 30, backgroundColor: this.state.selectedColor }}></View>
           <ColorPicker
-            onColorSelected={color => alert(`Color selected: ${color}`)}
+            onColorSelected={color => this.setState({ selectedColor: color })}
             style={{ flex: 1, width: '80%' }}
           />
 
@@ -58,7 +80,7 @@ export default class Splash1 extends React.Component {
               Helpers.rowCenter,
             ]}>
             <TouchableOpacity
-              onPress={() => NavigationService.goBack()}>
+              onPress={() => this.save()}>
               <Text style={Style.loginBtn}>
                 Done
                    </Text>
@@ -71,3 +93,16 @@ export default class Splash1 extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  user: state.signUpReducer.signUp,
+  auth: state.authTypeReducer.authType,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  notificationData: () => dispatch({ type: 'Notification', payload: that.state.data }),
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FontColor)
+

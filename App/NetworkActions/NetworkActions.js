@@ -719,6 +719,44 @@ async function AddPostToCollection(Request, Token) {
     )
 
 }
+async function UpdateFontFamily(Request, Token) {
+    console.log("UpdateFontSizeToken", Token)
+    return await Promise.resolve(API({
+        method: 'PUT',
+        url: '/api/v1/user/appsettings/fontfamily',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
+async function UpdateFontColor(Request, Token) {
+    console.log("UpdateFontSizeToken", Token)
+    return await Promise.resolve(API({
+        method: 'PUT',
+        url: '/api/v1/user/appsettings/fontcolor',
+        data: Request,
+        headers: {
+            'Authorization': "Bearer " + Token
+        }
+    })
+        .then(function (response) {
+            return Promise.resolve(response.data)
+        })
+        .catch(function (error) {
+            return Promise.reject(error.response.data)
+        })
+    )
+
+}
 async function Logout(Request, Token) {
     return await Promise.resolve(API({
         method: 'PUT',
@@ -738,4 +776,4 @@ async function Logout(Request, Token) {
         })
     )
 }
-export { Logout, AddPostToCollection, GetAccountSettings, ReadAllMessage, BlockUser, GetPrivacyList, GETFCM, GetCollectionPosts, NewCollection, GetCollections, UpdatePrivacy, GetPeopleToFollowSearch, GetTrendingWithHash, GetTrending, UpdateName, UpdateBio, FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }
+export { UpdateFontColor, UpdateFontFamily, Logout, AddPostToCollection, GetAccountSettings, ReadAllMessage, BlockUser, GetPrivacyList, GETFCM, GetCollectionPosts, NewCollection, GetCollections, UpdatePrivacy, GetPeopleToFollowSearch, GetTrendingWithHash, GetTrending, UpdateName, UpdateBio, FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, GetUsers, NewPost, GetPreviousChat, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow, GetProfileSelf, GetProfile, ChatAttachment, GetChatHistory }

@@ -36,7 +36,7 @@ export default StyleSheet.create({
     fontFamily: 'Poppins-Light', paddingRight: 5, fontSize: 14, paddingLeft: 5
   },
   trisaStyle: {
-    fontSize: 50, color: '#fff', fontWeight: 'bold', fontFamily: 'Poppins-Regular', textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    fontSize: 50, color: '#fff', textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 1
   },

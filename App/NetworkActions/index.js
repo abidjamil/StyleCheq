@@ -1,4 +1,4 @@
-import { Logout, AddPostToCollection, GetAccountSettings, ReadAllMessage, BlockUser, GetPrivacyList, GETFCM, GetCollectionPosts, NewCollection, GetCollections, UpdatePrivacy, GetPeopleToFollowSearch, GetTrendingWithHash, GetTrending, UpdateName, UpdateBio, FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, NewPost, GetUsers, GetChatHistory, GetPreviousChat, ChatAttachment, GetProfileSelf, GetProfile, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow } from './NetworkActions';
+import { UpdateFontColor, UpdateFontFamily, Logout, AddPostToCollection, GetAccountSettings, ReadAllMessage, BlockUser, GetPrivacyList, GETFCM, GetCollectionPosts, NewCollection, GetCollections, UpdatePrivacy, GetPeopleToFollowSearch, GetTrendingWithHash, GetTrending, UpdateName, UpdateBio, FollowUser, GetUserPosts, GetNotifications, LikePost, RatePost, RateIcon, AddComment, GetComments, NewPost, GetUsers, GetChatHistory, GetPreviousChat, ChatAttachment, GetProfileSelf, GetProfile, GetTimeline, AuthAction, SignupStep1, SignupStep2, SignupStep3, ForgotStep1, ForgotStep2, ForgotStep3, GetPeopleToFollow } from './NetworkActions';
 
 const NetworkActions = {
     AuthAction: AuthAction,
@@ -40,7 +40,9 @@ const NetworkActions = {
     ReadAllMessage: ReadAllMessage,
     GetAccountSettings: GetAccountSettings,
     AddPostToCollection: AddPostToCollection,
-    Logout: Logout
+    UpdateFontColor: UpdateFontColor,
+    UpdateFontFamily: UpdateFontFamily,
+    Logout: Logout,
 
 }
 export {

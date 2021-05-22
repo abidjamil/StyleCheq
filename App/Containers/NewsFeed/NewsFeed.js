@@ -419,6 +419,12 @@ class NewsFeed extends React.Component {
                   NetworkActions.RateIcon(request, that.props.auth.data.token)
                     .then(function (response) {
                       console.log(JSON.stringify(response))
+                      let foundIndex = that.state.data.findIndex(currentItem => currentItem.postId === that.state.selectedIcon?.post?.postId)
+                      const newData = that.state.data[foundIndex]
+                      newData.tags = response.data.tags
+                      let newArray = [...that.state.data];
+                      newArray[foundIndex] = newData;
+                      that.setState({ data: newArray, refresh: !that.state.refresh })
                       that.setState({ ratingModal: false })
                       that.setState({
                         isLoading: false,
@@ -486,10 +492,18 @@ class NewsFeed extends React.Component {
                   NetworkActions.RatePost(request, that.props.auth.data.token)
                     .then(function (response) {
                       console.log(JSON.stringify(response))
-                      that.setState({ postRatingModal: false })
                       that.setState({
                         isLoading: false,
                       })
+
+                      let foundIndex = that.state.data.findIndex(currentItem => currentItem.postId === that.state.selectedPostForRating.postId)
+                      const newData = that.state.data[foundIndex]
+                      newData.avgRating = response.data[0].avgRating
+                      newData.totalRating = response.data[0].totalRating
+                      let newArray = [...that.state.data];
+                      newArray[foundIndex] = newData;
+                      that.setState({ data: newArray, refresh: !that.state.refresh })
+                      that.setState({ postRatingModal: false })
                     })
                     .catch(function (error) {
                       that.setState({

@@ -18,7 +18,7 @@ class EditProfile extends React.Component {
           <View style={Style.fieldsLine}>
 
             <TouchableOpacity
-              onPress={() => NavigationService.goBack()}
+              onPress={() => NavigationService.navigate("ProfileImageSelf")}
               style={{ flexDirection: 'row' }}>
               <BACK name="left" size={23}></BACK>
               <Text style={Style.privacyBtn}>back</Text>
